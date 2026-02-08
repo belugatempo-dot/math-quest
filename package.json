@@ -1,0 +1,32 @@
+{
+  "name": "mathquest",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@9.1.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "tools/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "content:parse": "pnpm --filter @mathquest/content-pipeline parse",
+    "content:validate": "pnpm --filter @mathquest/content-pipeline validate",
+    "mobile:start": "pnpm --filter @mathquest/mobile start",
+    "mobile:ios": "pnpm --filter @mathquest/mobile ios",
+    "mobile:android": "pnpm --filter @mathquest/mobile android"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "typescript": "^5.4.0"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  }
+}

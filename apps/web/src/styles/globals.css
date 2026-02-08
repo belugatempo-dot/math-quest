@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 30, 41, 59;
+  --background-rgb: 248, 250, 252;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-colors duration-200;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-blue-600;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-white hover:bg-orange-600;
+  }
+
+  .btn-success {
+    @apply bg-success text-white hover:bg-green-600;
+  }
+
+  .card {
+    @apply bg-white rounded-xl shadow-md p-6;
+  }
+
+  .star {
+    @apply inline-block text-2xl;
+  }
+
+  .star-filled {
+    @apply text-star-gold;
+  }
+
+  .star-empty {
+    @apply text-star-gray;
+  }
+}

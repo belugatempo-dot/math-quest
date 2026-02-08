@@ -1,0 +1,4115 @@
+{
+  "id": "world-3",
+  "name": "Multiplication Mountains",
+  "theme": "adventure",
+  "baLevel": 3,
+  "targetAgeMin": 8,
+  "targetAgeMax": 10,
+  "totalLevels": 108,
+  "estimatedWeeks": 36,
+  "colorPalette": {
+    "primary": "#3B82F6",
+    "secondary": "#F97316",
+    "accent": "#22C55E",
+    "background": "#F8FAFC",
+    "text": "#1E293B"
+  },
+  "characters": [],
+  "isLocked": false,
+  "prerequisiteWorldId": "world-2",
+  "chapters": [
+    {
+      "id": "chapter-3-1",
+      "number": 1,
+      "name": "Triangle Trails",
+      "topic": "triangles",
+      "weekStart": 1,
+      "weekEnd": 2,
+      "levels": [
+        {
+          "id": "level-3-1-1",
+          "chapterId": "chapter-3-1",
+          "worldId": "world-3",
+          "number": 1,
+          "name": "The Three-Sided Path",
+          "type": "teaching",
+          "storyContext": "Sage Multiplico explains that all paths in the mountains have shapes with meaning.",
+          "problems": [
+            {
+              "id": "problem-level-3-1-1-1",
+              "levelId": "level-3-1-1",
+              "sequence": 1,
+              "type": "numeric_input",
+              "category": "thinking",
+              "statement": "\"Welcome, young explorer! This path is made of triangles. Count the sides of this shape. How many sides does a triangle have?\"",
+              "inputType": "number_pad",
+              "correctAnswer": {
+                "value": 3,
+                "displayValue": "3"
+              },
+              "hints": [],
+              "solutionExplanation": "3",
+              "teachingPoint": "A triangle always has exactly 3 sides and 3 vertices.",
+              "tags": [
+                "triangles"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-1-2",
+          "chapterId": "chapter-3-1",
+          "worldId": "world-3",
+          "number": 2,
+          "name": "Classifying Triangles",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-1-2-1",
+              "levelId": "level-3-1-2",
+              "sequence": 1,
+              "type": "multiple_choice",
+              "category": "thinking",
+              "statement": "\"Look at these three triangles on the mountain wall. Which one has all sides the same length?\" Triangle A: sides 5, 5, 5 Triangle B: sides 5, 5, 3 Triangle C: sides 3, 4, 5",
+              "inputType": "multiple_choice",
+              "correctAnswer": {
+                "value": "Triangle A",
+                "displayValue": "Triangle A"
+              },
+              "hints": [],
+              "solutionExplanation": "Triangle A",
+              "teachingPoint": "Equilateral = all sides equal, Isosceles = two sides equal, Scalene = no sides equal.",
+              "tags": [
+                "triangles"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-1-3",
+          "chapterId": "chapter-3-1",
+          "worldId": "world-3",
+          "number": 3,
+          "name": "Triangle Side Challenge",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-1-3-1",
+              "levelId": "level-3-1-3",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"The mountain bridge has an isosceles triangle shape. Two sides are 9 units and one side is 4 units. What are all the side lengths?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": [
+                  "9",
+                  "9",
+                  "4"
+                ],
+                "displayValue": "9, 9, 4"
+              },
+              "hints": [
+                {
+                  "tier": 1,
+                  "cost": 0,
+                  "text": "What does 'isosceles' mean?",
+                  "type": "conceptual"
+                },
+                {
+                  "tier": 2,
+                  "cost": 1,
+                  "text": "An isosceles triangle has exactly two sides that are equal.",
+                  "type": "directional"
+                },
+                {
+                  "tier": 3,
+                  "cost": 2,
+                  "text": "Look at the numbers involved and think about how they relate.",
+                  "type": "scaffolded"
+                }
+              ],
+              "solutionExplanation": "9, 9, 4",
+              "teachingPoint": "",
+              "tags": [
+                "triangles"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-1-4",
+          "chapterId": "chapter-3-1",
+          "worldId": "world-3",
+          "number": 4,
+          "name": "The Quadrilateral Crossing",
+          "type": "teaching",
+          "storyContext": "The path crosses a bridge shaped like a four-sided figure.",
+          "problems": [
+            {
+              "id": "problem-level-3-1-4-1",
+              "levelId": "level-3-1-4",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"This bridge has 4 sides. What do we call a shape with 4 sides?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "Quadrilateral",
+                "displayValue": "Quadrilateral"
+              },
+              "hints": [],
+              "solutionExplanation": "Quadrilateral",
+              "teachingPoint": "\"Quad\" means 4, \"lateral\" refers to sides.",
+              "tags": [
+                "quadrilaterals"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-1-5",
+          "chapterId": "chapter-3-1",
+          "worldId": "world-3",
+          "number": 5,
+          "name": "Special Quadrilaterals",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-1-5-1",
+              "levelId": "level-3-1-5",
+              "sequence": 1,
+              "type": "multiple_choice",
+              "category": "thinking",
+              "statement": "\"Match each quadrilateral to its description: A. Square B. Rectangle C. Parallelogram Which one has 4 equal sides AND 4 right angles?\"",
+              "inputType": "multiple_choice",
+              "correctAnswer": {
+                "value": "A",
+                "displayValue": "A (Square)"
+              },
+              "hints": [],
+              "solutionExplanation": "A (Square)",
+              "teachingPoint": "",
+              "tags": [
+                "squares"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-1-6",
+          "chapterId": "chapter-3-1",
+          "worldId": "world-3",
+          "number": 6,
+          "name": "Polygon Peaks",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-1-6-1",
+              "levelId": "level-3-1-6",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"The summit marker is a shape with 5 sides. What is this polygon called?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "Pentagon",
+                "displayValue": "Pentagon"
+              },
+              "hints": [],
+              "solutionExplanation": "Pentagon",
+              "teachingPoint": "Pentagon (5), Hexagon (6), Heptagon (7), Octagon (8)",
+              "tags": [
+                "polygons"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-1-7",
+          "chapterId": "chapter-3-1",
+          "worldId": "world-3",
+          "number": 7,
+          "name": "Count the Sides",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-1-7-1",
+              "levelId": "level-3-1-7",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"How many sides does a hexagon have? And an octagon?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": [
+                  "Hexagon = 6",
+                  "Octagon = 8"
+                ],
+                "displayValue": "Hexagon = 6, Octagon = 8"
+              },
+              "hints": [],
+              "solutionExplanation": "Hexagon = 6, Octagon = 8",
+              "teachingPoint": "",
+              "tags": [
+                "polygons"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-1-8",
+          "chapterId": "chapter-3-1",
+          "worldId": "world-3",
+          "number": 8,
+          "name": "Polyomino Puzzle",
+          "type": "teaching",
+          "storyContext": "Crystal fragments in the cave are shaped like connected squares.",
+          "problems": [
+            {
+              "id": "problem-level-3-1-8-1",
+              "levelId": "level-3-1-8",
+              "sequence": 1,
+              "type": "numeric_input",
+              "category": "thinking",
+              "statement": "\"A tetromino is made of 4 unit squares. How many unit squares make up a pentomino?\"",
+              "inputType": "number_pad",
+              "correctAnswer": {
+                "value": 5,
+                "displayValue": "5"
+              },
+              "hints": [],
+              "solutionExplanation": "5",
+              "teachingPoint": "Polyominoes are named by their number of squares (domino = 2, tromino = 3, tetromino = 4, pentomino = 5).",
+              "tags": [
+                "squares"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-1-9",
+          "chapterId": "chapter-3-1",
+          "worldId": "world-3",
+          "number": 9,
+          "name": "Build the Shape",
+          "type": "challenge",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-1-9-1",
+              "levelId": "level-3-1-9",
+              "sequence": 1,
+              "type": "multiple_choice",
+              "category": "thinking",
+              "statement": "\"Using exactly 5 unit squares connected edge-to-edge, draw a pentomino that fits inside a 3×3 grid. How many different pentominoes can you make?\"",
+              "inputType": "multiple_choice",
+              "correctAnswer": {
+                "value": "There are 12 distinct pentominoes (not counting rotations/reflections as different). Students need to draw any valid pentomino.",
+                "displayValue": "There are 12 distinct pentominoes (not counting rotations/reflections as different). Students need to draw any valid pentomino."
+              },
+              "hints": [],
+              "solutionExplanation": "There are 12 distinct pentominoes (not counting rotations/reflections as different). Students need to draw any valid pentomino.",
+              "teachingPoint": "",
+              "tags": [
+                "area"
+              ],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 5,
+          "isChallenge": true,
+          "isBoss": false
+        }
+      ],
+      "learningObjectives": [
+        "Triangles",
+        "Quadrilaterals",
+        "Polygons",
+        "Polyominoes"
+      ],
+      "signatureContent": [],
+      "isBoss": false,
+      "worldId": "world-3"
+    },
+    {
+      "id": "chapter-3-2",
+      "number": 2,
+      "name": "Skip-Count Caverns",
+      "topic": "skip-counting",
+      "weekStart": 3,
+      "weekEnd": 4,
+      "levels": [
+        {
+          "id": "level-3-2-1",
+          "chapterId": "chapter-3-2",
+          "worldId": "world-3",
+          "number": 1,
+          "name": "Counting by 2s",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-2-1-1",
+              "levelId": "level-3-2-1",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"The cave crystals glow every 2 steps. Starting at 2, what are the next 5 numbers you'll see glowing crystals?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": [
+                  "2",
+                  "4",
+                  "6",
+                  "8",
+                  "10"
+                ],
+                "displayValue": "2, 4, 6, 8, 10"
+              },
+              "hints": [],
+              "solutionExplanation": "2, 4, 6, 8, 10",
+              "teachingPoint": "Skip-counting is repeated addition: 2, 2+2, 2+2+2...",
+              "tags": [
+                "skip-counting"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-2-2",
+          "chapterId": "chapter-3-2",
+          "worldId": "world-3",
+          "number": 2,
+          "name": "Counting by 5s",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-2-2-1",
+              "levelId": "level-3-2-2",
+              "sequence": 1,
+              "type": "multi_select",
+              "category": "thinking",
+              "statement": "\"Count by 5s from 5 to 50. Circle all the numbers that end in 0.\"",
+              "inputType": "checkbox_group",
+              "correctAnswer": {
+                "value": [
+                  "5",
+                  "10",
+                  "15",
+                  "20",
+                  "25",
+                  "30",
+                  "35",
+                  "40",
+                  "45",
+                  "50"
+                ],
+                "displayValue": "5, 10, 15, 20, 25, 30, 35, 40, 45, 50"
+              },
+              "hints": [],
+              "solutionExplanation": "5, 10, 15, 20, 25, 30, 35, 40, 45, 50 (circled: 10, 20, 30, 40, 50)",
+              "teachingPoint": "",
+              "tags": [
+                "skip-counting"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-2-3",
+          "chapterId": "chapter-3-2",
+          "worldId": "world-3",
+          "number": 3,
+          "name": "Counting by Different Numbers",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-2-3-1",
+              "levelId": "level-3-2-3",
+              "sequence": 1,
+              "type": "numeric_input",
+              "category": "thinking",
+              "statement": "\"Skip-count by 4s starting at 4. What is the 7th number in your count?\"",
+              "inputType": "number_pad",
+              "correctAnswer": {
+                "value": 28,
+                "displayValue": "28"
+              },
+              "hints": [],
+              "solutionExplanation": "28 (4, 8, 12, 16, 20, 24, 28)",
+              "teachingPoint": "",
+              "tags": [
+                "skip-counting"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-2-4",
+          "chapterId": "chapter-3-2",
+          "worldId": "world-3",
+          "number": 4,
+          "name": "The Hundreds Chart",
+          "type": "teaching",
+          "storyContext": "The cave wall shows an ancient hundreds chart.",
+          "problems": [
+            {
+              "id": "problem-level-3-2-4-1",
+              "levelId": "level-3-2-4",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "pattern_discovery",
+              "statement": "\"On the hundreds chart, start at 7. Add 10. Where do you land? Add 10 again. What pattern do you notice?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": [
+                  "7 → 17 → 27. Pattern: The ones digit stays the same",
+                  "the tens digit increases by 1."
+                ],
+                "displayValue": "7 → 17 → 27. Pattern: The ones digit stays the same, the tens digit increases by 1."
+              },
+              "hints": [],
+              "solutionExplanation": "7 → 17 → 27. Pattern: The ones digit stays the same, the tens digit increases by 1.",
+              "teachingPoint": "",
+              "tags": [],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-2-5",
+          "chapterId": "chapter-3-2",
+          "worldId": "world-3",
+          "number": 5,
+          "name": "Chart Patterns",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-2-5-1",
+              "levelId": "level-3-2-5",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "pattern_discovery",
+              "statement": "\"What do all numbers in this sequence have in common: 3, 13, 23, 33, 43?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "They all have 3 in the ones place.",
+                "displayValue": "They all have 3 in the ones place."
+              },
+              "hints": [],
+              "solutionExplanation": "They all have 3 in the ones place.",
+              "teachingPoint": "",
+              "tags": [],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-2-6",
+          "chapterId": "chapter-3-2",
+          "worldId": "world-3",
+          "number": 6,
+          "name": "Skip-Count Intersection",
+          "type": "challenge",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-2-6-1",
+              "levelId": "level-3-2-6",
+              "sequence": 1,
+              "type": "numeric_input",
+              "category": "multiple_paths",
+              "statement": "\"Ben skip-counts by 6s starting at 6. Jen skip-counts by 9s starting at 9. What is the largest two-digit number that Ben and Jen both say?\"",
+              "inputType": "number_pad",
+              "correctAnswer": {
+                "value": 90,
+                "displayValue": "90"
+              },
+              "hints": [],
+              "solutionExplanation": "Common numbers include 18, 36, 54, 72, 90. The largest two-digit one is 90.",
+              "teachingPoint": "",
+              "tags": [
+                "skip-counting"
+              ],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 5,
+          "isChallenge": true,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-2-7",
+          "chapterId": "chapter-3-2",
+          "worldId": "world-3",
+          "number": 7,
+          "name": "Balance Scale Introduction",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-2-7-1",
+              "levelId": "level-3-2-7",
+              "sequence": 1,
+              "type": "numeric_input",
+              "category": "thinking",
+              "statement": "\"A balance scale has 15 on the left side. What must go on the right side to balance?\"",
+              "inputType": "number_pad",
+              "correctAnswer": {
+                "value": 15,
+                "displayValue": "15"
+              },
+              "hints": [],
+              "solutionExplanation": "15",
+              "teachingPoint": "When a scale balances, both sides are equal.",
+              "tags": [],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-2-8",
+          "chapterId": "chapter-3-2",
+          "worldId": "world-3",
+          "number": 8,
+          "name": "Missing Number Balance",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-2-8-1",
+              "levelId": "level-3-2-8",
+              "sequence": 1,
+              "type": "fill_in_blank",
+              "category": "thinking",
+              "statement": "\"The left side has: 20 + 10. The right side has: 15 + ___. What goes in the blank to balance?\"",
+              "inputType": "number_pad",
+              "correctAnswer": {
+                "value": 15,
+                "displayValue": "15"
+              },
+              "hints": [],
+              "solutionExplanation": "15 (because 20 + 10 = 30, and 30 = 15 + 15)",
+              "teachingPoint": "",
+              "tags": [],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-2-9",
+          "chapterId": "chapter-3-2",
+          "worldId": "world-3",
+          "number": 9,
+          "name": "Multi-Step Balance",
+          "type": "challenge",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-2-9-1",
+              "levelId": "level-3-2-9",
+              "sequence": 1,
+              "type": "numeric_input",
+              "category": "thinking",
+              "statement": "\"If 3 triangles balance with 12, how many triangles balance with 20?\"",
+              "inputType": "number_pad",
+              "correctAnswer": {
+                "value": 5,
+                "displayValue": "5"
+              },
+              "hints": [],
+              "solutionExplanation": "5 (each triangle = 4, so 20 ÷ 4 = 5)",
+              "teachingPoint": "",
+              "tags": [],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 5,
+          "isChallenge": true,
+          "isBoss": false
+        }
+      ],
+      "learningObjectives": [
+        "Skip-Counting",
+        "Hundreds Chart",
+        "Balancing"
+      ],
+      "signatureContent": [],
+      "isBoss": false,
+      "worldId": "world-3"
+    },
+    {
+      "id": "chapter-3-3",
+      "number": 3,
+      "name": "Perimeter & Area Pass",
+      "topic": "perimeter",
+      "weekStart": 5,
+      "weekEnd": 6,
+      "levels": [
+        {
+          "id": "level-3-3-1",
+          "chapterId": "chapter-3-3",
+          "worldId": "world-3",
+          "number": 1,
+          "name": "What is Perimeter?",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-3-1-1",
+              "levelId": "level-3-3-1",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"You walk around a triangular meadow. The sides are 5 m, 7 m, and 8 m. How far did you walk in total?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "20 m",
+                "displayValue": "20 m"
+              },
+              "hints": [],
+              "solutionExplanation": "20 m",
+              "teachingPoint": "Perimeter = sum of all side lengths.",
+              "tags": [
+                "perimeter"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-3-2",
+          "chapterId": "chapter-3-3",
+          "worldId": "world-3",
+          "number": 2,
+          "name": "Rectangle Perimeter",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-3-2-1",
+              "levelId": "level-3-3-2",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"A rectangular cabin has length 10 ft and width 6 ft. What is its perimeter?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "32 ft",
+                "displayValue": "32 ft (10 + 6 + 10 + 6 = 32)"
+              },
+              "hints": [],
+              "solutionExplanation": "32 ft (10 + 6 + 10 + 6 = 32)",
+              "teachingPoint": "",
+              "tags": [
+                "perimeter"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-3-3",
+          "chapterId": "chapter-3-3",
+          "worldId": "world-3",
+          "number": 3,
+          "name": "Isosceles Triangle Perimeter",
+          "type": "challenge",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-3-3-1",
+              "levelId": "level-3-3-3",
+              "sequence": 1,
+              "type": "numeric_input",
+              "category": "thinking",
+              "statement": "\"What is the perimeter of an isosceles triangle with sides of length 9 and 4?\"",
+              "inputType": "number_pad",
+              "correctAnswer": {
+                "value": 22,
+                "displayValue": "22"
+              },
+              "hints": [],
+              "solutionExplanation": "22 (only 9, 9, 4 forms a valid triangle)",
+              "teachingPoint": "This problem has two valid interpretations! Both 9+9+4=22 and 4+4+9=17 are correct. (Note: Actually 4+4+9=17 wouldn't form a valid triangle since 4+4=8<9. So only 22 works.)",
+              "tags": [
+                "perimeter"
+              ],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 5,
+          "isChallenge": true,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-3-4",
+          "chapterId": "chapter-3-3",
+          "worldId": "world-3",
+          "number": 4,
+          "name": "Find the Missing Side",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-3-4-1",
+              "levelId": "level-3-3-4",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "working_backwards",
+              "statement": "\"A square has perimeter 36 cm. What is the length of one side?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "9 cm",
+                "displayValue": "9 cm (36 ÷ 4 = 9)"
+              },
+              "hints": [],
+              "solutionExplanation": "9 cm (36 ÷ 4 = 9)",
+              "teachingPoint": "",
+              "tags": [
+                "perimeter"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-3-5",
+          "chapterId": "chapter-3-3",
+          "worldId": "world-3",
+          "number": 5,
+          "name": "What is Area?",
+          "type": "teaching",
+          "storyContext": "The mountain meadow is divided into unit squares.",
+          "problems": [
+            {
+              "id": "problem-level-3-3-5-1",
+              "levelId": "level-3-3-5",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"Count the unit squares that cover this rectangle: [3 × 4 grid shown]. What is the area?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "12 square units",
+                "displayValue": "12 square units"
+              },
+              "hints": [],
+              "solutionExplanation": "12 square units",
+              "teachingPoint": "",
+              "tags": [
+                "area"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-3-6",
+          "chapterId": "chapter-3-3",
+          "worldId": "world-3",
+          "number": 6,
+          "name": "Rectangle Area",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-3-6-1",
+              "levelId": "level-3-3-6",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"A cabin floor is 7 meters long and 5 meters wide. What is the area of the floor?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "35 square meters",
+                "displayValue": "35 square meters"
+              },
+              "hints": [],
+              "solutionExplanation": "35 square meters",
+              "teachingPoint": "Area of rectangle = length × width",
+              "tags": [
+                "area"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-3-7",
+          "chapterId": "chapter-3-3",
+          "worldId": "world-3",
+          "number": 7,
+          "name": "Area vs Perimeter",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-3-7-1",
+              "levelId": "level-3-3-7",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"A rectangle is 6 units by 3 units. Calculate BOTH its perimeter AND its area.\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": [
+                  "Perimeter = 18 units",
+                  "Area = 18 square units"
+                ],
+                "displayValue": "Perimeter = 18 units, Area = 18 square units"
+              },
+              "hints": [],
+              "solutionExplanation": "Perimeter = 18 units, Area = 18 square units",
+              "teachingPoint": "Different measurements can have the same number but different units!",
+              "tags": [
+                "perimeter",
+                "area"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-3-8",
+          "chapterId": "chapter-3-3",
+          "worldId": "world-3",
+          "number": 8,
+          "name": "Complex Area",
+          "type": "challenge",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-3-8-1",
+              "levelId": "level-3-3-8",
+              "sequence": 1,
+              "type": "ordering",
+              "category": "thinking",
+              "statement": "\"A rectangle with width 21 ft and height 16 ft is split into six congruent rectangles arranged in a 2×3 pattern. What is the area of one small rectangle?\"",
+              "inputType": "drag_drop",
+              "correctAnswer": {
+                "value": "56 sq ft",
+                "displayValue": "56 sq ft (Total area = 21 × 16 = 336, divided by 6 = 56)"
+              },
+              "hints": [],
+              "solutionExplanation": "56 sq ft (Total area = 21 × 16 = 336, divided by 6 = 56)",
+              "teachingPoint": "",
+              "tags": [
+                "area"
+              ],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 5,
+          "isChallenge": true,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-3-9",
+          "chapterId": "chapter-3-3",
+          "worldId": "world-3",
+          "number": 9,
+          "name": "Area Puzzle",
+          "type": "boss",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-3-9-1",
+              "levelId": "level-3-3-9",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"A rectangle has a perimeter of 20 units. The length and width are whole numbers. What dimensions give the LARGEST possible area?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "5 × 5 = 25 square units",
+                "displayValue": "5 × 5 = 25 square units (a square!)"
+              },
+              "hints": [],
+              "solutionExplanation": "5 × 5 = 25 square units (a square!)",
+              "teachingPoint": "",
+              "tags": [
+                "perimeter",
+                "area"
+              ],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 10,
+          "isChallenge": true,
+          "isBoss": true
+        }
+      ],
+      "learningObjectives": [
+        "Perimeter",
+        "Area"
+      ],
+      "signatureContent": [],
+      "isBoss": false,
+      "worldId": "world-3"
+    },
+    {
+      "id": "chapter-3-4",
+      "number": 4,
+      "name": "Multiplication Foundations",
+      "topic": "multiplication facts",
+      "weekStart": 10,
+      "weekEnd": 12,
+      "levels": [
+        {
+          "id": "level-3-4-1",
+          "chapterId": "chapter-3-4",
+          "worldId": "world-3",
+          "number": 1,
+          "name": "What is Multiplication?",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-4-1-1",
+              "levelId": "level-3-4-1",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"There are 4 tents at base camp. Each tent has 3 climbers. How many climbers in total? Write this as both addition and multiplication.\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": [
+                  "3 + 3 + 3 + 3 = 12",
+                  "or 4 × 3 = 12"
+                ],
+                "displayValue": "3 + 3 + 3 + 3 = 12, or 4 × 3 = 12"
+              },
+              "hints": [],
+              "solutionExplanation": "3 + 3 + 3 + 3 = 12, or 4 × 3 = 12",
+              "teachingPoint": "Multiplication is a shortcut for repeated addition.",
+              "tags": [
+                "multiplication"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-4-2",
+          "chapterId": "chapter-3-4",
+          "worldId": "world-3",
+          "number": 2,
+          "name": "Arrays",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-4-2-1",
+              "levelId": "level-3-4-2",
+              "sequence": 1,
+              "type": "ordering",
+              "category": "thinking",
+              "statement": "\"The supply crates are arranged in 5 rows with 6 crates in each row. How many crates total?\"",
+              "inputType": "drag_drop",
+              "correctAnswer": {
+                "value": 30,
+                "displayValue": "30"
+              },
+              "hints": [],
+              "solutionExplanation": "30",
+              "teachingPoint": "An array shows multiplication visually. Rows × columns = total.",
+              "tags": [
+                "multiplication"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-4-3",
+          "chapterId": "chapter-3-4",
+          "worldId": "world-3",
+          "number": 3,
+          "name": "Times Tables Practice",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-4-3-1",
+              "levelId": "level-3-4-3",
+              "sequence": 1,
+              "type": "fill_in_blank",
+              "category": "fluency",
+              "statement": "\"Solve: 7 × 8 = ___\"",
+              "inputType": "number_pad",
+              "correctAnswer": {
+                "value": 56,
+                "displayValue": "56"
+              },
+              "hints": [
+                {
+                  "tier": 1,
+                  "cost": 0,
+                  "text": "Think of 7 × 8 as (7 × 4) + (7 × 4) = 28 + 28",
+                  "type": "conceptual"
+                },
+                {
+                  "tier": 2,
+                  "cost": 1,
+                  "text": "Try breaking the problem into smaller steps.",
+                  "type": "directional"
+                },
+                {
+                  "tier": 3,
+                  "cost": 2,
+                  "text": "Look at the numbers involved and think about how they relate.",
+                  "type": "scaffolded"
+                }
+              ],
+              "solutionExplanation": "56",
+              "teachingPoint": "",
+              "tags": [
+                "multiplication"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-4-4",
+          "chapterId": "chapter-3-4",
+          "worldId": "world-3",
+          "number": 4,
+          "name": "The Commutative Property",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-4-4-1",
+              "levelId": "level-3-4-4",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"Is 6 × 4 the same as 4 × 6? Show why using arrays.\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": [
+                  "Yes",
+                  "both equal 24. A 6×4 array has the same number of squares as a 4×6 array."
+                ],
+                "displayValue": "Yes, both equal 24. A 6×4 array has the same number of squares as a 4×6 array."
+              },
+              "hints": [],
+              "solutionExplanation": "Yes, both equal 24. A 6×4 array has the same number of squares as a 4×6 array.",
+              "teachingPoint": "a × b = b × a (The Commutative Property)",
+              "tags": [
+                "multiplication"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-4-5",
+          "chapterId": "chapter-3-4",
+          "worldId": "world-3",
+          "number": 5,
+          "name": "Using Commutativity",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-4-5-1",
+              "levelId": "level-3-4-5",
+              "sequence": 1,
+              "type": "multiple_choice",
+              "category": "thinking",
+              "statement": "\"Which is easier to compute: 8 × 5 or 5 × 8? Explain why and solve.\"",
+              "inputType": "multiple_choice",
+              "correctAnswer": {
+                "value": "Both equal 40. Many find 5 × 8 easier because multiplying by 5 follows a simple pattern (ends in 0 or 5).",
+                "displayValue": "Both equal 40. Many find 5 × 8 easier because multiplying by 5 follows a simple pattern (ends in 0 or 5)."
+              },
+              "hints": [],
+              "solutionExplanation": "Both equal 40. Many find 5 × 8 easier because multiplying by 5 follows a simple pattern (ends in 0 or 5).",
+              "teachingPoint": "",
+              "tags": [],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-4-6",
+          "chapterId": "chapter-3-4",
+          "worldId": "world-3",
+          "number": 6,
+          "name": "The Associative Property",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-4-6-1",
+              "levelId": "level-3-4-6",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"Calculate (2 × 3) × 4 and 2 × (3 × 4). What do you notice?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": [
+                  "Both equal 24. (2 × 3) × 4 = 6 × 4 = 24",
+                  "",
+                  "2 × (3 × 4) = 2 × 12 = 24"
+                ],
+                "displayValue": "Both equal 24. (2 × 3) × 4 = 6 × 4 = 24, and 2 × (3 × 4) = 2 × 12 = 24"
+              },
+              "hints": [],
+              "solutionExplanation": "Both equal 24. (2 × 3) × 4 = 6 × 4 = 24, and 2 × (3 × 4) = 2 × 12 = 24",
+              "teachingPoint": "(a × b) × c = a × (b × c) (The Associative Property)",
+              "tags": [],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-4-7",
+          "chapterId": "chapter-3-4",
+          "worldId": "world-3",
+          "number": 7,
+          "name": "Strategic Grouping",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-4-7-1",
+              "levelId": "level-3-4-7",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"Calculate 5 × 7 × 2 by grouping the easy numbers first.\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "70. Group as 5 × 2 × 7 = 10 × 7 = 70",
+                "displayValue": "70. Group as 5 × 2 × 7 = 10 × 7 = 70"
+              },
+              "hints": [],
+              "solutionExplanation": "70. Group as 5 × 2 × 7 = 10 × 7 = 70",
+              "teachingPoint": "",
+              "tags": [],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-4-8",
+          "chapterId": "chapter-3-4",
+          "worldId": "world-3",
+          "number": 8,
+          "name": "Multiplication Puzzles",
+          "type": "challenge",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-4-8-1",
+              "levelId": "level-3-4-8",
+              "sequence": 1,
+              "type": "multi_select",
+              "category": "thinking",
+              "statement": "\"Fill in the blanks: ___ × ___ = 36, where both numbers are greater than 1 and less than 10. Find ALL solutions.\"",
+              "inputType": "checkbox_group",
+              "correctAnswer": {
+                "value": [
+                  "4 × 9",
+                  "6 × 6",
+                  "9 × 4"
+                ],
+                "displayValue": "4 × 9, 6 × 6, 9 × 4"
+              },
+              "hints": [],
+              "solutionExplanation": "4 × 9, 6 × 6, 9 × 4 (also 2 × 18 and 3 × 12, but those have numbers outside 1-10)",
+              "teachingPoint": "",
+              "tags": [
+                "multiplication"
+              ],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 5,
+          "isChallenge": true,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-4-9",
+          "chapterId": "chapter-3-4",
+          "worldId": "world-3",
+          "number": 9,
+          "name": "Three-Number Products",
+          "type": "challenge",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-4-9-1",
+              "levelId": "level-3-4-9",
+              "sequence": 1,
+              "type": "numeric_input",
+              "category": "thinking",
+              "statement": "\"What is 5 × 4 × 5?\"",
+              "inputType": "number_pad",
+              "correctAnswer": {
+                "value": 100,
+                "displayValue": "100"
+              },
+              "hints": [],
+              "solutionExplanation": "100",
+              "teachingPoint": "",
+              "tags": [
+                "multiplication"
+              ],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 5,
+          "isChallenge": true,
+          "isBoss": false
+        }
+      ],
+      "learningObjectives": [
+        "Multiplication Facts",
+        "Commutativity",
+        "Associativity"
+      ],
+      "signatureContent": [],
+      "isBoss": false,
+      "worldId": "world-3"
+    },
+    {
+      "id": "chapter-3-5",
+      "number": 5,
+      "name": "Perfect Squares",
+      "topic": "perfect squares",
+      "weekStart": 13,
+      "weekEnd": 14,
+      "levels": [
+        {
+          "id": "level-3-5-1",
+          "chapterId": "chapter-3-5",
+          "worldId": "world-3",
+          "number": 1,
+          "name": "What is a Square Number?",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-5-1-1",
+              "levelId": "level-3-5-1",
+              "sequence": 1,
+              "type": "numeric_input",
+              "category": "thinking",
+              "statement": "\"When you multiply a number by itself, you get a square number. What is 4 × 4?\"",
+              "inputType": "number_pad",
+              "correctAnswer": {
+                "value": 16,
+                "displayValue": "16"
+              },
+              "hints": [],
+              "solutionExplanation": "16",
+              "teachingPoint": "16 is a \"perfect square\" because 4 × 4 = 16. We write this as 4² = 16.",
+              "tags": [
+                "squares"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-5-2",
+          "chapterId": "chapter-3-5",
+          "worldId": "world-3",
+          "number": 2,
+          "name": "Square Arrays",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-5-2-1",
+              "levelId": "level-3-5-2",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"Draw an array that shows 5 × 5. What shape is it? How many total squares?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": [
+                  "25 total squares",
+                  "arranged in a square shape"
+                ],
+                "displayValue": "25 total squares, arranged in a square shape"
+              },
+              "hints": [],
+              "solutionExplanation": "25 total squares, arranged in a square shape (5 rows, 5 columns)",
+              "teachingPoint": "",
+              "tags": [
+                "squares"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-5-3",
+          "chapterId": "chapter-3-5",
+          "worldId": "world-3",
+          "number": 3,
+          "name": "First Ten Squares",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-5-3-1",
+              "levelId": "level-3-5-3",
+              "sequence": 1,
+              "type": "fill_in_blank",
+              "category": "thinking",
+              "statement": "\"Complete this list of perfect squares: 1² = 1, 2² = 4, 3² = 9, 4² = ___, 5² = ___\"",
+              "inputType": "number_pad",
+              "correctAnswer": {
+                "value": [
+                  "4² = 16",
+                  "5² = 25"
+                ],
+                "displayValue": "4² = 16, 5² = 25"
+              },
+              "hints": [],
+              "solutionExplanation": "4² = 16, 5² = 25",
+              "teachingPoint": "",
+              "tags": [
+                "squares"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-5-4",
+          "chapterId": "chapter-3-5",
+          "worldId": "world-3",
+          "number": 4,
+          "name": "Recognizing Squares",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-5-4-1",
+              "levelId": "level-3-5-4",
+              "sequence": 1,
+              "type": "multi_select",
+              "category": "thinking",
+              "statement": "\"Which of these numbers are perfect squares? 20, 25, 30, 36, 40, 49\"",
+              "inputType": "checkbox_group",
+              "correctAnswer": {
+                "value": 25,
+                "displayValue": "25"
+              },
+              "hints": [],
+              "solutionExplanation": "25 (5²), 36 (6²), 49 (7²)",
+              "teachingPoint": "",
+              "tags": [
+                "squares"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-5-5",
+          "chapterId": "chapter-3-5",
+          "worldId": "world-3",
+          "number": 5,
+          "name": "Square Patterns",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-5-5-1",
+              "levelId": "level-3-5-5",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "pattern_discovery",
+              "statement": "\"Look at the differences between consecutive squares: 4-1=3, 9-4=5, 16-9=7, 25-16=9. What's the pattern? What is 36-25?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "36-25 = 11. Pattern: differences are consecutive odd numbers",
+                "displayValue": "36-25 = 11. Pattern: differences are consecutive odd numbers (3, 5, 7, 9, 11...)"
+              },
+              "hints": [],
+              "solutionExplanation": "36-25 = 11. Pattern: differences are consecutive odd numbers (3, 5, 7, 9, 11...)",
+              "teachingPoint": "The difference between consecutive squares is always an odd number!",
+              "tags": [
+                "squares"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-5-6",
+          "chapterId": "chapter-3-5",
+          "worldId": "world-3",
+          "number": 6,
+          "name": "Building Squares",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-5-6-1",
+              "levelId": "level-3-5-6",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "pattern_discovery",
+              "statement": "\"If 7² = 49, use the odd number pattern to find 8².\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "8² = 49 + 15 = 64",
+                "displayValue": "8² = 49 + 15 = 64 (the next odd number after 13 is 15)"
+              },
+              "hints": [],
+              "solutionExplanation": "8² = 49 + 15 = 64 (the next odd number after 13 is 15)",
+              "teachingPoint": "",
+              "tags": [
+                "squares"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-5-7",
+          "chapterId": "chapter-3-5",
+          "worldId": "world-3",
+          "number": 7,
+          "name": "Area and Squares",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-5-7-1",
+              "levelId": "level-3-5-7",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"A square garden has sides of 9 feet. What is the area?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "81 square feet",
+                "displayValue": "81 square feet (9² = 81)"
+              },
+              "hints": [],
+              "solutionExplanation": "81 square feet (9² = 81)",
+              "teachingPoint": "",
+              "tags": [
+                "area",
+                "squares"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-5-8",
+          "chapterId": "chapter-3-5",
+          "worldId": "world-3",
+          "number": 8,
+          "name": "Sums of Squares",
+          "type": "challenge",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-5-8-1",
+              "levelId": "level-3-5-8",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "multiple_paths",
+              "statement": "\"What is 3² + 4²?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "9 + 16 = 25",
+                "displayValue": "9 + 16 = 25"
+              },
+              "hints": [],
+              "solutionExplanation": "9 + 16 = 25",
+              "teachingPoint": "",
+              "tags": [
+                "squares"
+              ],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 5,
+          "isChallenge": true,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-5-9",
+          "chapterId": "chapter-3-5",
+          "worldId": "world-3",
+          "number": 9,
+          "name": "Find the Square",
+          "type": "challenge",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-5-9-1",
+              "levelId": "level-3-5-9",
+              "sequence": 1,
+              "type": "numeric_input",
+              "category": "working_backwards",
+              "statement": "\"A number times itself equals 64. What is that number?\"",
+              "inputType": "number_pad",
+              "correctAnswer": {
+                "value": 8,
+                "displayValue": "8"
+              },
+              "hints": [],
+              "solutionExplanation": "8",
+              "teachingPoint": "",
+              "tags": [
+                "squares"
+              ],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 5,
+          "isChallenge": true,
+          "isBoss": false
+        }
+      ],
+      "learningObjectives": [
+        "Perfect Squares",
+        "Square Numbers",
+        "Patterns"
+      ],
+      "signatureContent": [],
+      "isBoss": false,
+      "worldId": "world-3"
+    },
+    {
+      "id": "chapter-3-6",
+      "number": 6,
+      "name": "Distributive Property & Order of Operations",
+      "topic": "order of operations",
+      "weekStart": 15,
+      "weekEnd": 17,
+      "levels": [
+        {
+          "id": "level-3-6-1",
+          "chapterId": "chapter-3-6",
+          "worldId": "world-3",
+          "number": 1,
+          "name": "Order of Operations Introduction",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-6-1-1",
+              "levelId": "level-3-6-1",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"Two climbers solve 3 + 4 × 2 differently. Alex gets 14, Bailey gets 11. Who is correct and why?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": [
+                  "Bailey is correct (11). Multiplication comes before addition: 4 × 2 = 8",
+                  "then 3 + 8 = 11."
+                ],
+                "displayValue": "Bailey is correct (11). Multiplication comes before addition: 4 × 2 = 8, then 3 + 8 = 11."
+              },
+              "hints": [],
+              "solutionExplanation": "Bailey is correct (11). Multiplication comes before addition: 4 × 2 = 8, then 3 + 8 = 11.",
+              "teachingPoint": "Order of Operations: Parentheses, Exponents, Multiplication/Division (left to right), Addition/Subtraction (left to right). \"PEMDAS\"",
+              "tags": [],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-6-2",
+          "chapterId": "chapter-3-6",
+          "worldId": "world-3",
+          "number": 2,
+          "name": "Parentheses First",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-6-2-1",
+              "levelId": "level-3-6-2",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"Calculate (3 + 4) × 2\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": [
+                  "14. Parentheses first: 3 + 4 = 7",
+                  "then 7 × 2 = 14."
+                ],
+                "displayValue": "14. Parentheses first: 3 + 4 = 7, then 7 × 2 = 14."
+              },
+              "hints": [],
+              "solutionExplanation": "14. Parentheses first: 3 + 4 = 7, then 7 × 2 = 14.",
+              "teachingPoint": "Parentheses are like saying \"do this first!\"",
+              "tags": [],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-6-3",
+          "chapterId": "chapter-3-6",
+          "worldId": "world-3",
+          "number": 3,
+          "name": "Practice Order of Operations",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-6-3-1",
+              "levelId": "level-3-6-3",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"Solve: 20 - 3 × 4 + 2\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": [
+                  "10. First 3×4=12",
+                  "then 20-12+2=10."
+                ],
+                "displayValue": "10. First 3×4=12, then 20-12+2=10."
+              },
+              "hints": [],
+              "solutionExplanation": "10. First 3×4=12, then 20-12+2=10.",
+              "teachingPoint": "",
+              "tags": [
+                "order-of-operations"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-6-4",
+          "chapterId": "chapter-3-6",
+          "worldId": "world-3",
+          "number": 4,
+          "name": "Area Model Introduction",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-6-4-1",
+              "levelId": "level-3-6-4",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"To find 7 × 12, break 12 into 10 + 2. Draw an area model and solve.\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "7 × 12 = 7 × (10 + 2) = 7×10 + 7×2 = 70 + 14 = 84",
+                "displayValue": "7 × 12 = 7 × (10 + 2) = 7×10 + 7×2 = 70 + 14 = 84"
+              },
+              "hints": [],
+              "solutionExplanation": "7 × 12 = 7 × (10 + 2) = 7×10 + 7×2 = 70 + 14 = 84",
+              "teachingPoint": "",
+              "tags": [
+                "multiplication"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-6-5",
+          "chapterId": "chapter-3-6",
+          "worldId": "world-3",
+          "number": 5,
+          "name": "The Distributive Property",
+          "type": "teaching",
+          "storyContext": "\"The ancient Distributive Property lets you 'distribute' multiplication across addition!\"",
+          "problems": [
+            {
+              "id": "problem-level-3-6-5-1",
+              "levelId": "level-3-6-5",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"Use the distributive property to calculate 6 × 15 by breaking 15 into 10 + 5.\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "6 × 15 = 6 × (10 + 5) = 6×10 + 6×5 = 60 + 30 = 90",
+                "displayValue": "6 × 15 = 6 × (10 + 5) = 6×10 + 6×5 = 60 + 30 = 90"
+              },
+              "hints": [],
+              "solutionExplanation": "6 × 15 = 6 × (10 + 5) = 6×10 + 6×5 = 60 + 30 = 90",
+              "teachingPoint": "a × (b + c) = (a × b) + (a × c)",
+              "tags": [],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-6-6",
+          "chapterId": "chapter-3-6",
+          "worldId": "world-3",
+          "number": 6,
+          "name": "Breaking Apart Factors",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-6-6-1",
+              "levelId": "level-3-6-6",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "strategic_practice",
+              "statement": "\"Calculate 8 × 99 using the distributive property.\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "8 × 99 = 8 × (100 - 1) = 800 - 8 = 792",
+                "displayValue": "8 × 99 = 8 × (100 - 1) = 800 - 8 = 792"
+              },
+              "hints": [
+                {
+                  "tier": 1,
+                  "cost": 0,
+                  "text": "What's easier: 8 × 99 or 8 × 100 minus something?",
+                  "type": "conceptual"
+                },
+                {
+                  "tier": 2,
+                  "cost": 1,
+                  "text": "Try breaking the problem into smaller steps.",
+                  "type": "directional"
+                },
+                {
+                  "tier": 3,
+                  "cost": 2,
+                  "text": "Look at the numbers involved and think about how they relate.",
+                  "type": "scaffolded"
+                }
+              ],
+              "solutionExplanation": "8 × 99 = 8 × (100 - 1) = 800 - 8 = 792",
+              "teachingPoint": "",
+              "tags": [
+                "distributive-property"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-6-7",
+          "chapterId": "chapter-3-6",
+          "worldId": "world-3",
+          "number": 7,
+          "name": "Area Model Puzzles",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-6-7-1",
+              "levelId": "level-3-6-7",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"An area model shows a rectangle split into two parts: 5 × 20 and 5 × 3. What single multiplication does this represent?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "5 × 23 = 115",
+                "displayValue": "5 × 23 = 115"
+              },
+              "hints": [],
+              "solutionExplanation": "5 × 23 = 115",
+              "teachingPoint": "",
+              "tags": [
+                "area"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-6-8",
+          "chapterId": "chapter-3-6",
+          "worldId": "world-3",
+          "number": 8,
+          "name": "Complex Expressions",
+          "type": "challenge",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-6-8-1",
+              "levelId": "level-3-6-8",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"Solve: 4 × (10 - 3) + 5²\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "4 × 7 + 25 = 28 + 25 = 53",
+                "displayValue": "4 × 7 + 25 = 28 + 25 = 53"
+              },
+              "hints": [],
+              "solutionExplanation": "4 × 7 + 25 = 28 + 25 = 53",
+              "teachingPoint": "",
+              "tags": [
+                "order-of-operations"
+              ],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 5,
+          "isChallenge": true,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-6-9",
+          "chapterId": "chapter-3-6",
+          "worldId": "world-3",
+          "number": 9,
+          "name": "Distribution Puzzle",
+          "type": "challenge",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-6-9-1",
+              "levelId": "level-3-6-9",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"Find the value of 25 × 17 + 25 × 3 without multiplying directly.\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "25 × (17 + 3) = 25 × 20 = 500",
+                "displayValue": "25 × (17 + 3) = 25 × 20 = 500"
+              },
+              "hints": [],
+              "solutionExplanation": "25 × (17 + 3) = 25 × 20 = 500",
+              "teachingPoint": "The distributive property works in reverse too! (Factoring)",
+              "tags": [
+                "distributive-property"
+              ],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 5,
+          "isChallenge": true,
+          "isBoss": false
+        }
+      ],
+      "learningObjectives": [
+        "Order of Operations",
+        "Area Model",
+        "Distributive Property"
+      ],
+      "signatureContent": [],
+      "isBoss": false,
+      "worldId": "world-3"
+    },
+    {
+      "id": "chapter-3-7",
+      "number": 7,
+      "name": "Variables & Equations",
+      "topic": "variables",
+      "weekStart": 19,
+      "weekEnd": 21,
+      "levels": [
+        {
+          "id": "level-3-7-1",
+          "chapterId": "chapter-3-7",
+          "worldId": "world-3",
+          "number": 1,
+          "name": "What is a Variable?",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-7-1-1",
+              "levelId": "level-3-7-1",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"There are some apples in a basket. We don't know how many, so we call the number 'n'. If someone adds 5 more apples, how many apples are there now?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "n + 5",
+                "displayValue": "n + 5"
+              },
+              "hints": [],
+              "solutionExplanation": "n + 5",
+              "teachingPoint": "A variable is a letter that represents an unknown number.",
+              "tags": [
+                "variables"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-7-2",
+          "chapterId": "chapter-3-7",
+          "worldId": "world-3",
+          "number": 2,
+          "name": "Expressions with Variables",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-7-2-1",
+              "levelId": "level-3-7-2",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"Write an expression: 'A number x, multiplied by 3'\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "3x or x × 3",
+                "displayValue": "3x or x × 3"
+              },
+              "hints": [],
+              "solutionExplanation": "3x or x × 3",
+              "teachingPoint": "",
+              "tags": [],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-7-3",
+          "chapterId": "chapter-3-7",
+          "worldId": "world-3",
+          "number": 3,
+          "name": "Evaluating Expressions",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-7-3-1",
+              "levelId": "level-3-7-3",
+              "sequence": 1,
+              "type": "numeric_input",
+              "category": "thinking",
+              "statement": "\"If n = 7, what is n + 12?\"",
+              "inputType": "number_pad",
+              "correctAnswer": {
+                "value": 19,
+                "displayValue": "19"
+              },
+              "hints": [],
+              "solutionExplanation": "19",
+              "teachingPoint": "",
+              "tags": [],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-7-4",
+          "chapterId": "chapter-3-7",
+          "worldId": "world-3",
+          "number": 4,
+          "name": "Writing Equations",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-7-4-1",
+              "levelId": "level-3-7-4",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"Write an equation: 'A number y plus 8 equals 15'\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "y + 8 = 15",
+                "displayValue": "y + 8 = 15"
+              },
+              "hints": [],
+              "solutionExplanation": "y + 8 = 15",
+              "teachingPoint": "An equation uses '=' to show two things are equal.",
+              "tags": [
+                "equations"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-7-5",
+          "chapterId": "chapter-3-7",
+          "worldId": "world-3",
+          "number": 5,
+          "name": "Solving by Guess and Check",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-7-5-1",
+              "levelId": "level-3-7-5",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"What value of x makes this true? x + 6 = 14\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "x = 8",
+                "displayValue": "x = 8"
+              },
+              "hints": [],
+              "solutionExplanation": "x = 8",
+              "teachingPoint": "",
+              "tags": [
+                "equations"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-7-6",
+          "chapterId": "chapter-3-7",
+          "worldId": "world-3",
+          "number": 6,
+          "name": "Inverse Operations",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-7-6-1",
+              "levelId": "level-3-7-6",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"To solve n - 5 = 12, what operation undoes subtraction? Solve for n.\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "Addition undoes subtraction. n = 12 + 5 = 17",
+                "displayValue": "Addition undoes subtraction. n = 12 + 5 = 17"
+              },
+              "hints": [],
+              "solutionExplanation": "Addition undoes subtraction. n = 12 + 5 = 17",
+              "teachingPoint": "Addition and subtraction are inverse operations. So are multiplication and division.",
+              "tags": [],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-7-7",
+          "chapterId": "chapter-3-7",
+          "worldId": "world-3",
+          "number": 7,
+          "name": "Multiplication Equations",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-7-7-1",
+              "levelId": "level-3-7-7",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"If ▲ + ▲ + ▲ = 24, what is ▲?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "▲ = 8",
+                "displayValue": "▲ = 8 (because 3 × ▲ = 24, so ▲ = 24 ÷ 3 = 8)"
+              },
+              "hints": [],
+              "solutionExplanation": "▲ = 8 (because 3 × ▲ = 24, so ▲ = 24 ÷ 3 = 8)",
+              "teachingPoint": "",
+              "tags": [
+                "multiplication",
+                "equations"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-7-8",
+          "chapterId": "chapter-3-7",
+          "worldId": "world-3",
+          "number": 8,
+          "name": "Two-Step Equations",
+          "type": "challenge",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-7-8-1",
+              "levelId": "level-3-7-8",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "multiple_paths",
+              "statement": "\"Solve: 2 × m + 4 = 20\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "m = 8",
+                "displayValue": "m = 8"
+              },
+              "hints": [],
+              "solutionExplanation": "2m + 4 = 20 → 2m = 16 → m = 8",
+              "teachingPoint": "",
+              "tags": [
+                "equations"
+              ],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 5,
+          "isChallenge": true,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-7-9",
+          "chapterId": "chapter-3-7",
+          "worldId": "world-3",
+          "number": 9,
+          "name": "Equation Word Problem",
+          "type": "challenge",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-7-9-1",
+              "levelId": "level-3-7-9",
+              "sequence": 1,
+              "type": "numeric_input",
+              "category": "thinking",
+              "statement": "\"I think of a number, multiply it by 5, then subtract 3. The result is 22. What was my number?\"",
+              "inputType": "number_pad",
+              "correctAnswer": {
+                "value": 5,
+                "displayValue": "5"
+              },
+              "hints": [],
+              "solutionExplanation": "5 (5 × 5 - 3 = 22)",
+              "teachingPoint": "",
+              "tags": [
+                "equations"
+              ],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 5,
+          "isChallenge": true,
+          "isBoss": false
+        }
+      ],
+      "learningObjectives": [
+        "Variables",
+        "Writing Equations",
+        "Solving Equations"
+      ],
+      "signatureContent": [],
+      "isBoss": false,
+      "worldId": "world-3"
+    },
+    {
+      "id": "chapter-3-8",
+      "number": 8,
+      "name": "Division Basics",
+      "topic": "division",
+      "weekStart": 22,
+      "weekEnd": 24,
+      "levels": [
+        {
+          "id": "level-3-8-1",
+          "chapterId": "chapter-3-8",
+          "worldId": "world-3",
+          "number": 1,
+          "name": "What is Division?",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-8-1-1",
+              "levelId": "level-3-8-1",
+              "sequence": 1,
+              "type": "numeric_input",
+              "category": "thinking",
+              "statement": "\"24 hikers need to split into 4 equal groups. How many hikers in each group?\"",
+              "inputType": "number_pad",
+              "correctAnswer": {
+                "value": 6,
+                "displayValue": "6"
+              },
+              "hints": [],
+              "solutionExplanation": "6",
+              "teachingPoint": "Division answers \"How many in each group?\" or \"How many groups?\"",
+              "tags": [
+                "division"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-8-2",
+          "chapterId": "chapter-3-8",
+          "worldId": "world-3",
+          "number": 2,
+          "name": "Division as Reverse Multiplication",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-8-2-1",
+              "levelId": "level-3-8-2",
+              "sequence": 1,
+              "type": "numeric_input",
+              "category": "thinking",
+              "statement": "\"If 7 × 8 = 56, what is 56 ÷ 8?\"",
+              "inputType": "number_pad",
+              "correctAnswer": {
+                "value": 7,
+                "displayValue": "7"
+              },
+              "hints": [],
+              "solutionExplanation": "7",
+              "teachingPoint": "Division undoes multiplication. If a × b = c, then c ÷ b = a.",
+              "tags": [],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-8-3",
+          "chapterId": "chapter-3-8",
+          "worldId": "world-3",
+          "number": 3,
+          "name": "Division Facts",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-8-3-1",
+              "levelId": "level-3-8-3",
+              "sequence": 1,
+              "type": "fill_in_blank",
+              "category": "fluency",
+              "statement": "\"Solve: 63 ÷ 9 = ___\"",
+              "inputType": "number_pad",
+              "correctAnswer": {
+                "value": 7,
+                "displayValue": "7"
+              },
+              "hints": [],
+              "solutionExplanation": "7",
+              "teachingPoint": "",
+              "tags": [
+                "division"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-8-4",
+          "chapterId": "chapter-3-8",
+          "worldId": "world-3",
+          "number": 4,
+          "name": "Division with Arrays",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-8-4-1",
+              "levelId": "level-3-8-4",
+              "sequence": 1,
+              "type": "ordering",
+              "category": "thinking",
+              "statement": "\"45 dots are arranged in 5 equal rows. How many dots in each row? Write this as a division.\"",
+              "inputType": "drag_drop",
+              "correctAnswer": {
+                "value": "9 dots per row. 45 ÷ 5 = 9",
+                "displayValue": "9 dots per row. 45 ÷ 5 = 9"
+              },
+              "hints": [],
+              "solutionExplanation": "9 dots per row. 45 ÷ 5 = 9",
+              "teachingPoint": "",
+              "tags": [
+                "division"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-8-5",
+          "chapterId": "chapter-3-8",
+          "worldId": "world-3",
+          "number": 5,
+          "name": "What are Remainders?",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-8-5-1",
+              "levelId": "level-3-8-5",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"14 hikers want to form groups of 3. How many complete groups? How many hikers are left over?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "4 groups with 2 left over",
+                "displayValue": "4 groups with 2 left over (14 ÷ 3 = 4 R2)"
+              },
+              "hints": [],
+              "solutionExplanation": "4 groups with 2 left over (14 ÷ 3 = 4 R2)",
+              "teachingPoint": "The leftover is called the \"remainder.\" We write 14 ÷ 3 = 4 R2.",
+              "tags": [
+                "division"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-8-6",
+          "chapterId": "chapter-3-8",
+          "worldId": "world-3",
+          "number": 6,
+          "name": "Finding Remainders",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-8-6-1",
+              "levelId": "level-3-8-6",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"What is 23 ÷ 5?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "4 R3",
+                "displayValue": "4 R3"
+              },
+              "hints": [],
+              "solutionExplanation": "4 R3 (because 5 × 4 = 20, and 23 - 20 = 3)",
+              "teachingPoint": "",
+              "tags": [
+                "remainders"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-8-7",
+          "chapterId": "chapter-3-8",
+          "worldId": "world-3",
+          "number": 7,
+          "name": "Remainder Patterns",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-8-7-1",
+              "levelId": "level-3-8-7",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"When dividing by 6, what are all the possible remainders?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": [
+                  "0",
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ],
+                "displayValue": "0, 1, 2, 3, 4, 5"
+              },
+              "hints": [],
+              "solutionExplanation": "0, 1, 2, 3, 4, 5 (remainder is always less than the divisor)",
+              "teachingPoint": "",
+              "tags": [
+                "remainders"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-8-8",
+          "chapterId": "chapter-3-8",
+          "worldId": "world-3",
+          "number": 8,
+          "name": "Remainder Word Problem",
+          "type": "challenge",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-8-8-1",
+              "levelId": "level-3-8-8",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"A baker has 50 cookies. She puts 8 cookies in each box. How many full boxes can she make? How many cookies are left over?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": [
+                  "6 full boxes",
+                  "2 cookies left over"
+                ],
+                "displayValue": "6 full boxes, 2 cookies left over"
+              },
+              "hints": [],
+              "solutionExplanation": "6 full boxes, 2 cookies left over (50 ÷ 8 = 6 R2)",
+              "teachingPoint": "",
+              "tags": [
+                "remainders"
+              ],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 5,
+          "isChallenge": true,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-8-9",
+          "chapterId": "chapter-3-8",
+          "worldId": "world-3",
+          "number": 9,
+          "name": "Chicken McNugget Problem",
+          "type": "challenge",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-8-9-1",
+              "levelId": "level-3-8-9",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "impossibility",
+              "statement": "\"Fubert has only 3-gram and 7-gram weights. What is the largest weight that he CANNOT make by combining two or more of these weights?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "11 grams",
+                "displayValue": "11 grams"
+              },
+              "hints": [],
+              "solutionExplanation": "Can make: 3, 6, 7, 9, 10, 12, 13, 14... Cannot make: 1, 2, 4, 5, 8, 11. Largest is 11.",
+              "teachingPoint": "",
+              "tags": [],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 5,
+          "isChallenge": true,
+          "isBoss": false
+        }
+      ],
+      "learningObjectives": [
+        "Division",
+        "Remainders"
+      ],
+      "signatureContent": [],
+      "isBoss": false,
+      "worldId": "world-3"
+    },
+    {
+      "id": "chapter-3-9",
+      "number": 9,
+      "name": "Units & Measurement",
+      "topic": "units of measurement",
+      "weekStart": 25,
+      "weekEnd": 27,
+      "levels": [
+        {
+          "id": "level-3-9-1",
+          "chapterId": "chapter-3-9",
+          "worldId": "world-3",
+          "number": 1,
+          "name": "Units of Length",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-9-1-1",
+              "levelId": "level-3-9-1",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"How many inches are in 1 foot? How many feet are in 1 yard?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": [
+                  "12 inches = 1 foot",
+                  "3 feet = 1 yard"
+                ],
+                "displayValue": "12 inches = 1 foot, 3 feet = 1 yard"
+              },
+              "hints": [],
+              "solutionExplanation": "12 inches = 1 foot, 3 feet = 1 yard",
+              "teachingPoint": "",
+              "tags": [],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-9-2",
+          "chapterId": "chapter-3-9",
+          "worldId": "world-3",
+          "number": 2,
+          "name": "Converting Units",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-9-2-1",
+              "levelId": "level-3-9-2",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"Convert 36 inches to feet.\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "3 feet",
+                "displayValue": "3 feet (36 ÷ 12 = 3)"
+              },
+              "hints": [],
+              "solutionExplanation": "3 feet (36 ÷ 12 = 3)",
+              "teachingPoint": "",
+              "tags": [],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-9-3",
+          "chapterId": "chapter-3-9",
+          "worldId": "world-3",
+          "number": 3,
+          "name": "Metric Units",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-9-3-1",
+              "levelId": "level-3-9-3",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"How many centimeters are in 1 meter? How many meters in 1 kilometer?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": [
+                  "100 cm = 1 m",
+                  "1000 m = 1 km"
+                ],
+                "displayValue": "100 cm = 1 m, 1000 m = 1 km"
+              },
+              "hints": [],
+              "solutionExplanation": "100 cm = 1 m, 1000 m = 1 km",
+              "teachingPoint": "",
+              "tags": [],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-9-4",
+          "chapterId": "chapter-3-9",
+          "worldId": "world-3",
+          "number": 4,
+          "name": "Metric Conversions",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-9-4-1",
+              "levelId": "level-3-9-4",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"Convert 250 centimeters to meters.\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "2.5 meters",
+                "displayValue": "2.5 meters (or 2 m 50 cm)"
+              },
+              "hints": [],
+              "solutionExplanation": "2.5 meters (or 2 m 50 cm)",
+              "teachingPoint": "",
+              "tags": [],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-9-5",
+          "chapterId": "chapter-3-9",
+          "worldId": "world-3",
+          "number": 5,
+          "name": "Weight/Mass Units",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-9-5-1",
+              "levelId": "level-3-9-5",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"A climbing rope weighs 2 kilograms. How many grams is that?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "2000 grams",
+                "displayValue": "2000 grams"
+              },
+              "hints": [],
+              "solutionExplanation": "2000 grams",
+              "teachingPoint": "",
+              "tags": [],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-9-6",
+          "chapterId": "chapter-3-9",
+          "worldId": "world-3",
+          "number": 6,
+          "name": "Time Units",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-9-6-1",
+              "levelId": "level-3-9-6",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"A hike takes 3 hours and 45 minutes. How many minutes total?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "225 minutes",
+                "displayValue": "225 minutes (3 × 60 + 45)"
+              },
+              "hints": [],
+              "solutionExplanation": "225 minutes (3 × 60 + 45)",
+              "teachingPoint": "",
+              "tags": [],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-9-7",
+          "chapterId": "chapter-3-9",
+          "worldId": "world-3",
+          "number": 7,
+          "name": "Coin Problem",
+          "type": "challenge",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-9-7-1",
+              "levelId": "level-3-9-7",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"Max has 7 US coins that are worth a total of 48 cents. How many nickels does he have?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "2 nickels",
+                "displayValue": "2 nickels"
+              },
+              "hints": [],
+              "solutionExplanation": "1 quarter (25¢) + 1 dime (10¢) + 2 nickels (10¢) + 3 pennies (3¢) = 48¢ with 7 coins.",
+              "teachingPoint": "",
+              "tags": [],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 5,
+          "isChallenge": true,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-9-8",
+          "chapterId": "chapter-3-9",
+          "worldId": "world-3",
+          "number": 8,
+          "name": "Challenge Review",
+          "type": "challenge",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-9-8-1",
+              "levelId": "level-3-9-8",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"A square has the same perimeter as a rectangle that is 10 units long and 6 units wide. What is the area of the square?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "64 square units",
+                "displayValue": "64 square units"
+              },
+              "hints": [],
+              "solutionExplanation": "Rectangle perimeter = 2(10+6) = 32. Square with perimeter 32 has sides of 8. Area = 64.",
+              "teachingPoint": "",
+              "tags": [],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 5,
+          "isChallenge": true,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-9-9",
+          "chapterId": "chapter-3-9",
+          "worldId": "world-3",
+          "number": 9,
+          "name": "Variable Valley Challenge",
+          "type": "challenge",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-9-9-1",
+              "levelId": "level-3-9-9",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"If n ÷ 7 has a remainder of 3, and n is between 30 and 40, what is n?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "31 or 38",
+                "displayValue": "31 or 38 (7×4+3=31, 7×5+3=38)"
+              },
+              "hints": [],
+              "solutionExplanation": "31 or 38 (7×4+3=31, 7×5+3=38)",
+              "teachingPoint": "",
+              "tags": [],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 5,
+          "isChallenge": true,
+          "isBoss": false
+        }
+      ],
+      "learningObjectives": [
+        "Units of Measurement",
+        "Challenging Problems"
+      ],
+      "signatureContent": [],
+      "isBoss": false,
+      "worldId": "world-3"
+    },
+    {
+      "id": "chapter-3-10",
+      "number": 10,
+      "name": "Introduction to Fractions",
+      "topic": "unit fractions",
+      "weekStart": 28,
+      "weekEnd": 31,
+      "levels": [
+        {
+          "id": "level-3-10-1",
+          "chapterId": "chapter-3-10",
+          "worldId": "world-3",
+          "number": 1,
+          "name": "What is a Fraction?",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-10-1-1",
+              "levelId": "level-3-10-1",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"A pizza is cut into 8 equal slices. You eat 3 slices. What fraction of the pizza did you eat?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "3/8",
+                "displayValue": "3/8"
+              },
+              "hints": [],
+              "solutionExplanation": "3/8",
+              "teachingPoint": "A fraction has a numerator (parts you have) and denominator (total equal parts).",
+              "tags": [
+                "fractions"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-10-2",
+          "chapterId": "chapter-3-10",
+          "worldId": "world-3",
+          "number": 2,
+          "name": "Unit Fractions",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-10-2-1",
+              "levelId": "level-3-10-2",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"What is the unit fraction for 'one out of five equal parts'?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "1/5",
+                "displayValue": "1/5"
+              },
+              "hints": [],
+              "solutionExplanation": "1/5",
+              "teachingPoint": "Unit fractions have 1 as the numerator: 1/2, 1/3, 1/4, 1/5...",
+              "tags": [
+                "fractions"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-10-3",
+          "chapterId": "chapter-3-10",
+          "worldId": "world-3",
+          "number": 3,
+          "name": "Reading Fractions",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-10-3-1",
+              "levelId": "level-3-10-3",
+              "sequence": 1,
+              "type": "multiple_choice",
+              "category": "thinking",
+              "statement": "\"A rectangle is divided into 6 equal parts. 4 parts are shaded. What fraction is shaded?\"",
+              "inputType": "multiple_choice",
+              "correctAnswer": {
+                "value": "4/6",
+                "displayValue": "4/6"
+              },
+              "hints": [],
+              "solutionExplanation": "4/6",
+              "teachingPoint": "",
+              "tags": [
+                "fractions"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-10-4",
+          "chapterId": "chapter-3-10",
+          "worldId": "world-3",
+          "number": 4,
+          "name": "Whole-Number Fractions",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-10-4-1",
+              "levelId": "level-3-10-4",
+              "sequence": 1,
+              "type": "numeric_input",
+              "category": "thinking",
+              "statement": "\"What whole number equals 12/4?\"",
+              "inputType": "number_pad",
+              "correctAnswer": {
+                "value": 3,
+                "displayValue": "3"
+              },
+              "hints": [],
+              "solutionExplanation": "3 (because 12 ÷ 4 = 3)",
+              "teachingPoint": "When the numerator is a multiple of the denominator, the fraction equals a whole number.",
+              "tags": [
+                "fractions"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-10-5",
+          "chapterId": "chapter-3-10",
+          "worldId": "world-3",
+          "number": 5,
+          "name": "Fractions Greater Than 1",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-10-5-1",
+              "levelId": "level-3-10-5",
+              "sequence": 1,
+              "type": "multiple_choice",
+              "category": "thinking",
+              "statement": "\"You have 7/4 of a pizza. Is this more or less than 1 whole pizza? How much more?\"",
+              "inputType": "multiple_choice",
+              "correctAnswer": {
+                "value": [
+                  "More than 1. It equals 1",
+                  "3/4 pizzas (or 1¾)."
+                ],
+                "displayValue": "More than 1. It equals 1 and 3/4 pizzas (or 1¾)."
+              },
+              "hints": [],
+              "solutionExplanation": "More than 1. It equals 1 and 3/4 pizzas (or 1¾).",
+              "teachingPoint": "",
+              "tags": [
+                "fractions"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-10-6",
+          "chapterId": "chapter-3-10",
+          "worldId": "world-3",
+          "number": 6,
+          "name": "Mixed Numbers",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-10-6-1",
+              "levelId": "level-3-10-6",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"Write 11/3 as a mixed number.\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "3⅔",
+                "displayValue": "3⅔ (because 11 ÷ 3 = 3 R2)"
+              },
+              "hints": [],
+              "solutionExplanation": "3⅔ (because 11 ÷ 3 = 3 R2)",
+              "teachingPoint": "",
+              "tags": [
+                "fractions"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-10-7",
+          "chapterId": "chapter-3-10",
+          "worldId": "world-3",
+          "number": 7,
+          "name": "Fractions on a Number Line",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-10-7-1",
+              "levelId": "level-3-10-7",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"Place 3/4 on a number line from 0 to 1. Is it closer to 0 or to 1?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "Closer to 1",
+                "displayValue": "Closer to 1 (3/4 = 0.75)"
+              },
+              "hints": [],
+              "solutionExplanation": "Closer to 1 (3/4 = 0.75)",
+              "teachingPoint": "",
+              "tags": [
+                "fractions"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-10-8",
+          "chapterId": "chapter-3-10",
+          "worldId": "world-3",
+          "number": 8,
+          "name": "Comparing Unit Fractions",
+          "type": "challenge",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-10-8-1",
+              "levelId": "level-3-10-8",
+              "sequence": 1,
+              "type": "multiple_choice",
+              "category": "thinking",
+              "statement": "\"Which is larger: 1/3 or 1/5? Explain why.\"",
+              "inputType": "multiple_choice",
+              "correctAnswer": {
+                "value": "1/3 is larger",
+                "displayValue": "1/3 is larger"
+              },
+              "hints": [],
+              "solutionExplanation": "1/3 is larger",
+              "teachingPoint": "With unit fractions, the SMALLER denominator means LARGER pieces!",
+              "tags": [],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 5,
+          "isChallenge": true,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-10-9",
+          "chapterId": "chapter-3-10",
+          "worldId": "world-3",
+          "number": 9,
+          "name": "Comparing Fractions",
+          "type": "challenge",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-10-9-1",
+              "levelId": "level-3-10-9",
+              "sequence": 1,
+              "type": "ordering",
+              "category": "thinking",
+              "statement": "\"Put in order from smallest to largest: 2/5, 2/3, 2/7\"",
+              "inputType": "drag_drop",
+              "correctAnswer": {
+                "value": [
+                  "2/7",
+                  "2/5",
+                  "2/3"
+                ],
+                "displayValue": "2/7, 2/5, 2/3"
+              },
+              "hints": [],
+              "solutionExplanation": "2/7, 2/5, 2/3",
+              "teachingPoint": "",
+              "tags": [],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 5,
+          "isChallenge": true,
+          "isBoss": false
+        }
+      ],
+      "learningObjectives": [
+        "Unit Fractions",
+        "Types of Fractions",
+        "Parts of a Whole",
+        "Comparing"
+      ],
+      "signatureContent": [],
+      "isBoss": false,
+      "worldId": "world-3"
+    },
+    {
+      "id": "chapter-3-11",
+      "number": 11,
+      "name": "Estimation & Rounding",
+      "topic": "estimation",
+      "weekStart": 32,
+      "weekEnd": 33,
+      "levels": [
+        {
+          "id": "level-3-11-1",
+          "chapterId": "chapter-3-11",
+          "worldId": "world-3",
+          "number": 1,
+          "name": "What is Estimation?",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-11-1-1",
+              "levelId": "level-3-11-1",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"About how many days are in 3 months? (Don't calculate exactly!)\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "About 90 days",
+                "displayValue": "About 90 days (roughly 30 days per month)"
+              },
+              "hints": [],
+              "solutionExplanation": "About 90 days (roughly 30 days per month)",
+              "teachingPoint": "Estimation gives a quick, reasonable answer without exact calculation.",
+              "tags": [],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-11-2",
+          "chapterId": "chapter-3-11",
+          "worldId": "world-3",
+          "number": 2,
+          "name": "Rounding to Nearest 10",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-11-2-1",
+              "levelId": "level-3-11-2",
+              "sequence": 1,
+              "type": "numeric_input",
+              "category": "thinking",
+              "statement": "\"Round 47 to the nearest 10.\"",
+              "inputType": "number_pad",
+              "correctAnswer": {
+                "value": 50,
+                "displayValue": "50"
+              },
+              "hints": [],
+              "solutionExplanation": "50",
+              "teachingPoint": "Look at the ones digit. 5 or more rounds up, 4 or less rounds down.",
+              "tags": [
+                "estimation"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-11-3",
+          "chapterId": "chapter-3-11",
+          "worldId": "world-3",
+          "number": 3,
+          "name": "Rounding to Nearest 100",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-11-3-1",
+              "levelId": "level-3-11-3",
+              "sequence": 1,
+              "type": "numeric_input",
+              "category": "thinking",
+              "statement": "\"Round 849 to the nearest hundred.\"",
+              "inputType": "number_pad",
+              "correctAnswer": {
+                "value": 800,
+                "displayValue": "800"
+              },
+              "hints": [],
+              "solutionExplanation": "800 (the tens digit is 4, so round down)",
+              "teachingPoint": "",
+              "tags": [
+                "estimation"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-11-4",
+          "chapterId": "chapter-3-11",
+          "worldId": "world-3",
+          "number": 4,
+          "name": "Estimating Sums",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-11-4-1",
+              "levelId": "level-3-11-4",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"Estimate 389 + 512 by rounding each number to the nearest hundred first.\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "400 + 500 = 900",
+                "displayValue": "400 + 500 = 900 (actual answer is 901)"
+              },
+              "hints": [],
+              "solutionExplanation": "400 + 500 = 900 (actual answer is 901)",
+              "teachingPoint": "",
+              "tags": [
+                "estimation"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-11-5",
+          "chapterId": "chapter-3-11",
+          "worldId": "world-3",
+          "number": 5,
+          "name": "Estimating Products",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-11-5-1",
+              "levelId": "level-3-11-5",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"Estimate 29 × 41 by rounding.\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": [
+                  "30 × 40 = 1",
+                  "200"
+                ],
+                "displayValue": "30 × 40 = 1,200"
+              },
+              "hints": [],
+              "solutionExplanation": "30 × 40 = 1,200 (actual is 1,189)",
+              "teachingPoint": "",
+              "tags": [
+                "multiplication",
+                "estimation"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-11-6",
+          "chapterId": "chapter-3-11",
+          "worldId": "world-3",
+          "number": 6,
+          "name": "Estimating Quotients",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-11-6-1",
+              "levelId": "level-3-11-6",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"Estimate 247 ÷ 5 without dividing exactly.\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "About 50",
+                "displayValue": "About 50 (250 ÷ 5 = 50)"
+              },
+              "hints": [],
+              "solutionExplanation": "About 50 (250 ÷ 5 = 50)",
+              "teachingPoint": "Round the dividend to a number that divides evenly.",
+              "tags": [
+                "division",
+                "estimation"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-11-7",
+          "chapterId": "chapter-3-11",
+          "worldId": "world-3",
+          "number": 7,
+          "name": "Is My Answer Reasonable?",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-11-7-1",
+              "levelId": "level-3-11-7",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"A student calculated 58 × 7 = 486. Is this reasonable? Estimate to check.\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": [
+                  "Not reasonable. Estimate: 60 × 7 = 420",
+                  "so 486 is too high."
+                ],
+                "displayValue": "Not reasonable. Estimate: 60 × 7 = 420, so 486 is too high."
+              },
+              "hints": [],
+              "solutionExplanation": "Not reasonable. Estimate: 60 × 7 = 420, so 486 is too high. (Actual: 58 × 7 = 406)",
+              "teachingPoint": "",
+              "tags": [
+                "estimation"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-11-8",
+          "chapterId": "chapter-3-11",
+          "worldId": "world-3",
+          "number": 8,
+          "name": "Fermi Estimation",
+          "type": "challenge",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-11-8-1",
+              "levelId": "level-3-11-8",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"About how many minutes are in one week? (Estimate without a calculator)\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": [
+                  "About 10",
+                  "000 minutes"
+                ],
+                "displayValue": "About 10,000 minutes"
+              },
+              "hints": [],
+              "solutionExplanation": "60 min/hr × 24 hr/day × 7 days ≈ 60 × 25 × 7 ≈ 60 × 175 ≈ 10,000 (actual: 10,080)",
+              "teachingPoint": "",
+              "tags": [
+                "estimation"
+              ],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 5,
+          "isChallenge": true,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-11-9",
+          "chapterId": "chapter-3-11",
+          "worldId": "world-3",
+          "number": 9,
+          "name": "Strategic Estimation",
+          "type": "challenge",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-11-9-1",
+              "levelId": "level-3-11-9",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "strategic_practice",
+              "statement": "\"You have $100. Books cost $13 each. Estimate: can you buy 8 books?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "No. Estimate: $13 × 8 ≈ $15 × 8 = $120 > $100",
+                "displayValue": "No. Estimate: $13 × 8 ≈ $15 × 8 = $120 > $100 (or $13 × 8 ≈ $10 × 8 = $80 is too low, actual is $104)"
+              },
+              "hints": [],
+              "solutionExplanation": "No. Estimate: $13 × 8 ≈ $15 × 8 = $120 > $100 (or $13 × 8 ≈ $10 × 8 = $80 is too low, actual is $104)",
+              "teachingPoint": "",
+              "tags": [
+                "estimation"
+              ],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 5,
+          "isChallenge": true,
+          "isBoss": false
+        }
+      ],
+      "learningObjectives": [
+        "Estimation",
+        "Rounding",
+        "Estimating Quotients"
+      ],
+      "signatureContent": [],
+      "isBoss": false,
+      "worldId": "world-3"
+    },
+    {
+      "id": "chapter-3-12",
+      "number": 12,
+      "name": "Area Measurement Mastery",
+      "topic": "area measurement",
+      "weekStart": 34,
+      "weekEnd": 36,
+      "levels": [
+        {
+          "id": "level-3-12-1",
+          "chapterId": "chapter-3-12",
+          "worldId": "world-3",
+          "number": 1,
+          "name": "Area Units",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-12-1-1",
+              "levelId": "level-3-12-1",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"Why do we measure area in 'square feet' or 'square meters' instead of just 'feet' or 'meters'?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": [
+                  "Because area measures 2-dimensional space (length × width)",
+                  "which gives square units."
+                ],
+                "displayValue": "Because area measures 2-dimensional space (length × width), which gives square units."
+              },
+              "hints": [],
+              "solutionExplanation": "Because area measures 2-dimensional space (length × width), which gives square units.",
+              "teachingPoint": "",
+              "tags": [
+                "area",
+                "squares"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-12-2",
+          "chapterId": "chapter-3-12",
+          "worldId": "world-3",
+          "number": 2,
+          "name": "Area of Rectangles Review",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-12-2-1",
+              "levelId": "level-3-12-2",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"Find the area of a rectangle with length 15 cm and width 8 cm.\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "120 square centimeters",
+                "displayValue": "120 square centimeters"
+              },
+              "hints": [],
+              "solutionExplanation": "120 square centimeters",
+              "teachingPoint": "",
+              "tags": [
+                "area"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-12-3",
+          "chapterId": "chapter-3-12",
+          "worldId": "world-3",
+          "number": 3,
+          "name": "Area of Squares Review",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-12-3-1",
+              "levelId": "level-3-12-3",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"A square garden has sides of 12 meters. What is its area?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "144 square meters",
+                "displayValue": "144 square meters (12² = 144)"
+              },
+              "hints": [],
+              "solutionExplanation": "144 square meters (12² = 144)",
+              "teachingPoint": "",
+              "tags": [
+                "area",
+                "squares"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-12-4",
+          "chapterId": "chapter-3-12",
+          "worldId": "world-3",
+          "number": 4,
+          "name": "Triangle Area Introduction",
+          "type": "teaching",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-12-4-1",
+              "levelId": "level-3-12-4",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"A rectangle has area 24 square units. A triangle is made by cutting the rectangle diagonally in half. What is the triangle's area?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "12 square units",
+                "displayValue": "12 square units (half of the rectangle)"
+              },
+              "hints": [],
+              "solutionExplanation": "12 square units (half of the rectangle)",
+              "teachingPoint": "Triangle area = ½ × base × height",
+              "tags": [
+                "triangles",
+                "area"
+              ],
+              "difficulty": 1
+            }
+          ],
+          "difficulty": 1,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-12-5",
+          "chapterId": "chapter-3-12",
+          "worldId": "world-3",
+          "number": 5,
+          "name": "Triangle Area Formula",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-12-5-1",
+              "levelId": "level-3-12-5",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"Find the area of a triangle with base 10 cm and height 6 cm.\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "30 square cm",
+                "displayValue": "30 square cm (½ × 10 × 6 = 30)"
+              },
+              "hints": [],
+              "solutionExplanation": "30 square cm (½ × 10 × 6 = 30)",
+              "teachingPoint": "",
+              "tags": [],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-12-6",
+          "chapterId": "chapter-3-12",
+          "worldId": "world-3",
+          "number": 6,
+          "name": "Finding Base or Height",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-12-6-1",
+              "levelId": "level-3-12-6",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "working_backwards",
+              "statement": "\"A triangle has area 35 square units and base 7 units. What is the height?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "10 units",
+                "displayValue": "10 units (35 = ½ × 7 × h → 35 = 3.5h → h = 10)"
+              },
+              "hints": [],
+              "solutionExplanation": "10 units (35 = ½ × 7 × h → 35 = 3.5h → h = 10)",
+              "teachingPoint": "",
+              "tags": [],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-12-7",
+          "chapterId": "chapter-3-12",
+          "worldId": "world-3",
+          "number": 7,
+          "name": "Composite Shapes",
+          "type": "practice",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-12-7-1",
+              "levelId": "level-3-12-7",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"An L-shaped figure is made of two rectangles: one is 5×3 and the other is 4×2. What is the total area?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "15 + 8 = 23 square units",
+                "displayValue": "15 + 8 = 23 square units"
+              },
+              "hints": [],
+              "solutionExplanation": "15 + 8 = 23 square units",
+              "teachingPoint": "",
+              "tags": [
+                "area"
+              ],
+              "difficulty": 2
+            }
+          ],
+          "difficulty": 2,
+          "estimatedMinutes": 3,
+          "isChallenge": false,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-12-8",
+          "chapterId": "chapter-3-12",
+          "worldId": "world-3",
+          "number": 8,
+          "name": "Subtracting Areas",
+          "type": "challenge",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-12-8-1",
+              "levelId": "level-3-12-8",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"A 10×10 square has a 3×3 square cut from one corner. What area remains?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "100 - 9 = 91 square units",
+                "displayValue": "100 - 9 = 91 square units"
+              },
+              "hints": [],
+              "solutionExplanation": "100 - 9 = 91 square units",
+              "teachingPoint": "",
+              "tags": [
+                "area"
+              ],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 5,
+          "isChallenge": true,
+          "isBoss": false
+        },
+        {
+          "id": "level-3-12-9",
+          "chapterId": "chapter-3-12",
+          "worldId": "world-3",
+          "number": 9,
+          "name": "Final Area Challenge",
+          "type": "challenge",
+          "storyContext": "",
+          "problems": [
+            {
+              "id": "problem-level-3-12-9-1",
+              "levelId": "level-3-12-9",
+              "sequence": 1,
+              "type": "text_input",
+              "category": "thinking",
+              "statement": "\"A house shape is made of a square (side 8) with a triangle (base 8, height 5) on top. What is the total area?\"",
+              "inputType": "text_field",
+              "correctAnswer": {
+                "value": "64 + 20 = 84 square units",
+                "displayValue": "64 + 20 = 84 square units"
+              },
+              "hints": [],
+              "solutionExplanation": "Square: 8² = 64. Triangle: ½ × 8 × 5 = 20. Total: 84.",
+              "teachingPoint": "",
+              "tags": [],
+              "difficulty": 4
+            }
+          ],
+          "difficulty": 4,
+          "estimatedMinutes": 5,
+          "isChallenge": true,
+          "isBoss": false
+        }
+      ],
+      "learningObjectives": [
+        "Area Measurement",
+        "Area of Triangles",
+        "Final Review"
+      ],
+      "signatureContent": [],
+      "isBoss": false,
+      "worldId": "world-3"
+    }
+  ]
+}
