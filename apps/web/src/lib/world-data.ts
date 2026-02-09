@@ -1,17 +1,32 @@
 import type { World, Chapter, Level, Problem } from '@mathquest/shared';
-import worldData from '../../../../data/world-3.json';
+import world3Data from '../../../../data/world-3.json';
+import world4Data from '../../../../data/world-4.json';
 
-export const world3 = worldData as World;
+export const world3 = world3Data as World;
+export const world4 = world4Data as World;
 
-export function getChapter(chapterId: string): Chapter | undefined {
-  return world3.chapters.find((c) => c.id === chapterId);
+/** All available worlds, ordered by BA level */
+export const allWorlds: World[] = [world3, world4];
+
+export function getWorld(worldId: string): World | undefined {
+  return allWorlds.find((w) => w.id === worldId);
 }
 
-/** Find a level by ID across all chapters. Used by content tools and shared logic. */
+export function getChapter(chapterId: string): Chapter | undefined {
+  for (const world of allWorlds) {
+    const chapter = world.chapters.find((c) => c.id === chapterId);
+    if (chapter) return chapter;
+  }
+  return undefined;
+}
+
+/** Find a level by ID across all worlds and chapters. */
 export function getLevel(levelId: string): Level | undefined {
-  for (const chapter of world3.chapters) {
-    const level = chapter.levels.find((l) => l.id === levelId);
-    if (level) return level;
+  for (const world of allWorlds) {
+    for (const chapter of world.chapters) {
+      const level = chapter.levels.find((l) => l.id === levelId);
+      if (level) return level;
+    }
   }
   return undefined;
 }
@@ -21,44 +36,54 @@ export function getLevelWithContext(levelId: string): {
   chapter: Chapter;
   world: World;
 } | undefined {
-  for (const chapter of world3.chapters) {
-    const level = chapter.levels.find((l) => l.id === levelId);
-    if (level) {
-      return { level, chapter, world: world3 };
+  for (const world of allWorlds) {
+    for (const chapter of world.chapters) {
+      const level = chapter.levels.find((l) => l.id === levelId);
+      if (level) {
+        return { level, chapter, world };
+      }
     }
   }
   return undefined;
 }
 
-/** Find a problem by ID across all levels and chapters. Used by content tools. */
+/** Find a problem by ID across all worlds. */
 export function getProblem(problemId: string): Problem | undefined {
-  for (const chapter of world3.chapters) {
-    for (const level of chapter.levels) {
-      const problem = level.problems.find((p) => p.id === problemId);
-      if (problem) return problem;
+  for (const world of allWorlds) {
+    for (const chapter of world.chapters) {
+      for (const level of chapter.levels) {
+        const problem = level.problems.find((p) => p.id === problemId);
+        if (problem) return problem;
+      }
     }
   }
   return undefined;
 }
 
-export function getAllLevels(): Level[] {
-  return world3.chapters.flatMap((c) => c.levels);
+export function getAllLevels(worldId?: string): Level[] {
+  const worlds = worldId ? allWorlds.filter((w) => w.id === worldId) : allWorlds;
+  return worlds.flatMap((w) => w.chapters.flatMap((c) => c.levels));
 }
 
 export function getNextLevel(currentLevelId: string): Level | undefined {
-  const levels = getAllLevels();
-  const currentIndex = levels.findIndex((l) => l.id === currentLevelId);
-  if (currentIndex >= 0 && currentIndex < levels.length - 1) {
-    return levels[currentIndex + 1];
-  }
-  return undefined;
+  const ctx = getLevelWithContext(currentLevelId);
+  if (!ctx) return undefined;
+  const levels = getAllLevels(ctx.world.id);
+  const idx = levels.findIndex((l) => l.id === currentLevelId);
+  return idx >= 0 && idx < levels.length - 1 ? levels[idx + 1] : undefined;
 }
 
 export function getPreviousLevel(currentLevelId: string): Level | undefined {
-  const levels = getAllLevels();
-  const currentIndex = levels.findIndex((l) => l.id === currentLevelId);
-  if (currentIndex > 0) {
-    return levels[currentIndex - 1];
+  const ctx = getLevelWithContext(currentLevelId);
+  if (!ctx) return undefined;
+  const levels = getAllLevels(ctx.world.id);
+  const idx = levels.findIndex((l) => l.id === currentLevelId);
+  return idx > 0 ? levels[idx - 1] : undefined;
+}
+
+export function getWorldForChapter(chapterId: string): World | undefined {
+  for (const world of allWorlds) {
+    if (world.chapters.some((c) => c.id === chapterId)) return world;
   }
   return undefined;
 }

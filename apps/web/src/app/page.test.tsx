@@ -1,6 +1,6 @@
 import React from 'react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 
 vi.mock('next/link', () => ({
   default: ({ children, href }: { children: React.ReactNode; href: string }) => (
@@ -8,8 +8,9 @@ vi.mock('next/link', () => ({
   ),
 }));
 
-vi.mock('@/lib/world-data', () => ({
-  world3: {
+const { mockWorld3, mockWorld4, mockAllWorlds } = vi.hoisted(() => {
+  const mockWorld3 = {
+    id: 'world-3',
     name: 'Multiplication Mountains',
     totalLevels: 15,
     estimatedWeeks: 8,
@@ -38,7 +39,36 @@ vi.mock('@/lib/world-data', () => ({
         weekEnd: 6,
       },
     ],
-  },
+  };
+
+  const mockWorld4 = {
+    id: 'world-4',
+    name: 'Fraction Islands',
+    totalLevels: 10,
+    estimatedWeeks: 6,
+    chapters: [
+      {
+        id: 'chapter-4-1',
+        number: 1,
+        name: 'Halves and Quarters',
+        levels: [
+          { id: 'level-4-1-1' },
+          { id: 'level-4-1-2' },
+        ],
+        learningObjectives: ['Learn fractions'],
+        weekStart: 1,
+        weekEnd: 3,
+      },
+    ],
+  };
+
+  const mockAllWorlds = [mockWorld3, mockWorld4];
+  return { mockWorld3, mockWorld4, mockAllWorlds };
+});
+
+vi.mock('@/lib/world-data', () => ({
+  allWorlds: mockAllWorlds,
+  getWorld: vi.fn((id: string) => mockAllWorlds.find((w: { id: string }) => w.id === id)),
 }));
 
 vi.mock('@/lib/storage', () => ({
@@ -57,10 +87,6 @@ vi.mock('@/components/navigation/ChapterCard', () => ({
   ),
 }));
 
-vi.mock('@/components/game/StarDisplay', () => ({
-  default: () => <div data-testid="star-display" />,
-}));
-
 import HomePage from './page';
 import { loadProgress } from '@/lib/storage';
 
@@ -77,12 +103,12 @@ beforeEach(() => {
 });
 
 describe('HomePage', () => {
-  it('should render world name', () => {
+  it('should render world name for default selected world', () => {
     render(<HomePage />);
-    expect(screen.getByText('Multiplication Mountains')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Multiplication Mountains' })).toBeInTheDocument();
   });
 
-  it('should render chapter cards for each chapter', () => {
+  it('should render chapter cards for the default world', () => {
     render(<HomePage />);
     expect(screen.getByTestId('chapter-card-chapter-3-1')).toBeInTheDocument();
     expect(screen.getByTestId('chapter-card-chapter-3-2')).toBeInTheDocument();
@@ -90,23 +116,20 @@ describe('HomePage', () => {
 
   it('should compute chapter progress correctly from completed levels', () => {
     render(<HomePage />);
-    // Chapter 3-1 has level-3-1-1 (3 stars) and level-3-1-2 (2 stars) = 5 stars, 2 completed
     expect(screen.getByText('Getting Started - Stars: 5 - Completed: 2')).toBeInTheDocument();
   });
 
   it('should show zero progress for chapter with no completions', () => {
     render(<HomePage />);
-    // Chapter 3-2 has no completed levels
     expect(screen.getByText('Going Further - Stars: 0 - Completed: 0')).toBeInTheDocument();
   });
 
   it('should show total stars in header', () => {
     render(<HomePage />);
-    // totalStars = 5 shown as bold number
     expect(screen.getByText('5')).toBeInTheDocument();
   });
 
-  it('should show max stars', () => {
+  it('should show max stars for selected world', () => {
     render(<HomePage />);
     // 3 levels * 3 = 9 max stars
     expect(screen.getByText('of 9 stars')).toBeInTheDocument();
@@ -127,5 +150,60 @@ describe('HomePage', () => {
     });
     render(<HomePage />);
     expect(screen.getByText('Getting Started - Stars: 0 - Completed: 0')).toBeInTheDocument();
+  });
+
+  describe('world selector', () => {
+    it('should render world selector tabs', () => {
+      render(<HomePage />);
+      expect(screen.getByRole('tablist', { name: 'Select world' })).toBeInTheDocument();
+      expect(screen.getByRole('tab', { name: 'Multiplication Mountains' })).toBeInTheDocument();
+      expect(screen.getByRole('tab', { name: 'Fraction Islands' })).toBeInTheDocument();
+    });
+
+    it('should mark the default world tab as selected', () => {
+      render(<HomePage />);
+      const world3Tab = screen.getByRole('tab', { name: 'Multiplication Mountains' });
+      expect(world3Tab).toHaveAttribute('aria-selected', 'true');
+      const world4Tab = screen.getByRole('tab', { name: 'Fraction Islands' });
+      expect(world4Tab).toHaveAttribute('aria-selected', 'false');
+    });
+
+    it('should switch to world 4 when its tab is clicked', () => {
+      render(<HomePage />);
+      fireEvent.click(screen.getByRole('tab', { name: 'Fraction Islands' }));
+
+      // Header should update to world 4
+      expect(screen.getByRole('heading', { name: 'Fraction Islands' })).toBeInTheDocument();
+      // World 4 chapters should be visible
+      expect(screen.getByTestId('chapter-card-chapter-4-1')).toBeInTheDocument();
+      // World 3 chapters should be gone
+      expect(screen.queryByTestId('chapter-card-chapter-3-1')).not.toBeInTheDocument();
+    });
+
+    it('should update aria-selected when switching worlds', () => {
+      render(<HomePage />);
+      fireEvent.click(screen.getByRole('tab', { name: 'Fraction Islands' }));
+
+      const world4Tab = screen.getByRole('tab', { name: 'Fraction Islands' });
+      expect(world4Tab).toHaveAttribute('aria-selected', 'true');
+      const world3Tab = screen.getByRole('tab', { name: 'Multiplication Mountains' });
+      expect(world3Tab).toHaveAttribute('aria-selected', 'false');
+    });
+
+    it('should show correct max stars after switching worlds', () => {
+      render(<HomePage />);
+      fireEvent.click(screen.getByRole('tab', { name: 'Fraction Islands' }));
+      // 2 levels * 3 = 6 max stars
+      expect(screen.getByText('of 6 stars')).toBeInTheDocument();
+    });
+
+    it('should switch back to world 3', () => {
+      render(<HomePage />);
+      fireEvent.click(screen.getByRole('tab', { name: 'Fraction Islands' }));
+      fireEvent.click(screen.getByRole('tab', { name: 'Multiplication Mountains' }));
+
+      expect(screen.getByTestId('chapter-card-chapter-3-1')).toBeInTheDocument();
+      expect(screen.queryByTestId('chapter-card-chapter-4-1')).not.toBeInTheDocument();
+    });
   });
 });

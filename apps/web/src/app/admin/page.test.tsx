@@ -57,14 +57,23 @@ const mockLevels = [
   },
 ];
 
+const { mockAllWorlds } = vi.hoisted(() => {
+  const mockWorld3 = { id: 'world-3', name: 'Multiplication Mountains' };
+  const mockWorld4 = { id: 'world-4', name: 'Fraction Islands' };
+  const mockAllWorlds = [mockWorld3, mockWorld4];
+  return { mockAllWorlds };
+});
+
 vi.mock('@/lib/world-data', () => ({
-  world3: {
-    chapters: [
-      { id: 'chapter-3-1', name: 'Getting Started' },
-      { id: 'chapter-3-2', name: 'Going Further' },
-    ],
-  },
+  allWorlds: mockAllWorlds,
   getAllLevels: vi.fn(() => mockLevels),
+  getChapter: vi.fn((id: string) => {
+    const chapters: Record<string, { id: string; name: string }> = {
+      'chapter-3-1': { id: 'chapter-3-1', name: 'Getting Started' },
+      'chapter-3-2': { id: 'chapter-3-2', name: 'Going Further' },
+    };
+    return chapters[id];
+  }),
 }));
 
 vi.mock('@/components/ui/Card', () => ({
@@ -88,7 +97,6 @@ describe('AdminPage', () => {
 
   it('should display total levels count in stats card', () => {
     render(<AdminPage />);
-    // The header says "Browse and inspect all 3 levels"
     expect(screen.getByText(/Browse and inspect all 3 levels/)).toBeInTheDocument();
   });
 
@@ -102,7 +110,6 @@ describe('AdminPage', () => {
   it('should display type distribution section', () => {
     render(<AdminPage />);
     expect(screen.getByText('Levels by Type')).toBeInTheDocument();
-    // Type names appear in badges within the distribution
     const teachingBadges = screen.getAllByText('teaching');
     expect(teachingBadges.length).toBeGreaterThanOrEqual(1);
   });
@@ -174,5 +181,30 @@ describe('AdminPage', () => {
   it('should have search input with label for accessibility', () => {
     render(<AdminPage />);
     expect(screen.getByLabelText('Search levels')).toBeInTheDocument();
+  });
+
+  describe('world filter', () => {
+    it('should render world filter dropdown', () => {
+      render(<AdminPage />);
+      expect(screen.getByLabelText('Filter by world')).toBeInTheDocument();
+    });
+
+    it('should have All Worlds as default option', () => {
+      render(<AdminPage />);
+      const select = screen.getByLabelText('Filter by world') as HTMLSelectElement;
+      expect(select.value).toBe('all');
+    });
+
+    it('should show world options in dropdown', () => {
+      render(<AdminPage />);
+      expect(screen.getByRole('option', { name: 'All Worlds' })).toBeInTheDocument();
+      expect(screen.getByRole('option', { name: 'Multiplication Mountains' })).toBeInTheDocument();
+      expect(screen.getByRole('option', { name: 'Fraction Islands' })).toBeInTheDocument();
+    });
+
+    it('should have world filter dropdown accessible', () => {
+      render(<AdminPage />);
+      expect(screen.getByLabelText('Filter by world')).toBeInTheDocument();
+    });
   });
 });

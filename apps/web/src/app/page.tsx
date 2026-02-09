@@ -2,13 +2,15 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { world3 } from '@/lib/world-data';
+import { allWorlds, getWorld } from '@/lib/world-data';
 import { loadProgress, type GameProgress } from '@/lib/storage';
 import ChapterCard from '@/components/navigation/ChapterCard';
-import StarDisplay from '@/components/game/StarDisplay';
 
 export default function HomePage() {
+  const [selectedWorldId, setSelectedWorldId] = useState(allWorlds[0].id);
   const [progress, setProgress] = useState<GameProgress | null>(null);
+
+  const selectedWorld = getWorld(selectedWorldId) ?? allWorlds[0];
 
   useEffect(() => {
     setProgress(loadProgress());
@@ -17,7 +19,7 @@ export default function HomePage() {
   const getChapterProgress = (chapterId: string) => {
     if (!progress) return { stars: 0, completed: 0 };
 
-    const chapter = world3.chapters.find((c) => c.id === chapterId);
+    const chapter = selectedWorld.chapters.find((c) => c.id === chapterId);
     if (!chapter) return { stars: 0, completed: 0 };
 
     let stars = 0;
@@ -34,8 +36,13 @@ export default function HomePage() {
     return { stars, completed };
   };
 
-  const totalStars = progress?.totalStars ?? 0;
-  const maxStars = world3.chapters.reduce(
+  const totalStars = selectedWorld.chapters.reduce((sum, ch) => {
+    return sum + ch.levels.reduce((s, level) => {
+      return s + (progress?.completedLevels[level.id]?.stars ?? 0);
+    }, 0);
+  }, 0);
+
+  const maxStars = selectedWorld.chapters.reduce(
     (sum, ch) => sum + ch.levels.length * 3,
     0
   );
@@ -47,9 +54,9 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto px-4 py-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold">{world3.name}</h1>
+              <h1 className="text-3xl font-bold">{selectedWorld.name}</h1>
               <p className="text-blue-100 mt-1">
-                {world3.totalLevels} levels • {world3.estimatedWeeks} weeks
+                {selectedWorld.totalLevels} levels • {selectedWorld.estimatedWeeks} weeks
               </p>
             </div>
             <div className="text-right">
@@ -81,8 +88,29 @@ export default function HomePage() {
         </div>
       </nav>
 
+      {/* World Selector */}
+      <div className="max-w-4xl mx-auto px-4 pt-6">
+        <div className="flex gap-2" role="tablist" aria-label="Select world">
+          {allWorlds.map((world) => (
+            <button
+              key={world.id}
+              role="tab"
+              aria-selected={world.id === selectedWorldId}
+              onClick={() => setSelectedWorldId(world.id)}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                world.id === selectedWorldId
+                  ? 'bg-primary text-white'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              {world.name}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Chapter Grid */}
-      <main className="max-w-4xl mx-auto px-4 py-8">
+      <main className="max-w-4xl mx-auto px-4 py-6">
         <div className="mb-6">
           <h2 className="text-xl font-bold text-foreground">Chapters</h2>
           <p className="text-gray-500">
@@ -91,7 +119,7 @@ export default function HomePage() {
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
-          {world3.chapters.map((chapter) => {
+          {selectedWorld.chapters.map((chapter) => {
             const { stars, completed } = getChapterProgress(chapter.id);
             return (
               <ChapterCard

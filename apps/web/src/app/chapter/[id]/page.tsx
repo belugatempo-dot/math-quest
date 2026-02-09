@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { getChapter, world3 } from '@/lib/world-data';
+import { getChapter } from '@/lib/world-data';
 import { loadProgress, type GameProgress } from '@/lib/storage';
 import LevelCard from '@/components/navigation/LevelCard';
 import StarDisplay from '@/components/game/StarDisplay';

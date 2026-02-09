@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { world3, getAllLevels } from '@/lib/world-data';
+import { allWorlds, getAllLevels, getChapter } from '@/lib/world-data';
 import Card from '@/components/ui/Card';
 import { getLevelTypeInfo } from '@/lib/level-type-styles';
 
@@ -11,8 +11,12 @@ type FilterType = 'all' | 'teaching' | 'practice' | 'challenge' | 'boss';
 export default function AdminPage() {
   const [filter, setFilter] = useState<FilterType>('all');
   const [search, setSearch] = useState('');
+  const [selectedWorldId, setSelectedWorldId] = useState<string>('all');
 
-  const allLevels = useMemo(() => getAllLevels(), []);
+  const allLevels = useMemo(
+    () => selectedWorldId === 'all' ? getAllLevels() : getAllLevels(selectedWorldId),
+    [selectedWorldId]
+  );
 
   const filteredLevels = useMemo(() => {
     return allLevels.filter((level) => {
@@ -85,13 +89,17 @@ export default function AdminPage() {
           </Card>
           <Card>
             <div className="text-3xl font-bold text-success">
-              {Math.round((stats.problemsWithHints / stats.totalProblems) * 100)}%
+              {stats.totalProblems > 0
+                ? Math.round((stats.problemsWithHints / stats.totalProblems) * 100)
+                : 0}%
             </div>
             <div className="text-sm text-gray-500">Have Hints</div>
           </Card>
           <Card>
             <div className="text-3xl font-bold text-accent">
-              {Math.round((stats.problemsWithTeachingPoints / stats.totalProblems) * 100)}%
+              {stats.totalProblems > 0
+                ? Math.round((stats.problemsWithTeachingPoints / stats.totalProblems) * 100)
+                : 0}%
             </div>
             <div className="text-sm text-gray-500">Have Teaching Points</div>
           </Card>
@@ -127,6 +135,21 @@ export default function AdminPage() {
           />
 
           <div className="flex gap-2">
+            <label htmlFor="world-filter" className="sr-only">Filter by world</label>
+            <select
+              id="world-filter"
+              value={selectedWorldId}
+              onChange={(e) => setSelectedWorldId(e.target.value)}
+              className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:border-primary focus:outline-none"
+            >
+              <option value="all">All Worlds</option>
+              {allWorlds.map((world) => (
+                <option key={world.id} value={world.id}>{world.name}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex gap-2">
             {(['all', 'teaching', 'practice', 'challenge', 'boss'] as FilterType[]).map(
               (type) => (
                 <button
@@ -148,7 +171,7 @@ export default function AdminPage() {
         {/* Level List */}
         <div className="space-y-2">
           {filteredLevels.map((level) => {
-            const chapter = world3.chapters.find((c) => c.id === level.chapterId);
+            const chapter = getChapter(level.chapterId);
             return (
               <Link
                 key={level.id}

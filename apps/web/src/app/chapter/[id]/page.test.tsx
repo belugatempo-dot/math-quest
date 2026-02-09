@@ -48,7 +48,6 @@ const mockChapter = {
 
 vi.mock('@/lib/world-data', () => ({
   getChapter: vi.fn(),
-  world3: { chapters: [] },
 }));
 
 vi.mock('@/lib/storage', () => ({
