@@ -53,7 +53,7 @@ Builds with tsup into CJS + ESM (`dist/`).
 Next.js 14 App Router with Tailwind CSS. All pages use `'use client'`.
 
 **Routes:**
-- `/` — World overview (chapters with progress)
+- `/` — World selector with tab navigation; each world shows chapters with progress
 - `/chapter/[id]` — Chapter detail (level cards with lock/star status)
 - `/play/[levelId]` — Game play (problem display, answer input, hints, completion modal)
 - `/admin/` — Content preview tools
@@ -62,6 +62,7 @@ Next.js 14 App Router with Tailwind CSS. All pages use `'use client'`.
 - `useGameState` hook (`src/hooks/`) encapsulates all game logic (state machine for attempts, hints, feedback, completion, star calculation). PlayPage is purely rendering (~147 lines).
 - `getLevelTypeInfo()` in `src/lib/level-type-styles.ts` consolidates styling for 5 level types (teaching, practice, challenge, quiz, boss).
 - Player progress persisted to localStorage via `src/lib/storage.ts`.
+- `world-data.ts` exports `allWorlds`, `getWorld()`, `getChapter()`, `getLevel()`, `getLevelWithContext()`, `getWorldForChapter()` for cross-world navigation.
 - Path alias: `@/*` maps to `./src/*`.
 
 ### `packages/content` (@mathquest/content)
@@ -85,11 +86,21 @@ World 3 (Multiplication Mountains) — **120 levels** across 12 chapters (enhanc
 
 **Schema note**: Problem ID regex in `packages/shared/src/schemas/problem.ts:72` accepts both `problem-\d+-\d+-\d+-\d+` and `problem-level-\d+-\d+-\d+-\d+` formats.
 
+### `data/world-4.json`
+World 4 (Fraction Islands) — **125 levels** (120 regular + 5 boss battles) across 10 chapters. Created 2026-02-08.
+
+**World 4 quality status: A-**. Problem ID format: `problem-4-X-Y-Z`. Level ID format: `level-4-X-Y`. Chapters 8 (17 levels) and 10 (13 levels) are the largest.
+
+### `scripts/`
+Utility scripts for content management:
+- `parse-world4.mjs` — Markdown-to-JSON converter for World 4 content
+- `validate-world.mjs` — Zod WorldSchema validator for any world JSON file
+
 ## Testing
 
 - **Shared**: Vitest with `globals: true`, node environment, v8 coverage. Coverage excludes test files and barrel index files. 100% coverage on all 4 utility modules. **341 tests**.
-- **Web**: Vitest with jsdom, `@testing-library/react`, setup file `vitest.setup.ts`. Hook tests use `renderHook`/`act`. Component tests query by accessibility attributes. **215 tests**.
-- **Total**: 556 tests across shared + web.
+- **Web**: Vitest with jsdom, `@testing-library/react`, setup file `vitest.setup.ts`. Hook tests use `renderHook`/`act`. Component tests query by accessibility attributes. **245 tests**.
+- **Total**: 586 tests across shared + web.
 - Turborepo ensures shared package builds before tests run (`dependsOn: ["^build"]`).
 - **Note**: `@mathquest/content` package has no tests (pre-existing, `pnpm test` from root will fail on it — run shared and web tests separately).
 
