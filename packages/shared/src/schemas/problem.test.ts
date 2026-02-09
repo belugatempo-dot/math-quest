@@ -229,6 +229,12 @@ describe('ProblemSchema', () => {
         ProblemSchema.safeParse({ ...validProblem, id: 'level-3-1-1-1' }).success
       ).toBe(false);
     });
+
+    it('should accept problem-level- prefix format', () => {
+      expect(
+        ProblemSchema.safeParse({ ...validProblem, id: 'problem-level-3-1-1-1' }).success
+      ).toBe(true);
+    });
   });
 
   describe('statement validation', () => {

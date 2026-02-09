@@ -69,7 +69,7 @@ export const FollowUpSchema = z.object({
 });
 
 export const ProblemSchema = z.object({
-  id: z.string().regex(/^problem-\d+-\d+-\d+-\d+$/, 'Invalid problem ID format'),
+  id: z.string().regex(/^problem(-level)?-\d+-\d+-\d+-\d+$/, 'Invalid problem ID format'),
   levelId: z.string(),
   sequence: z.number().positive(),
   type: ProblemTypeSchema,

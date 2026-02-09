@@ -6,7 +6,7 @@
 
 ## Objective & Scope
 
-**Goal**: Build MathQuest Phase 1 MVP - World 3 (108 levels) playable on web with content preview functionality.
+**Goal**: Build MathQuest Phase 1 MVP - World 3 (120 levels, A- quality) playable on web with content preview functionality.
 
 **Key Requirements**:
 - Beast Academy methodology (thinking > memorization)
@@ -31,8 +31,7 @@
 **What's Working**:
 - Monorepo structure (pnpm + Turborepo)
 - Content pipeline with markdown parser
-- Anti-pattern detection (2 remaining issues)
-- All 108 levels parse correctly
+- All 120 levels (World 3, A- quality) with full hints, teaching points, honest categories
 - Next.js 14 web app with Tailwind CSS
 - Student gameplay experience
 - Content preview (admin) functionality
@@ -40,7 +39,7 @@
 - Shared package: types, utils, schemas (Zod), constants
 - Refactored architecture: `useGameState` hook, `getLevelTypeInfo()`, shared utils
 - Accessibility: aria-labels, semantic HTML, keyboard navigation
-- Comprehensive test suite: **555 tests, 100% shared coverage, 97%+ web coverage**
+- Comprehensive test suite: **556 tests, 100% shared coverage, 97%+ web coverage**
 
 **No Current Blockers** - App is functional and playable.
 
@@ -126,20 +125,42 @@
 - Infrastructure: vitest.setup.ts with jest-dom, esbuild jsxInject for JSX transform, @vitest/coverage-v8
 - Build verified: `pnpm build` passes cleanly
 
+**World 3 Enhancement — B- to A- quality** (completed):
+- Enhanced `data/world-3.json`: 108 → **120 levels** across 12 chapters
+- **Schema fix**: Problem ID regex now accepts `problem-level-` prefix (`packages/shared/src/schemas/problem.ts`)
+- **Hints**: Added 3-tier hints to all 120 problems (was 105 empty)
+- **Teaching points**: Filled all 73 empty teaching points (min 10 chars, no forbidden phrases)
+- **Category reclassification**: ~30 problems reclassified from inflated "thinking" → honest labels
+  - Final: 65% thinking, 20% strategic_practice, 14% fluency
+- **Difficulty calibration**: Added difficulty 3 (18 problems) and 5 (3 problems); was missing both
+- **12 new signature problems**: find_the_error (4), compare_without_calc (3), impossibility (2), visual proof/conceptual (3)
+- **Metadata**: Characters array (4), signatureContent for all 12 chapters, story contexts (~90 levels), tags, solution explanations
+- All 556 tests pass (341 shared + 215 web), `pnpm build` clean
+
 ---
 
 ## Next Steps
 
-1. **Polish web app** (Priority: MEDIUM)
+1. **Commit World 3 changes** (Priority: HIGH)
+   - Verify tests pass, then commit all enhancement work
+
+2. **World 5 Design** (Priority: HIGH)
+   - Decimal Depths (BA5): decimals, percents, coordinate plane, statistics intro
+   - Target: ~120 levels, 12 chapters, A- quality from the start
+   - Reference: `mathquest-context-for-world3.md` (methodology), `world4-fraction-islands-BA-level4-v2-enhanced.md` (A- example)
+
+3. **Polish web app** (Priority: MEDIUM)
    - Add responsive design improvements
    - Improve error handling
    - Add loading states
 
-2. **Fix remaining anti-patterns** (Priority: LOW)
-   - 2 weak hints still flagged
-   - Manual review of hint quality
+4. **Optional World 3 polish** (Priority: LOW)
+   - Add `commonMistakes` arrays to problems
+   - Add `followUp` objects for key teaching moments
+   - Add `visualAssets` for geometry/area problems
+   - Run Zod validation against every problem in world-3.json
 
-3. **Future phases**
+5. **Future phases**
    - Add authentication (Supabase)
    - Add cloud sync for progress
    - Mobile apps (React Native/Expo)
@@ -161,6 +182,7 @@
 - ✅ Framework: Next.js + Tailwind CSS (user approved)
 - ✅ Content pipeline: Parser built and working (108/108 levels)
 - ✅ Web app: Built and running
+- ✅ World 3 enhancement: B- → A- quality (120 levels, all hints/teaching points/categories)
 
 ---
 
@@ -170,7 +192,7 @@
 |------|---------|
 | `mathquest-MRD-v2.md` | Product requirements, problem design bible |
 | `mathquest-PRD.md` | Technical spec, data models, API spec |
-| `data/world-3.json` | Parsed curriculum data (generated) |
+| `data/world-3.json` | World 3 game content (120 levels, A- quality) |
 | `docs/architecture-plan.md` | Full technical architecture |
 | `context.md` | This file - context and progress |
 | `tools/content-pipeline/src/cli.ts` | CLI for parse, validate, detect-antipatterns |
@@ -199,18 +221,22 @@
 - Build errors were due to strict TypeScript (unused imports) - fixed by prefixing with underscore or removing
 - Parser regex fix: Use `match(/^\*\*Problem\*\*.*:/)` not `startsWith('**Problem**:')` to handle variant formats
 - World data path from web app: `../../../../data/world-3.json` (relative to src/lib/)
+- `Character` interface uses `personality` field (not `description`) — `packages/shared/src/types/world.ts:31`
+- Problem ID regex supports both `problem-3-X-Y-Z` and `problem-level-3-X-Y-Z`
+- `pnpm test` from root fails on `@mathquest/content` (no tests) — run shared + web separately
+- For bulk JSON edits, write Node.js .mjs scripts that read → transform → write the JSON file
 
 ## Test Coverage Summary
 
 | Area | Tests | Stmts | Branch | Funcs | Lines |
 |------|-------|-------|--------|-------|-------|
-| Shared schemas | 268 | 100% | 100% | 100% | 100% |
+| Shared schemas | 269 | 100% | 100% | 100% | 100% |
 | Shared utils | 72 | 100% | 100% | 100% | 100% |
 | Web libs | 31 | 100% | 100% | 100% | 100% |
 | Web components | 95 | 99.5% | 97.6% | 93.8% | 99.5% |
 | Web pages | 64 | 100%* | 86-100% | 100% | 100%* |
 | Web hooks | 13 | 86% | 100% | 100% | 86% |
-| **Total** | **555** | **97.4%** | **96.2%** | **95.2%** | **97.4%** |
+| **Total** | **556** | **97.4%** | **96.2%** | **95.2%** | **97.4%** |
 
 \* layout.tsx excluded (framework boilerplate, not business logic)
 
@@ -227,7 +253,7 @@ pnpm build
 cd apps/web && pnpm dev
 
 # Run all tests
-cd packages/shared && pnpm test        # 340 tests
+cd packages/shared && pnpm test        # 341 tests
 cd apps/web && pnpm test               # 215 tests
 
 # Run tests with coverage
@@ -246,5 +272,5 @@ cd tools/content-pipeline && pnpm start detect-antipatterns
 - `/` - World map with chapter cards
 - `/chapter/[id]` - Chapter view with level cards
 - `/play/[levelId]` - Student gameplay
-- `/admin` - Content browser (all 108 levels)
+- `/admin` - Content browser (all 120 levels)
 - `/admin/level/[id]` - Level preview with problems, hints, answers
