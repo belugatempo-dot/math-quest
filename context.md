@@ -6,7 +6,7 @@
 
 ## Objective & Scope
 
-**Goal**: Build MathQuest Phase 1 MVP - World 3 (120 levels, A- quality) playable on web with content preview functionality.
+**Goal**: Build MathQuest Phase 1 MVP — World 3 + World 4 with multi-world navigation, playable on web with content preview functionality.
 
 **Key Requirements**:
 - Beast Academy methodology (thinking > memorization)
@@ -15,7 +15,7 @@
 - localStorage for progress persistence
 
 **Out of Scope for MVP**:
-- Worlds 1-2 (Phase 2)
+- Worlds 1-2 (Phase 2), World 5+ (future)
 - iOS/Android native apps (Phase 2-3)
 - Advanced input types (drag-drop, drawing)
 - Voice narration
@@ -31,7 +31,9 @@
 **What's Working**:
 - Monorepo structure (pnpm + Turborepo)
 - Content pipeline with markdown parser
-- All 120 levels (World 3, A- quality) with full hints, teaching points, honest categories
+- **World 3** (Multiplication Mountains): 120 levels, A- quality, full hints/teaching points/categories
+- **World 4** (Fraction Islands): 125 levels (120 regular + 5 boss), A- quality
+- **Multi-world navigation**: world selector tabs, cross-world helpers (`getWorld`, `getChapter`, `getLevel`, `getLevelWithContext`, `getWorldForChapter`)
 - Next.js 14 web app with Tailwind CSS
 - Student gameplay experience
 - Content preview (admin) functionality
@@ -39,7 +41,8 @@
 - Shared package: types, utils, schemas (Zod), constants
 - Refactored architecture: `useGameState` hook, `getLevelTypeInfo()`, shared utils
 - Accessibility: aria-labels, semantic HTML, keyboard navigation
-- Comprehensive test suite: **556 tests, 100% shared coverage, 97%+ web coverage**
+- Utility scripts: `parse-world4.mjs` (markdown→JSON), `validate-world.mjs` (Zod validation)
+- Comprehensive test suite: **586 tests (341 shared + 245 web), 100% shared coverage, 97%+ web coverage**
 
 **No Current Blockers** - App is functional and playable.
 
@@ -135,30 +138,44 @@
 - **Difficulty calibration**: Added difficulty 3 (18 problems) and 5 (3 problems); was missing both
 - **12 new signature problems**: find_the_error (4), compare_without_calc (3), impossibility (2), visual proof/conceptual (3)
 - **Metadata**: Characters array (4), signatureContent for all 12 chapters, story contexts (~90 levels), tags, solution explanations
-- All 556 tests pass (341 shared + 215 web), `pnpm build` clean
+- All 586 tests pass (341 shared + 245 web), `pnpm build` clean
+
+**World 4 Creation — Fraction Islands** (completed):
+- Created `data/world-4.json`: **125 levels** (120 regular + 5 boss battles) across 10 chapters
+- Problem IDs: `problem-4-X-Y-Z` (short format). Level IDs: `level-4-X-Y`
+- Parser script: `scripts/parse-world4.mjs` (markdown→JSON converter)
+- Validator script: `scripts/validate-world.mjs` (Zod WorldSchema checker, works for any world)
+- All Zod schemas pass, build clean
+
+**Multi-world Navigation** (completed):
+- World selector with tab navigation on home page
+- `world-data.ts` exports `allWorlds`, `getWorld()`, `getChapter()`, `getLevel()`, `getLevelWithContext()`, `getWorldForChapter()`
+- Admin page filter supports cross-world browsing
+- All 586 tests pass (341 shared + 245 web)
 
 ---
 
 ## Next Steps
 
-1. **Commit World 3 changes** (Priority: HIGH)
-   - Verify tests pass, then commit all enhancement work
-
-2. **World 5 Design** (Priority: HIGH)
+1. **World 5 Design** (Priority: HIGH)
    - Decimal Depths (BA5): decimals, percents, coordinate plane, statistics intro
    - Target: ~120 levels, 12 chapters, A- quality from the start
    - Reference: `mathquest-context-for-world3.md` (methodology), `world4-fraction-islands-BA-level4-v2-enhanced.md` (A- example)
 
-3. **Polish web app** (Priority: MEDIUM)
+2. **Polish web app** (Priority: MEDIUM)
    - Add responsive design improvements
    - Improve error handling
    - Add loading states
 
-4. **Optional World 3 polish** (Priority: LOW)
+3. **Optional World 3/4 polish** (Priority: LOW)
    - Add `commonMistakes` arrays to problems
    - Add `followUp` objects for key teaching moments
    - Add `visualAssets` for geometry/area problems
-   - Run Zod validation against every problem in world-3.json
+
+4. **Content pipeline testing** (Priority: LOW)
+   - `packages/content` and `tools/content-pipeline` have no tests
+   - Add schema validation script for world JSON files
+   - Add content quality metrics script
 
 5. **Future phases**
    - Add authentication (Supabase)
@@ -183,6 +200,9 @@
 - ✅ Content pipeline: Parser built and working (108/108 levels)
 - ✅ Web app: Built and running
 - ✅ World 3 enhancement: B- → A- quality (120 levels, all hints/teaching points/categories)
+- ✅ World 4 creation: Fraction Islands, A- quality (125 levels, 10 chapters)
+- ✅ Multi-world navigation: world selector tabs, cross-world helpers
+- ✅ Commit all enhancement work (World 3 commit `97a46ab`, World 4 commit `c02d9c3`)
 
 ---
 
@@ -193,6 +213,9 @@
 | `mathquest-MRD-v2.md` | Product requirements, problem design bible |
 | `mathquest-PRD.md` | Technical spec, data models, API spec |
 | `data/world-3.json` | World 3 game content (120 levels, A- quality) |
+| `data/world-4.json` | World 4 game content (125 levels, A- quality) |
+| `scripts/parse-world4.mjs` | Markdown→JSON converter for World 4 |
+| `scripts/validate-world.mjs` | Zod WorldSchema validator for any world JSON |
 | `docs/architecture-plan.md` | Full technical architecture |
 | `context.md` | This file - context and progress |
 | `tools/content-pipeline/src/cli.ts` | CLI for parse, validate, detect-antipatterns |
@@ -208,7 +231,7 @@
 | `apps/web/src/app/admin/page.tsx` | Content browser |
 | `apps/web/src/app/admin/level/[id]/page.tsx` | Level preview |
 | `apps/web/src/hooks/useGameState.ts` | Game state management hook |
-| `apps/web/src/lib/world-data.ts` | Data loading utilities |
+| `apps/web/src/lib/world-data.ts` | Multi-world data loading & navigation helpers |
 | `apps/web/src/lib/storage.ts` | localStorage progress persistence |
 | `apps/web/src/lib/level-type-styles.ts` | Level type display configuration |
 
@@ -236,7 +259,7 @@
 | Web components | 95 | 99.5% | 97.6% | 93.8% | 99.5% |
 | Web pages | 64 | 100%* | 86-100% | 100% | 100%* |
 | Web hooks | 13 | 86% | 100% | 100% | 86% |
-| **Total** | **556** | **97.4%** | **96.2%** | **95.2%** | **97.4%** |
+| **Total** | **586** | **97.4%** | **96.2%** | **95.2%** | **97.4%** |
 
 \* layout.tsx excluded (framework boilerplate, not business logic)
 
@@ -254,7 +277,7 @@ cd apps/web && pnpm dev
 
 # Run all tests
 cd packages/shared && pnpm test        # 341 tests
-cd apps/web && pnpm test               # 215 tests
+cd apps/web && pnpm test               # 245 tests
 
 # Run tests with coverage
 cd packages/shared && pnpm test -- --coverage
@@ -269,8 +292,8 @@ cd tools/content-pipeline && pnpm start detect-antipatterns
 
 ## Web App Routes
 
-- `/` - World map with chapter cards
+- `/` - World selector with tab navigation; each world shows chapters with progress
 - `/chapter/[id]` - Chapter view with level cards
 - `/play/[levelId]` - Student gameplay
-- `/admin` - Content browser (all 120 levels)
+- `/admin` - Content browser with cross-world filter (245 levels total)
 - `/admin/level/[id]` - Level preview with problems, hints, answers
