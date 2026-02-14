@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { calculateStars, calculateExpectedTime } from './starCalculator';
 
 describe('calculateStars', () => {
-  const meta = { expectedSeconds: 150, problemCount: 5 };
+  const meta = { expectedSeconds: 150, problemCount: 1 };
 
   it('returns 3 stars for perfect performance (no hints, 1 attempt, fast time)', () => {
     expect(calculateStars({ hintsUsed: 0, attempts: 1, timeSeconds: 100 }, meta)).toBe(3);
@@ -38,6 +38,68 @@ describe('calculateStars', () => {
 
   it('returns 0 stars for more than 3 hints (edge case)', () => {
     expect(calculateStars({ hintsUsed: 4, attempts: 10, timeSeconds: 500 }, meta)).toBe(0);
+  });
+
+  describe('multi-problem levels', () => {
+    const multiMeta = { expectedSeconds: 300, problemCount: 5 };
+
+    it('returns 3 stars for perfect run through 5 problems (5 attempts, 0 hints)', () => {
+      expect(
+        calculateStars({ hintsUsed: 0, attempts: 5, timeSeconds: 200 }, multiMeta)
+      ).toBe(3);
+    });
+
+    it('returns 3 stars at exactly problemCount attempts', () => {
+      expect(
+        calculateStars({ hintsUsed: 0, attempts: 5, timeSeconds: 450 }, multiMeta)
+      ).toBe(3);
+    });
+
+    it('returns 2 stars with one retry across 5 problems (6 attempts)', () => {
+      expect(
+        calculateStars({ hintsUsed: 0, attempts: 6, timeSeconds: 200 }, multiMeta)
+      ).toBe(2);
+    });
+
+    it('returns 2 stars with 1 hint and problemCount+1 attempts', () => {
+      expect(
+        calculateStars({ hintsUsed: 1, attempts: 6, timeSeconds: 200 }, multiMeta)
+      ).toBe(2);
+    });
+
+    it('returns 1 star with many retries across 5 problems', () => {
+      expect(
+        calculateStars({ hintsUsed: 2, attempts: 10, timeSeconds: 400 }, multiMeta)
+      ).toBe(1);
+    });
+
+    it('returns 3 stars for single-problem level with 1 attempt (backward compat)', () => {
+      const singleMeta = { expectedSeconds: 30, problemCount: 1 };
+      expect(
+        calculateStars({ hintsUsed: 0, attempts: 1, timeSeconds: 20 }, singleMeta)
+      ).toBe(3);
+    });
+
+    it('returns 2 stars for single-problem level with 2 attempts (backward compat)', () => {
+      const singleMeta = { expectedSeconds: 30, problemCount: 1 };
+      expect(
+        calculateStars({ hintsUsed: 0, attempts: 2, timeSeconds: 20 }, singleMeta)
+      ).toBe(2);
+    });
+
+    it('returns 3 stars for 4-problem boss level with perfect run', () => {
+      const bossMeta = { expectedSeconds: 240, problemCount: 4 };
+      expect(
+        calculateStars({ hintsUsed: 0, attempts: 4, timeSeconds: 180 }, bossMeta)
+      ).toBe(3);
+    });
+
+    it('returns 2 stars for 3-problem level with 2 retries', () => {
+      const threeMeta = { expectedSeconds: 120, problemCount: 3 };
+      expect(
+        calculateStars({ hintsUsed: 1, attempts: 4, timeSeconds: 100 }, threeMeta)
+      ).toBe(2);
+    });
   });
 });
 

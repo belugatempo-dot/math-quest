@@ -24,15 +24,16 @@ export function calculateStars(
   meta: LevelMeta
 ): 0 | 1 | 2 | 3 {
   const { hintsUsed, attempts, timeSeconds } = result;
-  const { expectedSeconds } = meta;
+  const { expectedSeconds, problemCount } = meta;
 
-  // 3 stars: Perfect - no hints, first try, reasonable time
-  if (hintsUsed === 0 && attempts === 1 && timeSeconds <= expectedSeconds * 1.5) {
+  // 3 stars: Perfect - no hints, no retries, reasonable time
+  // For multi-problem levels, a perfect run means exactly one attempt per problem
+  if (hintsUsed === 0 && attempts <= problemCount && timeSeconds <= expectedSeconds * 1.5) {
     return 3;
   }
 
-  // 2 stars: Good - minimal hints, few attempts
-  if (hintsUsed <= 1 && attempts <= 2) {
+  // 2 stars: Good - minimal hints, at most one retry across all problems
+  if (hintsUsed <= 1 && attempts <= problemCount + 1) {
     return 2;
   }
 
