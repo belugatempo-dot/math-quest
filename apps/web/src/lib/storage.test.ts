@@ -4,8 +4,11 @@ import {
   saveProgress,
   completeLevelProgress,
   resetProgress,
+  migrateOldProgress,
   type GameProgress,
 } from './storage';
+
+const PROFILE_ID = 'test-profile-id';
 
 const defaultProgress: GameProgress = {
   completedLevels: {},
@@ -29,14 +32,20 @@ describe('loadProgress', () => {
 
   it('should return default progress when window is undefined', () => {
     vi.stubGlobal('window', undefined);
-    const result = loadProgress();
+    const result = loadProgress(PROFILE_ID);
     expect(result).toEqual(defaultProgress);
   });
 
   it('should return default progress when localStorage is empty', () => {
     vi.mocked(localStorage.getItem).mockReturnValue(null);
-    const result = loadProgress();
+    const result = loadProgress(PROFILE_ID);
     expect(result).toEqual(defaultProgress);
+  });
+
+  it('should read from profile-namespaced key', () => {
+    vi.mocked(localStorage.getItem).mockReturnValue(null);
+    loadProgress(PROFILE_ID);
+    expect(localStorage.getItem).toHaveBeenCalledWith(`mathquest-progress-${PROFILE_ID}`);
   });
 
   it('should return parsed progress from localStorage', () => {
@@ -47,14 +56,14 @@ describe('loadProgress', () => {
       lastPlayedAt: '2024-01-15',
     };
     vi.mocked(localStorage.getItem).mockReturnValue(JSON.stringify(stored));
-    const result = loadProgress();
+    const result = loadProgress(PROFILE_ID);
     expect(result).toEqual(stored);
   });
 
   it('should return default progress on malformed JSON', () => {
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     vi.mocked(localStorage.getItem).mockReturnValue('not valid json{{{');
-    const result = loadProgress();
+    const result = loadProgress(PROFILE_ID);
     expect(result).toEqual(defaultProgress);
     expect(consoleSpy).toHaveBeenCalledWith('Failed to load progress:', expect.any(Error));
     consoleSpy.mockRestore();
@@ -76,15 +85,15 @@ describe('saveProgress', () => {
 
   it('should not call localStorage when window is undefined', () => {
     vi.stubGlobal('window', undefined);
-    saveProgress(defaultProgress);
+    saveProgress(PROFILE_ID, defaultProgress);
     expect(localStorage.setItem).not.toHaveBeenCalled();
   });
 
-  it('should call localStorage.setItem with correct key and value', () => {
+  it('should call localStorage.setItem with profile-namespaced key', () => {
     const progress: GameProgress = { ...defaultProgress, totalStars: 5 };
-    saveProgress(progress);
+    saveProgress(PROFILE_ID, progress);
     expect(localStorage.setItem).toHaveBeenCalledWith(
-      'mathquest-progress',
+      `mathquest-progress-${PROFILE_ID}`,
       JSON.stringify(progress)
     );
   });
@@ -94,7 +103,7 @@ describe('saveProgress', () => {
     vi.mocked(localStorage.setItem).mockImplementation(() => {
       throw new Error('Storage full');
     });
-    saveProgress(defaultProgress);
+    saveProgress(PROFILE_ID, defaultProgress);
     expect(consoleSpy).toHaveBeenCalledWith('Failed to save progress:', expect.any(Error));
     consoleSpy.mockRestore();
   });
@@ -118,7 +127,7 @@ describe('completeLevelProgress', () => {
 
   it('should add a new level completion', () => {
     vi.mocked(localStorage.getItem).mockReturnValue(JSON.stringify(defaultProgress));
-    const result = completeLevelProgress('level-3-1-1', 3, 1, 0);
+    const result = completeLevelProgress(PROFILE_ID, 'level-3-1-1', 3, 1, 0);
     expect(result.completedLevels['level-3-1-1']).toEqual({
       stars: 3,
       completedAt: new Date('2024-06-15T12:00:00Z').toISOString(),
@@ -140,13 +149,10 @@ describe('completeLevelProgress', () => {
       lastPlayedAt: '2024-01-01',
     };
     vi.mocked(localStorage.getItem).mockReturnValue(JSON.stringify(existing));
-    const result = completeLevelProgress('level-3-1-1', 3, 1, 0);
+    const result = completeLevelProgress(PROFILE_ID, 'level-3-1-1', 3, 1, 0);
     expect(result.completedLevels['level-3-1-1'].stars).toBe(3);
-    // totalStars: was 1, subtract old (1) + add new (3) = 3
     expect(result.totalStars).toBe(3);
-    // attempts accumulated
     expect(result.completedLevels['level-3-1-1'].attempts).toBe(4);
-    // hintsUsed takes minimum
     expect(result.completedLevels['level-3-1-1'].hintsUsed).toBe(0);
   });
 
@@ -160,19 +166,16 @@ describe('completeLevelProgress', () => {
       lastPlayedAt: '2024-01-01',
     };
     vi.mocked(localStorage.getItem).mockReturnValue(JSON.stringify(existing));
-    const result = completeLevelProgress('level-3-1-1', 1, 2, 3);
+    const result = completeLevelProgress(PROFILE_ID, 'level-3-1-1', 1, 2, 3);
     expect(result.completedLevels['level-3-1-1'].stars).toBe(3);
-    // totalStars unchanged: 3 - 3 + 3 = 3
     expect(result.totalStars).toBe(3);
-    // attempts accumulated: 1 + 2 = 3
     expect(result.completedLevels['level-3-1-1'].attempts).toBe(3);
-    // hintsUsed min: min(0, 3) = 0
     expect(result.completedLevels['level-3-1-1'].hintsUsed).toBe(0);
   });
 
   it('should save progress after completing level', () => {
     vi.mocked(localStorage.getItem).mockReturnValue(JSON.stringify(defaultProgress));
-    completeLevelProgress('level-3-1-1', 2, 1, 1);
+    completeLevelProgress(PROFILE_ID, 'level-3-1-1', 2, 1, 1);
     expect(localStorage.setItem).toHaveBeenCalled();
   });
 });
@@ -192,12 +195,75 @@ describe('resetProgress', () => {
 
   it('should not call localStorage when window is undefined', () => {
     vi.stubGlobal('window', undefined);
-    resetProgress();
+    resetProgress(PROFILE_ID);
     expect(localStorage.removeItem).not.toHaveBeenCalled();
   });
 
-  it('should call localStorage.removeItem with correct key', () => {
-    resetProgress();
+  it('should call localStorage.removeItem with profile-namespaced key', () => {
+    resetProgress(PROFILE_ID);
+    expect(localStorage.removeItem).toHaveBeenCalledWith(`mathquest-progress-${PROFILE_ID}`);
+  });
+});
+
+describe('migrateOldProgress', () => {
+  beforeEach(() => {
+    vi.stubGlobal('localStorage', {
+      getItem: vi.fn(),
+      setItem: vi.fn(),
+      removeItem: vi.fn(),
+    });
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it('should return null when window is undefined', () => {
+    vi.stubGlobal('window', undefined);
+    expect(migrateOldProgress(PROFILE_ID)).toBeNull();
+  });
+
+  it('should return null when no old progress exists', () => {
+    vi.mocked(localStorage.getItem).mockReturnValue(null);
+    expect(migrateOldProgress(PROFILE_ID)).toBeNull();
+  });
+
+  it('should migrate old progress to new profile key', () => {
+    const oldProgress: GameProgress = {
+      completedLevels: {
+        'level-3-1-1': { stars: 3, completedAt: '2024-01-15', attempts: 1, hintsUsed: 0 },
+      },
+      totalStars: 3,
+      lastPlayedLevelId: 'level-3-1-1',
+      lastPlayedAt: '2024-01-15',
+    };
+    vi.mocked(localStorage.getItem).mockReturnValue(JSON.stringify(oldProgress));
+    const result = migrateOldProgress(PROFILE_ID);
+    expect(result).toEqual(oldProgress);
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      `mathquest-progress-${PROFILE_ID}`,
+      JSON.stringify(oldProgress)
+    );
+  });
+
+  it('should remove old progress key after migration', () => {
+    const oldProgress: GameProgress = {
+      completedLevels: {},
+      totalStars: 0,
+      lastPlayedLevelId: null,
+      lastPlayedAt: null,
+    };
+    vi.mocked(localStorage.getItem).mockReturnValue(JSON.stringify(oldProgress));
+    migrateOldProgress(PROFILE_ID);
     expect(localStorage.removeItem).toHaveBeenCalledWith('mathquest-progress');
+  });
+
+  it('should return null and log error on malformed old data', () => {
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    vi.mocked(localStorage.getItem).mockReturnValue('{{bad');
+    const result = migrateOldProgress(PROFILE_ID);
+    expect(result).toBeNull();
+    expect(consoleSpy).toHaveBeenCalledWith('Failed to migrate old progress:', expect.any(Error));
+    consoleSpy.mockRestore();
   });
 });

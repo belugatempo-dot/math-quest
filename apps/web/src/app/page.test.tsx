@@ -71,8 +71,9 @@ vi.mock('@/lib/world-data', () => ({
   getWorld: vi.fn((id: string) => mockAllWorlds.find((w: { id: string }) => w.id === id)),
 }));
 
-vi.mock('@/lib/storage', () => ({
-  loadProgress: vi.fn(),
+const mockUseProfile = vi.fn();
+vi.mock('@/contexts/ProfileContext', () => ({
+  useProfile: () => mockUseProfile(),
 }));
 
 vi.mock('@/components/navigation/ChapterCard', () => ({
@@ -87,22 +88,51 @@ vi.mock('@/components/navigation/ChapterCard', () => ({
   ),
 }));
 
+vi.mock('@/components/ui/ProfilePicker', () => ({
+  default: () => <div data-testid="profile-picker">Profile Picker</div>,
+}));
+
 import HomePage from './page';
-import { loadProgress } from '@/lib/storage';
+
+const defaultProgress = {
+  completedLevels: {
+    'level-3-1-1': { stars: 3, completedAt: '2024-01-15', attempts: 1, hintsUsed: 0 },
+    'level-3-1-2': { stars: 2, completedAt: '2024-01-16', attempts: 2, hintsUsed: 1 },
+  },
+  totalStars: 5,
+  lastPlayedLevelId: 'level-3-1-2',
+  lastPlayedAt: '2024-01-16',
+};
+
+const activeProfile = { id: 'a', name: 'Alice', avatar: '🦊', createdAt: '2024-01-01' };
 
 beforeEach(() => {
-  vi.mocked(loadProgress).mockReturnValue({
-    completedLevels: {
-      'level-3-1-1': { stars: 3, completedAt: '2024-01-15', attempts: 1, hintsUsed: 0 },
-      'level-3-1-2': { stars: 2, completedAt: '2024-01-16', attempts: 2, hintsUsed: 1 },
-    },
-    totalStars: 5,
-    lastPlayedLevelId: 'level-3-1-2',
-    lastPlayedAt: '2024-01-16',
+  mockUseProfile.mockReturnValue({
+    activeProfile,
+    profiles: [activeProfile],
+    progress: defaultProgress,
+    switchProfile: vi.fn(),
+    createProfile: vi.fn(),
+    deleteProfile: vi.fn(),
+    completeLevel: vi.fn(),
   });
 });
 
 describe('HomePage', () => {
+  it('should show ProfilePicker when no active profile', () => {
+    mockUseProfile.mockReturnValue({
+      activeProfile: null,
+      profiles: [],
+      progress: { completedLevels: {}, totalStars: 0, lastPlayedLevelId: null, lastPlayedAt: null },
+      switchProfile: vi.fn(),
+      createProfile: vi.fn(),
+      deleteProfile: vi.fn(),
+      completeLevel: vi.fn(),
+    });
+    render(<HomePage />);
+    expect(screen.getByTestId('profile-picker')).toBeInTheDocument();
+  });
+
   it('should render world name for default selected world', () => {
     render(<HomePage />);
     expect(screen.getByRole('heading', { name: 'Multiplication Mountains' })).toBeInTheDocument();
@@ -131,7 +161,6 @@ describe('HomePage', () => {
 
   it('should show max stars for selected world', () => {
     render(<HomePage />);
-    // 3 levels * 3 = 9 max stars
     expect(screen.getByText('of 9 stars')).toBeInTheDocument();
   });
 
@@ -141,15 +170,40 @@ describe('HomePage', () => {
     expect(screen.getByText('Content Preview')).toBeInTheDocument();
   });
 
-  it('should return zero stars/completed when progress is null', () => {
-    vi.mocked(loadProgress).mockReturnValue({
-      completedLevels: {},
-      totalStars: 0,
-      lastPlayedLevelId: null,
-      lastPlayedAt: null,
+  it('should return zero stars/completed when progress has no completions', () => {
+    mockUseProfile.mockReturnValue({
+      activeProfile,
+      profiles: [activeProfile],
+      progress: { completedLevels: {}, totalStars: 0, lastPlayedLevelId: null, lastPlayedAt: null },
+      switchProfile: vi.fn(),
+      createProfile: vi.fn(),
+      deleteProfile: vi.fn(),
+      completeLevel: vi.fn(),
     });
     render(<HomePage />);
     expect(screen.getByText('Getting Started - Stars: 0 - Completed: 0')).toBeInTheDocument();
+  });
+
+  it('should show active profile name and avatar', () => {
+    render(<HomePage />);
+    expect(screen.getByText('Alice')).toBeInTheDocument();
+    expect(screen.getByLabelText('Switch player')).toBeInTheDocument();
+  });
+
+  it('should call switchProfile with empty string when switch player is clicked', () => {
+    const switchProfile = vi.fn();
+    mockUseProfile.mockReturnValue({
+      activeProfile,
+      profiles: [activeProfile],
+      progress: defaultProgress,
+      switchProfile,
+      createProfile: vi.fn(),
+      deleteProfile: vi.fn(),
+      completeLevel: vi.fn(),
+    });
+    render(<HomePage />);
+    fireEvent.click(screen.getByLabelText('Switch player'));
+    expect(switchProfile).toHaveBeenCalledWith('');
   });
 
   describe('world selector', () => {
@@ -172,11 +226,8 @@ describe('HomePage', () => {
       render(<HomePage />);
       fireEvent.click(screen.getByRole('tab', { name: 'Fraction Islands' }));
 
-      // Header should update to world 4
       expect(screen.getByRole('heading', { name: 'Fraction Islands' })).toBeInTheDocument();
-      // World 4 chapters should be visible
       expect(screen.getByTestId('chapter-card-chapter-4-1')).toBeInTheDocument();
-      // World 3 chapters should be gone
       expect(screen.queryByTestId('chapter-card-chapter-3-1')).not.toBeInTheDocument();
     });
 
@@ -193,7 +244,6 @@ describe('HomePage', () => {
     it('should show correct max stars after switching worlds', () => {
       render(<HomePage />);
       fireEvent.click(screen.getByRole('tab', { name: 'Fraction Islands' }));
-      // 2 levels * 3 = 6 max stars
       expect(screen.getByText('of 6 stars')).toBeInTheDocument();
     });
 

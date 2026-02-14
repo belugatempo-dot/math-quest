@@ -50,8 +50,9 @@ vi.mock('@/lib/world-data', () => ({
   getChapter: vi.fn(),
 }));
 
-vi.mock('@/lib/storage', () => ({
-  loadProgress: vi.fn(),
+const mockUseProfile = vi.fn();
+vi.mock('@/contexts/ProfileContext', () => ({
+  useProfile: () => mockUseProfile(),
 }));
 
 vi.mock('@/components/navigation/LevelCard', () => ({
@@ -72,11 +73,26 @@ vi.mock('@/components/game/StarDisplay', () => ({
 
 import { useParams } from 'next/navigation';
 import { getChapter } from '@/lib/world-data';
-import { loadProgress } from '@/lib/storage';
 
 describe('ChapterPage', () => {
   beforeEach(() => {
     vi.mocked(useParams).mockReturnValue({ id: 'chapter-3-1' });
+    mockUseProfile.mockReturnValue({
+      activeProfile: { id: 'a', name: 'Alice', avatar: '🦊', createdAt: '2024-01-01' },
+      profiles: [],
+      progress: {
+        completedLevels: {
+          'level-3-1-1': { stars: 3, completedAt: '2024-01-15', attempts: 1, hintsUsed: 0 },
+        },
+        totalStars: 3,
+        lastPlayedLevelId: 'level-3-1-1',
+        lastPlayedAt: '2024-01-15',
+      },
+      switchProfile: vi.fn(),
+      createProfile: vi.fn(),
+      deleteProfile: vi.fn(),
+      completeLevel: vi.fn(),
+    });
   });
 
   describe('not-found state', () => {
@@ -97,14 +113,6 @@ describe('ChapterPage', () => {
   describe('found state', () => {
     beforeEach(() => {
       vi.mocked(getChapter).mockReturnValue(mockChapter as ReturnType<typeof getChapter>);
-      vi.mocked(loadProgress).mockReturnValue({
-        completedLevels: {
-          'level-3-1-1': { stars: 3, completedAt: '2024-01-15', attempts: 1, hintsUsed: 0 },
-        },
-        totalStars: 3,
-        lastPlayedLevelId: 'level-3-1-1',
-        lastPlayedAt: '2024-01-15',
-      });
     });
 
     it('should display chapter number', () => {
@@ -119,7 +127,6 @@ describe('ChapterPage', () => {
 
     it('should display total and max stars', () => {
       render(<ChapterPage />);
-      // 3 stars earned out of 2 levels * 3 = 6 max
       expect(screen.getByText('3/6 stars')).toBeInTheDocument();
     });
 
@@ -141,16 +148,23 @@ describe('ChapterPage', () => {
 
     it('should show second level as unlocked when first is completed', () => {
       render(<ChapterPage />);
-      // First level has stars > 0, so second is unlocked
       expect(screen.getByText('Climbing Up - Stars: 0 - Unlocked')).toBeInTheDocument();
     });
 
     it('should show second level as locked when first has no stars', () => {
-      vi.mocked(loadProgress).mockReturnValue({
-        completedLevels: {},
-        totalStars: 0,
-        lastPlayedLevelId: null,
-        lastPlayedAt: null,
+      mockUseProfile.mockReturnValue({
+        activeProfile: { id: 'a', name: 'Alice', avatar: '🦊', createdAt: '2024-01-01' },
+        profiles: [],
+        progress: {
+          completedLevels: {},
+          totalStars: 0,
+          lastPlayedLevelId: null,
+          lastPlayedAt: null,
+        },
+        switchProfile: vi.fn(),
+        createProfile: vi.fn(),
+        deleteProfile: vi.fn(),
+        completeLevel: vi.fn(),
       });
       render(<ChapterPage />);
       expect(screen.getByText('Climbing Up - Stars: 0 - Locked')).toBeInTheDocument();

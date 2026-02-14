@@ -2,6 +2,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useGameState } from './useGameState';
 
+const mockCompleteLevel = vi.fn();
+
 const mockLevel = {
   id: 'level-1',
   chapterId: 'chapter-1',
@@ -77,8 +79,16 @@ vi.mock('@/lib/world-data', () => ({
   getNextLevel: vi.fn(() => undefined),
 }));
 
-vi.mock('@/lib/storage', () => ({
-  completeLevelProgress: vi.fn(),
+vi.mock('@/contexts/ProfileContext', () => ({
+  useProfile: () => ({
+    completeLevel: mockCompleteLevel,
+    activeProfile: { id: 'test-profile', name: 'Test', avatar: '🧒', createdAt: '2024-01-01' },
+    profiles: [],
+    progress: { completedLevels: {}, totalStars: 0, lastPlayedLevelId: null, lastPlayedAt: null },
+    switchProfile: vi.fn(),
+    createProfile: vi.fn(),
+    deleteProfile: vi.fn(),
+  }),
 }));
 
 describe('useGameState', () => {

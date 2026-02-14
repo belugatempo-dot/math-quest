@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { getChapter } from '@/lib/world-data';
-import { loadProgress, type GameProgress } from '@/lib/storage';
+import { useProfile } from '@/contexts/ProfileContext';
 import LevelCard from '@/components/navigation/LevelCard';
 import StarDisplay from '@/components/game/StarDisplay';
+import type { GameProgress } from '@/lib/storage';
 import type { Chapter } from '@mathquest/shared';
 
 function getLevelStars(progress: GameProgress | null, levelId: string): number {
@@ -27,11 +27,7 @@ export default function ChapterPage() {
   const params = useParams();
   const chapterId = params.id as string;
   const chapter = getChapter(chapterId);
-  const [progress, setProgress] = useState<GameProgress | null>(null);
-
-  useEffect(() => {
-    setProgress(loadProgress());
-  }, []);
+  const { progress } = useProfile();
 
   if (!chapter) {
     return (

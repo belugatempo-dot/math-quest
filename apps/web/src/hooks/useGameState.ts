@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useRef } from 'react';
 import { getLevelWithContext, getNextLevel } from '@/lib/world-data';
-import { completeLevelProgress } from '@/lib/storage';
+import { useProfile } from '@/contexts/ProfileContext';
 import {
   checkAnswer as checkAnswerShared,
   calculateStars,
@@ -46,6 +46,7 @@ export function useGameState(levelId: string): {
   context: GameContext;
 } | null {
   const levelContext = getLevelWithContext(levelId);
+  const { completeLevel } = useProfile();
 
   const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
   const [attempts, setAttempts] = useState(0);
@@ -86,7 +87,7 @@ export function useGameState(levelId: string): {
               }
             );
             setEarnedStars(stars);
-            completeLevelProgress(levelId, stars, attempts, hintsUsed);
+            completeLevel(levelId, stars, attempts, hintsUsed);
             setIsComplete(true);
           }
         }, ANSWER_TRANSITION_DELAY_MS);
@@ -97,7 +98,7 @@ export function useGameState(levelId: string): {
         });
       }
     },
-    [currentProblem, currentProblemIndex, level, levelId, hintsUsed, attempts]
+    [currentProblem, currentProblemIndex, level, levelId, hintsUsed, attempts, completeLevel]
   );
 
   const handleRevealHint = useCallback((tier: 1 | 2 | 3) => {

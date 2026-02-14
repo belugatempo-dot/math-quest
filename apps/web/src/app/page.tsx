@@ -1,20 +1,21 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { allWorlds, getWorld } from '@/lib/world-data';
-import { loadProgress, type GameProgress } from '@/lib/storage';
+import { useProfile } from '@/contexts/ProfileContext';
 import ChapterCard from '@/components/navigation/ChapterCard';
+import ProfilePicker from '@/components/ui/ProfilePicker';
 
 export default function HomePage() {
+  const { activeProfile, progress, switchProfile } = useProfile();
   const [selectedWorldId, setSelectedWorldId] = useState(allWorlds[0].id);
-  const [progress, setProgress] = useState<GameProgress | null>(null);
+
+  if (!activeProfile) {
+    return <ProfilePicker />;
+  }
 
   const selectedWorld = getWorld(selectedWorldId) ?? allWorlds[0];
-
-  useEffect(() => {
-    setProgress(loadProgress());
-  }, []);
 
   const getChapterProgress = (chapterId: string) => {
     if (!progress) return { stars: 0, completed: 0 };
@@ -59,12 +60,24 @@ export default function HomePage() {
                 {selectedWorld.totalLevels} levels • {selectedWorld.estimatedWeeks} weeks
               </p>
             </div>
-            <div className="text-right">
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">⭐</span>
-                <span className="text-3xl font-bold">{totalStars}</span>
+            <div className="flex items-center gap-6">
+              <div className="text-right">
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl">⭐</span>
+                  <span className="text-3xl font-bold">{totalStars}</span>
+                </div>
+                <p className="text-sm text-blue-100">of {maxStars} stars</p>
               </div>
-              <p className="text-sm text-blue-100">of {maxStars} stars</p>
+              <button
+                onClick={() => switchProfile('')}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
+                aria-label="Switch player"
+              >
+                <span className="text-xl" role="img" aria-hidden="true">
+                  {activeProfile.avatar}
+                </span>
+                <span className="text-sm font-medium">{activeProfile.name}</span>
+              </button>
             </div>
           </div>
         </div>
