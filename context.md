@@ -146,6 +146,12 @@
 - Cloud operations are fire-and-forget (`.catch(() => {})`) — never block gameplay
 - MigrationPrompt shown in ProfilePicker after first auth when local profiles exist
 
+### February 15, 2026 (later)
+
+**Auth form toggle link visibility fix** (completed):
+- Fixed sign-in/sign-up toggle links in `AuthForm.tsx` — changed from `text-primary` (invisible on purple bg) to `text-white/80 hover:text-white` matching glassmorphism theme conventions
+- Commit: `150ff4b`
+
 ### February 14-15, 2026
 
 **World 4 enrichment** (completed):

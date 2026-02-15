@@ -15,7 +15,7 @@ const VARIANT_STYLES: Record<BubbleVariant, string> = {
   story: 'bg-blue-500/20 border-blue-400/30 text-blue-100',
   hint: 'bg-amber-500/20 border-amber-400/30 text-amber-100',
   feedback: 'bg-green-500/20 border-green-400/30 text-green-100',
-  teaching: 'bg-purple-500/20 border-purple-400/30 text-purple-100',
+  teaching: 'bg-white/15 border-white/25 text-white',
 };
 
 export default function SpeechBubble({

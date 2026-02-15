@@ -64,12 +64,12 @@ export default function TeachingPanel({
     <div className="space-y-4 animate-fadeIn" data-testid="teaching-panel">
       {/* Progress indicator + Skip */}
       <div className="flex items-center justify-between">
-        <span className="text-sm font-medium text-white/60">
+        <span className="text-sm font-medium text-white/80">
           Step {currentStep + 1} of {steps.length}
         </span>
         <button
           onClick={handleSkipClick}
-          className="text-sm text-white/50 hover:text-white/80 transition-colors"
+          className="text-sm text-white/70 hover:text-white/80 transition-colors"
           aria-label="Skip lesson"
         >
           Skip
@@ -115,7 +115,7 @@ export default function TeachingPanel({
       {hasVisual && (
         <div
           data-testid="teaching-visual-area"
-          className="rounded-xl border-2 border-purple-400/30 bg-purple-500/15 p-6 min-h-[200px] flex items-center justify-center animate-fadeIn"
+          className="rounded-xl border-2 border-white/25 bg-white/10 p-6 min-h-[200px] flex items-center justify-center animate-fadeIn"
         >
           <TeachingVisual
             visualType={step.visualType as VisualType}
