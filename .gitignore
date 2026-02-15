@@ -56,3 +56,7 @@ AoPS-Syllabus & Standards/
 
 # Session context files
 next_step_context.md
+*_plan.md
+
+# Supabase CLI local state
+supabase/.temp/

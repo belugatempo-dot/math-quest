@@ -42,8 +42,8 @@ Monorepo using pnpm workspaces + Turborepo. Three workspaces: `apps/*`, `package
 ### `packages/shared` (@mathquest/shared)
 Core library consumed by all other packages. Exports via subpath entries:
 - `@mathquest/shared` — everything
-- `@mathquest/shared/types` — TypeScript interfaces (World, Chapter, Level, Problem, Hint, UserProgress, TeachingStep, TeachingFormat, VisualType, InteractionType, GamePhase)
-- `@mathquest/shared/schemas` — Zod validation schemas mirroring each type
+- `@mathquest/shared/types` — TypeScript interfaces (World, Chapter, Level, Problem, Hint, UserProgress, TeachingStep, TeachingFormat, VisualType, InteractionType, GamePhase, SupabaseProfile, ChildProfile, CloudProgress, AuthState)
+- `@mathquest/shared/schemas` — Zod validation schemas mirroring each type (including auth schemas)
 - `@mathquest/shared/utils` — Business logic: `checkAnswer()`, `calculateStars()`, `calculateExpectedTime()`, hint/progression managers
 - `@mathquest/shared/constants` — Hint costs, star thresholds, world themes, character definitions, content validation rules
 
@@ -64,9 +64,28 @@ Next.js 14 App Router with Tailwind CSS. All pages use `'use client'`.
 - `TeachingPanel.tsx` — Multi-step lesson renderer with keyboard navigation and skip nudge.
 - `TeachingVisual.tsx` — Interactive SVG visuals (AngleDiagram, WorkedExample, ConceptDiagram).
 - `AdaptiveReteachModal.tsx` — Re-teach offer after 2 consecutive wrong answers (once per level).
-- Player progress persisted to localStorage via `src/lib/storage.ts`.
+- Player progress persisted to localStorage via `src/lib/storage.ts`, with optional cloud sync via Supabase.
 - `world-data.ts` exports `allWorlds`, `getWorld()`, `getChapter()`, `getLevel()`, `getLevelWithContext()`, `getWorldForChapter()` for cross-world navigation.
 - Path alias: `@/*` maps to `./src/*`.
+
+**Auth & Cloud Sync (COPPA-compliant):**
+- `AuthContext.tsx` — Auth state provider. Gracefully degrades when Supabase env vars missing.
+- `ProfileContext.tsx` — Cloud-aware: loads child profiles from Supabase when authenticated, falls back to localStorage.
+- Services in `src/lib/services/`: `auth.service.ts`, `child-profile.service.ts`, `progress.service.ts`, `migration.service.ts`.
+- Supabase clients in `src/lib/supabase/`: `client.ts` (browser, singleton), `server.ts` (SSR), `middleware.ts` (session refresh).
+- `src/middleware.ts` — Next.js middleware for Supabase session refresh.
+- Cloud sync is fire-and-forget (non-blocking). Progress merge: max stars, sum attempts, min hints, latest timestamp.
+- `MigrationPrompt.tsx` — One-time prompt to upload localStorage profiles to cloud after first sign-in.
+- `SyncStatus.tsx` — Cloud sync indicator in header.
+- Database: 3 tables (`profiles`, `child_profiles`, `user_progress`) with RLS. Supabase project: `lwzjhqglcyvmewbcmlnk`.
+- Dependencies: `@supabase/supabase-js`, `@supabase/ssr`.
+- Env vars: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` (see `.env.example`).
+
+**UI Theme:**
+- Purple-blue gradient glassmorphism: body gradient `#6366F1 → #7C3AED → #9333EA`, fixed attachment.
+- Cards use `bg-white/10 backdrop-blur-lg border border-white/20`.
+- Purple-tinted shadows, violet glow effects.
+- World-themed CSS custom properties (`--world-primary`, etc.).
 
 ### `packages/content` (@mathquest/content)
 Markdown-to-JSON parser using remark/unified. Includes anti-pattern detection for content quality.
@@ -75,9 +94,9 @@ Markdown-to-JSON parser using remark/unified. Includes anti-pattern detection fo
 CLI wrapping the content package. Commands: `parse`, `validate`.
 
 ### `data/world-3.json`
-World 3 (Multiplication Mountains) — **120 levels** across 12 chapters (enhanced from 108 on 2026-02-08). This is the game content consumed by the web app at build time via `src/lib/world-data.ts`.
+World 3 (Multiplication Mountains) — **135 levels** across 12 chapters with **424 problems** (3.1 problems/level). Enhanced from 108 levels on 2026-02-08. This is the game content consumed by the web app at build time via `src/lib/world-data.ts`.
 
-**World 3 quality status: A-** (enhanced from B-/B+). All 120 problems have:
+**World 3 quality status: A-** (enhanced from B-/B+). All problems have:
 - 3 progressive hints (conceptual → directional → scaffolded)
 - Teaching points (10+ chars, explaining the WHY)
 - Honest category labels (65% thinking, 20% strategic practice, 14% fluency)
@@ -102,9 +121,9 @@ Utility scripts for content management:
 
 ## Testing
 
-- **Shared**: Vitest with `globals: true`, node environment, v8 coverage. Coverage excludes test files and barrel index files. 100% coverage on all 4 utility modules. **390 tests**.
-- **Web**: Vitest with jsdom, `@testing-library/react`, setup file `vitest.setup.ts`. Hook tests use `renderHook`/`act`. Component tests query by accessibility attributes. **486 tests**.
-- **Total**: 876 tests across shared + web.
+- **Shared**: Vitest with `globals: true`, node environment, v8 coverage. Coverage excludes test files and barrel index files. 100% coverage on all 4 utility modules + auth schemas. **431 tests**.
+- **Web**: Vitest with jsdom, `@testing-library/react`, setup file `vitest.setup.ts`. Hook tests use `renderHook`/`act`. Component tests query by accessibility attributes. **611 tests**.
+- **Total**: 1,042 tests across shared + web.
 - Turborepo ensures shared package builds before tests run (`dependsOn: ["^build"]`).
 - **Note**: `@mathquest/content` package has no tests (pre-existing, `pnpm test` from root will fail on it — run shared and web tests separately).
 
@@ -112,4 +131,6 @@ Utility scripts for content management:
 
 - Shared business logic belongs in `@mathquest/shared/utils`, not in the web app.
 - Types and their corresponding Zod schemas stay in sync in `packages/shared/src/types/` and `packages/shared/src/schemas/`.
-- Web components are organized by domain: `ui/` (reusable), `game/` (gameplay, teaching), `navigation/` (routing cards), `admin/` (preview), `characters/` (CharacterMessage, CharacterAvatar, SpeechBubble), `decorations/`, `effects/`, `visuals/`.
+- Web components are organized by domain: `ui/` (reusable), `game/` (gameplay, teaching), `navigation/` (routing cards), `admin/` (preview), `auth/` (AuthForm, MigrationPrompt, SyncStatus), `characters/` (CharacterMessage, CharacterAvatar, SpeechBubble), `decorations/`, `effects/`, `visuals/`.
+- Services in `src/lib/services/` handle Supabase API calls; contexts handle state management.
+- Supabase clients return `null` when env vars are missing — all consumers handle this gracefully.

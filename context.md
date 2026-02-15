@@ -19,14 +19,14 @@
 - iOS/Android native apps (Phase 2-3)
 - Advanced input types (drag-drop, drawing)
 - Voice narration
-- Cloud sync / authentication
 
 ---
 
 ## Current Status
 
 **Phase**: Week 1 - Foundation + Web App
-**Status**: ✅ Web App Built and Running
+**Status**: ✅ Deployed to Production
+**Live URL**: https://math-quest-lime.vercel.app
 
 **What's Working**:
 - Monorepo structure (pnpm + Turborepo)
@@ -34,7 +34,7 @@
 - **World 3** (Multiplication Mountains): 135 levels, 424 problems, A- quality
 - **World 4** (Fraction Islands): 133 levels, 369 problems, A quality, 12 boss levels
 - **Multi-world navigation**: world selector tabs, cross-world helpers (`getWorld`, `getChapter`, `getLevel`, `getLevelWithContext`, `getWorldForChapter`)
-- Next.js 14 web app with Tailwind CSS, dark theme UI with world-themed CSS custom properties
+- Next.js 14 web app with Tailwind CSS, purple-blue gradient glassmorphism UI with world-themed CSS custom properties
 - Character-led teaching system (TeachingPanel, TeachingVisual, AdaptiveReteachModal)
 - Phase-based game state machine (teaching → problem → feedback → teaching-point → adaptive-reteach)
 - World 4 Ch1 teaching content (7/10 levels: 4 multi-step, 3 single-message)
@@ -45,7 +45,11 @@
 - Refactored architecture: `useGameState` hook, `getLevelTypeInfo()`, shared utils
 - Accessibility: aria-labels, semantic HTML, keyboard navigation
 - Utility scripts: `parse-world4.mjs`, `validate-world.mjs`, `add-teaching-content-world4-ch1.mjs`
-- Comprehensive test suite: **876 tests (390 shared + 486 web), 100% shared coverage, 97%+ web coverage**
+- **Supabase Auth + Cloud Sync**: Parent auth (email/password), child profiles, cloud progress save/load, localStorage migration
+- COPPA-compliant: children never have auth accounts, parents own child profiles
+- Offline-first: localStorage primary, cloud sync is fire-and-forget
+- Comprehensive test suite: **1,042 tests (431 shared + 611 web), 100% shared coverage, 97%+ web coverage**
+- **Deployed to Vercel**: https://math-quest-lime.vercel.app (auto-deploys on push to main)
 
 **No Current Blockers** - App is functional and playable.
 
@@ -120,6 +124,28 @@
 - `useGameState` hook tests (7 tests)
 - `level-type-styles` utility tests (6 tests)
 
+### February 15, 2026 (continued)
+
+**Supabase Auth + User Management** (completed — 7 TDD slices):
+1. **Supabase Infrastructure**: Installed `@supabase/supabase-js` + `@supabase/ssr`, created browser/server clients, Next.js middleware for session refresh, auth types + Zod schemas in shared package
+2. **Parent Registration**: `AuthService.signUp()`, `AuthForm.tsx` (signup mode), `AuthContext.tsx` with auth state, `AuthProvider` wrapping in layout
+3. **Parent Login**: `AuthService.signIn/signOut()`, login mode in `AuthForm.tsx`, auth status bar in `ProfilePicker.tsx`
+4. **Child Profile Management**: `child-profile.service.ts`, `ProfileContext` cloud-aware (loads/creates/deletes child profiles via Supabase when authenticated, localStorage fallback for offline/guest)
+5. **Cloud Progress Save**: `progress.service.ts` with `saveProgressToCloud()`, hooked into `completeLevel()` fire-and-forget
+6. **Cloud Progress Load + Merge**: `loadProgressFromCloud()`, `progress-merge.ts` (max stars, sum attempts, min hints, latest timestamp), merge on login
+7. **Migration + Session**: `migration.service.ts`, `MigrationPrompt.tsx` (one-time local→cloud upload prompt), `SyncStatus.tsx` indicator in header
+
+**Database** (3 tables in Supabase project `lwzjhqglcyvmewbcmlnk`):
+- `profiles` (extends auth.users), `child_profiles`, `user_progress` (JSONB completed_levels)
+- RLS policies on all tables, auto-profile trigger on auth.users insert
+- SQL migrations pushed via `npx supabase db push`
+
+**Key architecture decisions**:
+- Supabase env vars optional — app degrades gracefully to pure localStorage when not configured
+- `getSupabaseBrowserClient()` returns null when env vars missing → all services handle null client
+- Cloud operations are fire-and-forget (`.catch(() => {})`) — never block gameplay
+- MigrationPrompt shown in ProfilePicker after first auth when local profiles exist
+
 ### February 14-15, 2026
 
 **World 4 enrichment** (completed):
@@ -128,9 +154,14 @@
 - Filled CCSS gaps: 4.NF.C.5, 5.NBT.A.4, 5.NBT.B.6-7, 4.MD.A.1-3, 4.G.A.1-3, 4.OA.C.5
 - Quality upgraded from A- to A
 
-**Dark theme UI conversion** (completed):
-- World-themed CSS custom properties
-- Dark backgrounds with themed gradients
+**Purple-blue gradient glassmorphism theme** (completed):
+- Vivid gradient bg (`#6366F1` → `#7C3AED` → `#9333EA`), `background-attachment: fixed`
+- Glassmorphism cards: `bg-white/10 backdrop-blur-lg border border-white/20`
+- Purple-tinted shadows, violet glow effects
+- World-themed CSS custom properties (indigo/purple palette)
+- World 3: indigo primary (`#6366F1`), purple secondary, cyan accent
+- World 4: lighter indigo (`#818CF8`), lighter purple, pink accent
+- All 26 source files + 2 data files converted from dark navy/slate to purple glassmorphism
 
 **Character-led teaching system** (completed — 8 TDD iterations):
 1. Schema & types: TeachingStep, TeachingFormat, VisualType, InteractionType, GamePhase
@@ -187,29 +218,33 @@
 
 ## Next Steps
 
-1. **Extend teaching content to World 4 Ch2-12** (Priority: HIGH)
+1. **Configure Supabase for production** (Priority: HIGH)
+   - Create `apps/web/.env.local` with Supabase URL + anon key
+   - Enable Email Auth in Supabase Authentication → Providers
+   - Disable "Confirm email" for dev, enable for production
+   - Add Supabase env vars to Vercel project settings
+
+2. **Extend teaching content to World 4 Ch2-12** (Priority: HIGH)
    - Ch1 has 7/10 levels with teaching — replicate pattern to remaining 11 chapters
    - Use `add-teaching-content-world4-ch1.mjs` as template
 
-2. **Extend teaching content to World 3** (Priority: HIGH)
+3. **Extend teaching content to World 3** (Priority: HIGH)
    - Adapt teaching system for multiplication topics
 
-3. **World 5 Design** (Priority: MEDIUM)
+4. **World 5 Design** (Priority: MEDIUM)
    - Decimal Depths (BA5): decimals, percents, coordinate plane, statistics intro
    - Target: ~120 levels, 12 chapters, A quality from the start
 
-4. **Polish web app** (Priority: MEDIUM)
+5. **Polish web app** (Priority: MEDIUM)
    - Add responsive design improvements
    - Improve error handling
    - Add loading states
 
-5. **Content pipeline testing** (Priority: LOW)
+6. **Content pipeline testing** (Priority: LOW)
    - `packages/content` and `tools/content-pipeline` have no tests
    - Add content quality metrics script
 
-6. **Future phases**
-   - Add authentication (Supabase)
-   - Add cloud sync for progress
+7. **Future phases**
    - Mobile apps (React Native/Expo)
 
 ---
@@ -233,9 +268,11 @@
 - ✅ World 4 creation & enrichment: Fraction Islands, A quality (133 levels, 369 problems, 12 boss levels)
 - ✅ Multi-world navigation: world selector tabs, cross-world helpers
 - ✅ Character-led teaching system: TeachingPanel, TeachingVisual, AdaptiveReteachModal (commit `69538f0`)
-- ✅ Dark theme UI conversion with world-themed CSS custom properties
+- ✅ Purple-blue gradient glassmorphism theme (replaced flat dark navy, 26 source files + 2 data files)
 - ✅ World 4 Ch1 teaching content (7/10 levels)
 - ✅ Commit all enhancement work (World 3 commit `97a46ab`, World 4 commit `c02d9c3`, Teaching commit `69538f0`)
+- ✅ Supabase Auth + Cloud Sync (7 slices, COPPA-compliant, offline-first)
+- ✅ Database deployed to Supabase project `lwzjhqglcyvmewbcmlnk`
 
 ---
 
@@ -272,6 +309,24 @@
 | `apps/web/src/components/characters/CharacterMessage.tsx` | Character speech component |
 | `apps/web/src/lib/storage.ts` | localStorage progress persistence |
 | `apps/web/src/lib/level-type-styles.ts` | Level type display configuration |
+| `apps/web/src/styles/globals.css` | Purple gradient bg, glassmorphism base classes |
+| `apps/web/tailwind.config.ts` | Purple-tinted shadows, indigo/violet theme colors |
+| `apps/web/src/contexts/WorldThemeContext.tsx` | Default world color palette (indigo/purple) |
+| **Auth & Cloud Sync** | |
+| `apps/web/src/lib/supabase/client.ts` | Browser Supabase client (singleton, null when unconfigured) |
+| `apps/web/src/lib/supabase/server.ts` | Server-side Supabase client (cookies) |
+| `apps/web/src/lib/supabase/middleware.ts` | Session refresh helper |
+| `apps/web/src/middleware.ts` | Next.js middleware (session refresh) |
+| `apps/web/src/contexts/AuthContext.tsx` | Auth state provider (isConfigured, isAuthenticated, user) |
+| `apps/web/src/lib/services/auth.service.ts` | signUp, signIn, signOut, getCurrentUser |
+| `apps/web/src/lib/services/child-profile.service.ts` | CRUD for cloud child profiles |
+| `apps/web/src/lib/services/progress.service.ts` | saveProgressToCloud, loadProgressFromCloud |
+| `apps/web/src/lib/services/migration.service.ts` | localStorage → cloud profile migration |
+| `apps/web/src/lib/progress-merge.ts` | Merge local + cloud progress (max stars, sum attempts) |
+| `apps/web/src/components/auth/AuthForm.tsx` | Login/signup form |
+| `apps/web/src/components/auth/MigrationPrompt.tsx` | One-time local→cloud upload prompt |
+| `apps/web/src/components/auth/SyncStatus.tsx` | Cloud sync indicator |
+| `supabase/migrations/` | SQL migrations for profiles, child_profiles, user_progress |
 
 ---
 
@@ -297,7 +352,8 @@
 | Web components | 263 | 99%+ | 97%+ | 95%+ | 99%+ |
 | Web pages | 76 | 100%* | 86-100% | 100% | 100%* |
 | Web hooks | 116 | 95%+ | 100% | 100% | 95%+ |
-| **Total** | **876** | **97%+** | **96%+** | **95%+** | **97%+** |
+| Web auth/services | 125 | 95%+ | 90%+ | 95%+ | 95%+ |
+| **Total** | **1,042** | **97%+** | **96%+** | **95%+** | **97%+** |
 
 \* layout.tsx excluded (framework boilerplate, not business logic)
 
@@ -314,8 +370,8 @@ pnpm build
 cd apps/web && pnpm dev
 
 # Run all tests
-cd packages/shared && pnpm test        # 341 tests
-cd apps/web && pnpm test               # 245 tests
+cd packages/shared && pnpm test        # 431 tests
+cd apps/web && pnpm test               # 611 tests
 
 # Run tests with coverage
 cd packages/shared && pnpm test -- --coverage
@@ -333,5 +389,5 @@ cd tools/content-pipeline && pnpm start detect-antipatterns
 - `/` - World selector with tab navigation; each world shows chapters with progress
 - `/chapter/[id]` - Chapter view with level cards
 - `/play/[levelId]` - Student gameplay
-- `/admin` - Content browser with cross-world filter (245 levels total)
+- `/admin` - Content browser with cross-world filter (268 levels total)
 - `/admin/level/[id]` - Level preview with problems, hints, answers
