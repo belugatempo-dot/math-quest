@@ -181,7 +181,7 @@ export default function AuthForm({
           <button
             type="button"
             onClick={() => switchMode('signup')}
-            className="text-sm text-primary hover:text-primary/80 transition-colors"
+            className="text-sm text-white/80 hover:text-white transition-colors"
           >
             Don&apos;t have an account? Sign up
           </button>
@@ -189,7 +189,7 @@ export default function AuthForm({
           <button
             type="button"
             onClick={() => switchMode('signin')}
-            className="text-sm text-primary hover:text-primary/80 transition-colors"
+            className="text-sm text-white/80 hover:text-white transition-colors"
           >
             Already have an account? Sign in
           </button>
