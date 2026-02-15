@@ -1,13 +1,13 @@
 # Math Quest
 
-Gamified math learning platform for elementary students. Players progress through themed worlds solving problems across five level types (teaching, practice, challenge, quiz, boss), with a progressive hint system, star-based scoring, and multi-profile support.
+Gamified math learning platform for elementary students. Players progress through themed worlds solving problems across five level types (teaching, practice, challenge, quiz, boss), with character-led teaching, a progressive hint system, star-based scoring, and multi-profile support.
 
 ## Tech Stack
 
 - **Framework:** Next.js 14 (App Router), React 18, TypeScript 5.4
 - **Styling:** Tailwind CSS 3.4
 - **Monorepo:** pnpm workspaces + Turborepo
-- **Testing:** Vitest + Testing Library (751 tests)
+- **Testing:** Vitest + Testing Library (876 tests)
 - **Validation:** Zod schemas
 - **Content pipeline:** remark/unified (Markdown to JSON)
 
@@ -29,8 +29,8 @@ pnpm dev          # Start dev server
 ### Run Tests
 
 ```bash
-cd packages/shared && pnpm test    # Shared package (350 tests)
-cd apps/web && pnpm test           # Web app (401 tests)
+cd packages/shared && pnpm test    # Shared package (390 tests)
+cd apps/web && pnpm test           # Web app (486 tests)
 ```
 
 > **Note:** Running `pnpm test` from the root will fail because `@mathquest/content` has no tests yet. Run shared and web tests separately.
@@ -43,7 +43,7 @@ packages/shared/         — Types, Zod schemas, business logic (answerChecker, 
 packages/content/        — Markdown-to-JSON parser (remark/unified)
 tools/content-pipeline/  — CLI for content parsing and validation
 data/                    — World JSON files (game content, consumed at build time)
-scripts/                 — Utility scripts (validation, enrichment)
+scripts/                 — Utility scripts (validation, enrichment, teaching content)
 ```
 
 ## Game Content
@@ -52,6 +52,8 @@ scripts/                 — Utility scripts (validation, enrichment)
 |-------|------------------------|----------|--------|----------|--------------|
 | 3     | Multiplication Mountains | 12     | 135    | 424      | CCSS Grade 3 |
 | 4     | Fraction Islands         | 12     | 133    | 369      | CCSS Grades 4-5 |
+
+World 4 Chapter 1 (Angle Island) includes character-led teaching content: 4 multi-step lessons and 3 single-message reminders across 7/10 levels.
 
 Validate content files:
 

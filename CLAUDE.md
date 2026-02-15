@@ -42,7 +42,7 @@ Monorepo using pnpm workspaces + Turborepo. Three workspaces: `apps/*`, `package
 ### `packages/shared` (@mathquest/shared)
 Core library consumed by all other packages. Exports via subpath entries:
 - `@mathquest/shared` — everything
-- `@mathquest/shared/types` — TypeScript interfaces (World, Chapter, Level, Problem, Hint, UserProgress)
+- `@mathquest/shared/types` — TypeScript interfaces (World, Chapter, Level, Problem, Hint, UserProgress, TeachingStep, TeachingFormat, VisualType, InteractionType, GamePhase)
 - `@mathquest/shared/schemas` — Zod validation schemas mirroring each type
 - `@mathquest/shared/utils` — Business logic: `checkAnswer()`, `calculateStars()`, `calculateExpectedTime()`, hint/progression managers
 - `@mathquest/shared/constants` — Hint costs, star thresholds, world themes, character definitions, content validation rules
@@ -59,8 +59,11 @@ Next.js 14 App Router with Tailwind CSS. All pages use `'use client'`.
 - `/admin/` — Content preview tools
 
 **Key patterns:**
-- `useGameState` hook (`src/hooks/`) encapsulates all game logic (state machine for attempts, hints, feedback, completion, star calculation). PlayPage is purely rendering (~147 lines).
+- `useGameState` hook (`src/hooks/`) encapsulates all game logic including phase management (teaching → problem → feedback → teaching-point → adaptive-reteach). PlayPage is phase-based rendering (~189 lines).
 - `getLevelTypeInfo()` in `src/lib/level-type-styles.ts` consolidates styling for 5 level types (teaching, practice, challenge, quiz, boss).
+- `TeachingPanel.tsx` — Multi-step lesson renderer with keyboard navigation and skip nudge.
+- `TeachingVisual.tsx` — Interactive SVG visuals (AngleDiagram, WorkedExample, ConceptDiagram).
+- `AdaptiveReteachModal.tsx` — Re-teach offer after 2 consecutive wrong answers (once per level).
 - Player progress persisted to localStorage via `src/lib/storage.ts`.
 - `world-data.ts` exports `allWorlds`, `getWorld()`, `getChapter()`, `getLevel()`, `getLevelWithContext()`, `getWorldForChapter()` for cross-world navigation.
 - Path alias: `@/*` maps to `./src/*`.
@@ -89,18 +92,19 @@ World 3 (Multiplication Mountains) — **120 levels** across 12 chapters (enhanc
 ### `data/world-4.json`
 World 4 (Fraction Islands) — **133 levels** across 12 chapters with **369 problems** (2.8 problems/level). Enhanced 2026-02-14 from initial 125 levels/137 problems.
 
-**World 4 quality status: A**. All 12 chapters have boss levels. All CCSS Grade 4-5 gaps filled (4.NF.C.5, 5.NBT.A.4, 5.NBT.B.6-7, 4.MD.A.1-3, 4.G.A.1-3, 4.OA.C.5). Problem ID format: `problem-4-X-Y-Z`. Level ID format: `level-4-X-Y`. Largest chapters: Ch 8 (18 levels, 53 problems), Ch 10 (14 levels, 37 problems).
+**World 4 quality status: A**. All 12 chapters have boss levels. All CCSS Grade 4-5 gaps filled (4.NF.C.5, 5.NBT.A.4, 5.NBT.B.6-7, 4.MD.A.1-3, 4.G.A.1-3, 4.OA.C.5). Problem ID format: `problem-4-X-Y-Z`. Level ID format: `level-4-X-Y`. Largest chapters: Ch 8 (18 levels, 53 problems), Ch 10 (14 levels, 37 problems). Chapter 1 (Angle Island) has character-led teaching content (4 multi-step lessons, 3 single-message reminders).
 
 ### `scripts/`
 Utility scripts for content management:
 - `parse-world4.mjs` — Markdown-to-JSON converter for World 4 content
 - `validate-world.mjs` — Zod WorldSchema validator for any world JSON file
+- `add-teaching-content-world4-ch1.mjs` — Teaching content injection for World 4 Chapter 1
 
 ## Testing
 
-- **Shared**: Vitest with `globals: true`, node environment, v8 coverage. Coverage excludes test files and barrel index files. 100% coverage on all 4 utility modules. **350 tests**.
-- **Web**: Vitest with jsdom, `@testing-library/react`, setup file `vitest.setup.ts`. Hook tests use `renderHook`/`act`. Component tests query by accessibility attributes. **401 tests**.
-- **Total**: 751 tests across shared + web.
+- **Shared**: Vitest with `globals: true`, node environment, v8 coverage. Coverage excludes test files and barrel index files. 100% coverage on all 4 utility modules. **390 tests**.
+- **Web**: Vitest with jsdom, `@testing-library/react`, setup file `vitest.setup.ts`. Hook tests use `renderHook`/`act`. Component tests query by accessibility attributes. **486 tests**.
+- **Total**: 876 tests across shared + web.
 - Turborepo ensures shared package builds before tests run (`dependsOn: ["^build"]`).
 - **Note**: `@mathquest/content` package has no tests (pre-existing, `pnpm test` from root will fail on it — run shared and web tests separately).
 
@@ -108,4 +112,4 @@ Utility scripts for content management:
 
 - Shared business logic belongs in `@mathquest/shared/utils`, not in the web app.
 - Types and their corresponding Zod schemas stay in sync in `packages/shared/src/types/` and `packages/shared/src/schemas/`.
-- Web components are organized by domain: `ui/` (reusable), `game/` (gameplay), `navigation/` (routing cards), `admin/` (preview).
+- Web components are organized by domain: `ui/` (reusable), `game/` (gameplay, teaching), `navigation/` (routing cards), `admin/` (preview), `characters/` (CharacterMessage, CharacterAvatar, SpeechBubble), `decorations/`, `effects/`, `visuals/`.

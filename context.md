@@ -1,6 +1,6 @@
 # MathQuest Development Context
 
-**Last Updated**: February 8, 2026
+**Last Updated**: February 15, 2026
 
 ---
 
@@ -31,18 +31,21 @@
 **What's Working**:
 - Monorepo structure (pnpm + Turborepo)
 - Content pipeline with markdown parser
-- **World 3** (Multiplication Mountains): 120 levels, A- quality, full hints/teaching points/categories
-- **World 4** (Fraction Islands): 125 levels (120 regular + 5 boss), A- quality
+- **World 3** (Multiplication Mountains): 135 levels, 424 problems, A- quality
+- **World 4** (Fraction Islands): 133 levels, 369 problems, A quality, 12 boss levels
 - **Multi-world navigation**: world selector tabs, cross-world helpers (`getWorld`, `getChapter`, `getLevel`, `getLevelWithContext`, `getWorldForChapter`)
-- Next.js 14 web app with Tailwind CSS
+- Next.js 14 web app with Tailwind CSS, dark theme UI with world-themed CSS custom properties
+- Character-led teaching system (TeachingPanel, TeachingVisual, AdaptiveReteachModal)
+- Phase-based game state machine (teaching → problem → feedback → teaching-point → adaptive-reteach)
+- World 4 Ch1 teaching content (7/10 levels: 4 multi-step, 3 single-message)
 - Student gameplay experience
 - Content preview (admin) functionality
 - localStorage progress persistence
 - Shared package: types, utils, schemas (Zod), constants
 - Refactored architecture: `useGameState` hook, `getLevelTypeInfo()`, shared utils
 - Accessibility: aria-labels, semantic HTML, keyboard navigation
-- Utility scripts: `parse-world4.mjs` (markdown→JSON), `validate-world.mjs` (Zod validation)
-- Comprehensive test suite: **586 tests (341 shared + 245 web), 100% shared coverage, 97%+ web coverage**
+- Utility scripts: `parse-world4.mjs`, `validate-world.mjs`, `add-teaching-content-world4-ch1.mjs`
+- Comprehensive test suite: **876 tests (390 shared + 486 web), 100% shared coverage, 97%+ web coverage**
 
 **No Current Blockers** - App is functional and playable.
 
@@ -117,6 +120,33 @@
 - `useGameState` hook tests (7 tests)
 - `level-type-styles` utility tests (6 tests)
 
+### February 14-15, 2026
+
+**World 4 enrichment** (completed):
+- Expanded from 125→133 levels, 137→369 problems (2.8/level)
+- Added boss levels to all 12 chapters (was 5)
+- Filled CCSS gaps: 4.NF.C.5, 5.NBT.A.4, 5.NBT.B.6-7, 4.MD.A.1-3, 4.G.A.1-3, 4.OA.C.5
+- Quality upgraded from A- to A
+
+**Dark theme UI conversion** (completed):
+- World-themed CSS custom properties
+- Dark backgrounds with themed gradients
+
+**Character-led teaching system** (completed — 8 TDD iterations):
+1. Schema & types: TeachingStep, TeachingFormat, VisualType, InteractionType, GamePhase
+2. Game state machine: phase management (teaching → problem → adaptive-reteach), 2-wrong trigger
+3. TeachingPanel component: multi-step lessons, skip nudge, keyboard navigation
+4. TeachingVisual component: AngleDiagram, WorkedExample, ConceptDiagram (interactive SVGs)
+5. AdaptiveReteachModal component: re-teach offer after consecutive wrong answers
+6. PlayPage integration: phase-based rendering
+7. Teaching content for World 4 Ch1: 7/10 levels (4 multi-step, 3 single-message)
+8. Polish: animations, keyboard shortcuts, full test verification
+- Character components: CharacterMessage, CharacterAvatar, SpeechBubble ('teaching' variant)
+- Commit: `69538f0`
+
+**Multi-kid profile system** (completed):
+- Profile switching with localStorage persistence
+
 ### February 8, 2026
 
 **Test automation — full coverage** (completed):
@@ -157,27 +187,27 @@
 
 ## Next Steps
 
-1. **World 5 Design** (Priority: HIGH)
-   - Decimal Depths (BA5): decimals, percents, coordinate plane, statistics intro
-   - Target: ~120 levels, 12 chapters, A- quality from the start
-   - Reference: `mathquest-context-for-world3.md` (methodology), `world4-fraction-islands-BA-level4-v2-enhanced.md` (A- example)
+1. **Extend teaching content to World 4 Ch2-12** (Priority: HIGH)
+   - Ch1 has 7/10 levels with teaching — replicate pattern to remaining 11 chapters
+   - Use `add-teaching-content-world4-ch1.mjs` as template
 
-2. **Polish web app** (Priority: MEDIUM)
+2. **Extend teaching content to World 3** (Priority: HIGH)
+   - Adapt teaching system for multiplication topics
+
+3. **World 5 Design** (Priority: MEDIUM)
+   - Decimal Depths (BA5): decimals, percents, coordinate plane, statistics intro
+   - Target: ~120 levels, 12 chapters, A quality from the start
+
+4. **Polish web app** (Priority: MEDIUM)
    - Add responsive design improvements
    - Improve error handling
    - Add loading states
 
-3. **Optional World 3/4 polish** (Priority: LOW)
-   - Add `commonMistakes` arrays to problems
-   - Add `followUp` objects for key teaching moments
-   - Add `visualAssets` for geometry/area problems
-
-4. **Content pipeline testing** (Priority: LOW)
+5. **Content pipeline testing** (Priority: LOW)
    - `packages/content` and `tools/content-pipeline` have no tests
-   - Add schema validation script for world JSON files
    - Add content quality metrics script
 
-5. **Future phases**
+6. **Future phases**
    - Add authentication (Supabase)
    - Add cloud sync for progress
    - Mobile apps (React Native/Expo)
@@ -199,10 +229,13 @@
 - ✅ Framework: Next.js + Tailwind CSS (user approved)
 - ✅ Content pipeline: Parser built and working (108/108 levels)
 - ✅ Web app: Built and running
-- ✅ World 3 enhancement: B- → A- quality (120 levels, all hints/teaching points/categories)
-- ✅ World 4 creation: Fraction Islands, A- quality (125 levels, 10 chapters)
+- ✅ World 3 enhancement: B- → A- quality (135 levels, 424 problems)
+- ✅ World 4 creation & enrichment: Fraction Islands, A quality (133 levels, 369 problems, 12 boss levels)
 - ✅ Multi-world navigation: world selector tabs, cross-world helpers
-- ✅ Commit all enhancement work (World 3 commit `97a46ab`, World 4 commit `c02d9c3`)
+- ✅ Character-led teaching system: TeachingPanel, TeachingVisual, AdaptiveReteachModal (commit `69538f0`)
+- ✅ Dark theme UI conversion with world-themed CSS custom properties
+- ✅ World 4 Ch1 teaching content (7/10 levels)
+- ✅ Commit all enhancement work (World 3 commit `97a46ab`, World 4 commit `c02d9c3`, Teaching commit `69538f0`)
 
 ---
 
@@ -212,10 +245,11 @@
 |------|---------|
 | `mathquest-MRD-v2.md` | Product requirements, problem design bible |
 | `mathquest-PRD.md` | Technical spec, data models, API spec |
-| `data/world-3.json` | World 3 game content (120 levels, A- quality) |
-| `data/world-4.json` | World 4 game content (125 levels, A- quality) |
+| `data/world-3.json` | World 3 game content (135 levels, 424 problems, A-) |
+| `data/world-4.json` | World 4 game content (133 levels, 369 problems, A, with teaching) |
 | `scripts/parse-world4.mjs` | Markdown→JSON converter for World 4 |
 | `scripts/validate-world.mjs` | Zod WorldSchema validator for any world JSON |
+| `scripts/add-teaching-content-world4-ch1.mjs` | Teaching content injection for World 4 Ch1 |
 | `docs/architecture-plan.md` | Full technical architecture |
 | `context.md` | This file - context and progress |
 | `tools/content-pipeline/src/cli.ts` | CLI for parse, validate, detect-antipatterns |
@@ -230,8 +264,12 @@
 | `apps/web/src/app/chapter/[id]/page.tsx` | Chapter navigation |
 | `apps/web/src/app/admin/page.tsx` | Content browser |
 | `apps/web/src/app/admin/level/[id]/page.tsx` | Level preview |
-| `apps/web/src/hooks/useGameState.ts` | Game state management hook |
+| `apps/web/src/hooks/useGameState.ts` | Game state management hook (phase machine) |
 | `apps/web/src/lib/world-data.ts` | Multi-world data loading & navigation helpers |
+| `apps/web/src/components/game/TeachingPanel.tsx` | Multi-step lesson renderer |
+| `apps/web/src/components/game/TeachingVisual.tsx` | Interactive SVG visuals |
+| `apps/web/src/components/game/AdaptiveReteachModal.tsx` | Re-teach offer modal |
+| `apps/web/src/components/characters/CharacterMessage.tsx` | Character speech component |
 | `apps/web/src/lib/storage.ts` | localStorage progress persistence |
 | `apps/web/src/lib/level-type-styles.ts` | Level type display configuration |
 
@@ -253,13 +291,13 @@
 
 | Area | Tests | Stmts | Branch | Funcs | Lines |
 |------|-------|-------|--------|-------|-------|
-| Shared schemas | 269 | 100% | 100% | 100% | 100% |
-| Shared utils | 72 | 100% | 100% | 100% | 100% |
+| Shared schemas | 309 | 100% | 100% | 100% | 100% |
+| Shared utils | 81 | 100% | 100% | 100% | 100% |
 | Web libs | 31 | 100% | 100% | 100% | 100% |
-| Web components | 95 | 99.5% | 97.6% | 93.8% | 99.5% |
-| Web pages | 64 | 100%* | 86-100% | 100% | 100%* |
-| Web hooks | 13 | 86% | 100% | 100% | 86% |
-| **Total** | **586** | **97.4%** | **96.2%** | **95.2%** | **97.4%** |
+| Web components | 263 | 99%+ | 97%+ | 95%+ | 99%+ |
+| Web pages | 76 | 100%* | 86-100% | 100% | 100%* |
+| Web hooks | 116 | 95%+ | 100% | 100% | 95%+ |
+| **Total** | **876** | **97%+** | **96%+** | **95%+** | **97%+** |
 
 \* layout.tsx excluded (framework boilerplate, not business logic)
 

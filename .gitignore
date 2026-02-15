@@ -46,3 +46,13 @@ ios/Pods/
 # Misc
 *.pem
 .vercel
+
+# Syllabus PDFs (reference material, not source code)
+AoPS-Syllabus/
+AoPS-Syllabus & Standards/
+
+# Claude Code metadata
+.claude/
+
+# Session context files
+next_step_context.md
