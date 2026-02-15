@@ -31,7 +31,7 @@ describe('CharacterMessage', () => {
       </CharacterMessage>
     );
     const bubble = screen.getByTestId('speech-bubble');
-    expect(bubble.className).toContain('bg-amber-900/30');
+    expect(bubble.className).toContain('bg-amber-500/20');
   });
 
   it('should pass size to avatar', () => {
@@ -51,6 +51,6 @@ describe('CharacterMessage', () => {
       </CharacterMessage>
     );
     const bubble = screen.getByTestId('speech-bubble');
-    expect(bubble.className).toContain('bg-green-900/30');
+    expect(bubble.className).toContain('bg-green-500/20');
   });
 });

@@ -64,12 +64,12 @@ export default function TeachingPanel({
     <div className="space-y-4 animate-fadeIn" data-testid="teaching-panel">
       {/* Progress indicator + Skip */}
       <div className="flex items-center justify-between">
-        <span className="text-sm font-medium text-slate-400">
+        <span className="text-sm font-medium text-white/60">
           Step {currentStep + 1} of {steps.length}
         </span>
         <button
           onClick={handleSkipClick}
-          className="text-sm text-slate-500 hover:text-slate-300 transition-colors"
+          className="text-sm text-white/50 hover:text-white/80 transition-colors"
           aria-label="Skip lesson"
         >
           Skip
@@ -78,7 +78,7 @@ export default function TeachingPanel({
 
       {/* Skip nudge */}
       {showNudge && (
-        <div className="rounded-xl border border-amber-700/50 bg-amber-900/30 p-4 text-center space-y-3 animate-fadeIn">
+        <div className="rounded-xl border border-amber-400/30 bg-amber-500/20 p-4 text-center space-y-3 animate-fadeIn">
           <p className="text-sm text-amber-200">
             Pro tip: reviewing the lesson helps you earn more stars!
           </p>
@@ -91,7 +91,7 @@ export default function TeachingPanel({
             </button>
             <button
               onClick={handleConfirmSkip}
-              className="px-4 py-2 text-sm font-medium rounded-lg border border-slate-600 text-slate-300 hover:bg-slate-700 transition-colors"
+              className="px-4 py-2 text-sm font-medium rounded-lg border border-white/25 text-white/70 hover:bg-white/15 transition-colors"
             >
               Skip Anyway
             </button>
@@ -115,7 +115,7 @@ export default function TeachingPanel({
       {hasVisual && (
         <div
           data-testid="teaching-visual-area"
-          className="rounded-xl border-2 border-purple-700/30 bg-purple-900/20 p-6 min-h-[200px] flex items-center justify-center animate-fadeIn"
+          className="rounded-xl border-2 border-purple-400/30 bg-purple-500/15 p-6 min-h-[200px] flex items-center justify-center animate-fadeIn"
         >
           <TeachingVisual
             visualType={step.visualType as VisualType}
@@ -130,7 +130,7 @@ export default function TeachingPanel({
           {!isFirstStep && (
             <button
               onClick={onPrev}
-              className="px-4 py-2 text-sm font-medium rounded-lg border border-slate-600 text-slate-300 hover:bg-slate-700 transition-colors"
+              className="px-4 py-2 text-sm font-medium rounded-lg border border-white/25 text-white/70 hover:bg-white/15 transition-colors"
             >
               ← Back
             </button>

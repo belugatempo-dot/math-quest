@@ -12,15 +12,15 @@ describe('Card', () => {
   it('should apply default variant (default) classes', () => {
     render(<Card>Test</Card>);
     const card = screen.getByText('Test').closest('div')!;
-    expect(card.className).toContain('bg-slate-800/90');
-    expect(card.className).toContain('shadow-md');
+    expect(card.className).toContain('bg-white/10');
+    expect(card.className).toContain('shadow-lg');
   });
 
   describe('variants', () => {
     it.each([
-      ['default', 'bg-slate-800/90'],
-      ['elevated', 'bg-slate-800/90'],
-      ['bordered', 'bg-slate-800/90'],
+      ['default', 'bg-white/10'],
+      ['elevated', 'bg-white/15'],
+      ['bordered', 'bg-white/10'],
     ] as const)('should apply %s variant classes', (variant, expectedClass) => {
       render(<Card variant={variant}>Test</Card>);
       const card = screen.getByText('Test').closest('div')!;

@@ -87,7 +87,7 @@ export default function PlayPage() {
         <div className="space-y-5">
           {/* Teaching Phase */}
           {isTeachingPhase && teachingSteps && (
-            <div className="rounded-2xl border-2 border-purple-300/30 bg-slate-800/90 backdrop-blur-sm p-5 shadow-lg">
+            <div className="rounded-2xl border-2 border-purple-400/30 bg-white/10 backdrop-blur-lg p-5 shadow-lg">
               <TeachingPanel
                 steps={teachingSteps}
                 currentStep={state.currentTeachingStep}
@@ -105,7 +105,7 @@ export default function PlayPage() {
               {state.teachingCompleted && teachingSteps && (
                 <button
                   onClick={actions.reviewLesson}
-                  className="w-full py-2 text-sm font-medium text-purple-400 border border-purple-400/30 rounded-lg hover:bg-purple-400/10 transition-colors"
+                  className="w-full py-2 text-sm font-medium text-purple-300 border border-purple-400/30 rounded-lg hover:bg-purple-500/15 transition-colors"
                 >
                   Review Lesson
                 </button>
@@ -119,7 +119,7 @@ export default function PlayPage() {
               )}
 
               {/* Problem Area */}
-              <div className="rounded-2xl border-2 border-primary/30 bg-slate-800/90 backdrop-blur-sm p-5 shadow-lg">
+              <div className="rounded-2xl border-2 border-primary/30 bg-white/10 backdrop-blur-lg p-5 shadow-lg">
                 <ProblemDisplay
                   problem={currentProblem}
                   showTeachingPoint={state.showTeachingPoint}
@@ -127,7 +127,7 @@ export default function PlayPage() {
               </div>
 
               {/* Answer Input */}
-              <div className="rounded-2xl bg-slate-800/90 backdrop-blur-sm p-5 shadow-md">
+              <div className="rounded-2xl bg-white/10 backdrop-blur-lg p-5 shadow-md">
                 <AnswerInput
                   problem={currentProblem}
                   onSubmit={actions.submitAnswer}
@@ -137,7 +137,7 @@ export default function PlayPage() {
               </div>
 
               {/* Hints */}
-              <div className="rounded-2xl bg-slate-800/90 backdrop-blur-sm p-5 shadow-md">
+              <div className="rounded-2xl bg-white/10 backdrop-blur-lg p-5 shadow-md">
                 <HintPanel
                   hints={currentProblem.hints}
                   isChallenge={level.isChallenge}
@@ -146,14 +146,14 @@ export default function PlayPage() {
               </div>
 
               {/* Stats */}
-              <div className="rounded-2xl bg-slate-800/60 backdrop-blur-sm p-4">
+              <div className="rounded-2xl bg-white/8 backdrop-blur-sm p-4">
                 <div className="flex gap-6 text-sm justify-center">
                   <div className="text-center">
-                    <p className="text-slate-400 text-xs">Attempts</p>
+                    <p className="text-white/60 text-xs">Attempts</p>
                     <p className="font-bold text-foreground text-lg">{state.attempts}</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-slate-400 text-xs">Hints Used</p>
+                    <p className="text-white/60 text-xs">Hints Used</p>
                     <p className="font-bold text-foreground text-lg">{state.hintsUsed}</p>
                   </div>
                 </div>

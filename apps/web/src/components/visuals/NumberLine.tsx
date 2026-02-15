@@ -21,7 +21,7 @@ export default function NumberLine({
 
   return (
     <div
-      className="p-3 bg-slate-800/50 rounded-lg"
+      className="p-3 bg-white/10 rounded-lg"
       data-testid="number-line"
       role="img"
       aria-label={`Number line from ${min} to ${max}`}

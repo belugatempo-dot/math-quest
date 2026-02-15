@@ -42,7 +42,7 @@ export default function LevelComplete({
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50">
       {stars >= 2 && <Confetti />}
-      <div className="max-w-md w-full text-center animate-bounce-in rounded-3xl bg-slate-800 border border-slate-700 p-8 shadow-2xl">
+      <div className="max-w-md w-full text-center animate-bounce-in rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 p-8 shadow-2xl">
         <div className="mb-4">
           <div className="text-4xl mb-2">{getMessage()}</div>
           <h2 className="text-xl font-bold text-foreground">{levelName}</h2>
@@ -65,20 +65,20 @@ export default function LevelComplete({
         </div>
 
         <div className="grid grid-cols-2 gap-3 mb-6">
-          <div className="p-3 rounded-2xl bg-gradient-to-br from-blue-900/30 to-blue-900/20 border border-blue-700/50">
-            <p className="text-slate-400 text-xs font-medium">Attempts</p>
+          <div className="p-3 rounded-2xl bg-gradient-to-br from-blue-500/15 to-blue-500/10 border border-blue-400/30">
+            <p className="text-white/60 text-xs font-medium">Attempts</p>
             <p className="text-2xl font-bold text-foreground">{attempts}</p>
           </div>
-          <div className="p-3 rounded-2xl bg-gradient-to-br from-purple-900/30 to-purple-900/20 border border-purple-700/50">
-            <p className="text-slate-400 text-xs font-medium">Hints Used</p>
+          <div className="p-3 rounded-2xl bg-gradient-to-br from-purple-500/15 to-purple-500/10 border border-purple-400/30">
+            <p className="text-white/60 text-xs font-medium">Hints Used</p>
             <p className="text-2xl font-bold text-foreground">{hintsUsed}</p>
           </div>
         </div>
 
         {teachingPoint && (
-          <div className="mb-6 p-4 bg-gradient-to-r from-green-900/30 to-emerald-900/30 border border-green-700/50 rounded-2xl text-left">
-            <p className="text-sm font-bold text-green-300">Remember:</p>
-            <p className="mt-1 text-green-400">{teachingPoint}</p>
+          <div className="mb-6 p-4 bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-400/30 rounded-2xl text-left">
+            <p className="text-sm font-bold text-green-200">Remember:</p>
+            <p className="mt-1 text-green-300">{teachingPoint}</p>
           </div>
         )}
 

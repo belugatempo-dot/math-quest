@@ -57,18 +57,18 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <header className="bg-gray-800 text-white">
+      <header className="bg-white/10 backdrop-blur-lg text-white border-b border-white/15">
         <div className="max-w-6xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold">Content Preview</h1>
-              <p className="text-gray-400">
+              <p className="text-white/60">
                 Browse and inspect all {allLevels.length} levels
               </p>
             </div>
             <Link
               href="/"
-              className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
+              className="px-4 py-2 bg-white/15 text-white/80 hover:bg-white/20 rounded-lg transition-colors"
             >
               ← Back to App
             </Link>
@@ -81,11 +81,11 @@ export default function AdminPage() {
         <div className="grid gap-4 md:grid-cols-4 mb-8">
           <Card>
             <div className="text-3xl font-bold text-primary">{allLevels.length}</div>
-            <div className="text-sm text-slate-400">Total Levels</div>
+            <div className="text-sm text-white/60">Total Levels</div>
           </Card>
           <Card>
             <div className="text-3xl font-bold text-secondary">{stats.totalProblems}</div>
-            <div className="text-sm text-slate-400">Total Problems</div>
+            <div className="text-sm text-white/60">Total Problems</div>
           </Card>
           <Card>
             <div className="text-3xl font-bold text-success">
@@ -93,7 +93,7 @@ export default function AdminPage() {
                 ? Math.round((stats.problemsWithHints / stats.totalProblems) * 100)
                 : 0}%
             </div>
-            <div className="text-sm text-slate-400">Have Hints</div>
+            <div className="text-sm text-white/60">Have Hints</div>
           </Card>
           <Card>
             <div className="text-3xl font-bold text-accent">
@@ -101,7 +101,7 @@ export default function AdminPage() {
                 ? Math.round((stats.problemsWithTeachingPoints / stats.totalProblems) * 100)
                 : 0}%
             </div>
-            <div className="text-sm text-slate-400">Have Teaching Points</div>
+            <div className="text-sm text-white/60">Have Teaching Points</div>
           </Card>
         </div>
 
@@ -131,7 +131,7 @@ export default function AdminPage() {
             placeholder="Search levels..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="px-4 py-2 border border-slate-600 rounded-lg bg-slate-800 text-foreground focus:border-primary focus:outline-none"
+            className="px-4 py-2 border border-white/25 rounded-lg bg-white/10 text-foreground focus:border-primary focus:outline-none"
           />
 
           <div className="flex gap-2">
@@ -140,7 +140,7 @@ export default function AdminPage() {
               id="world-filter"
               value={selectedWorldId}
               onChange={(e) => setSelectedWorldId(e.target.value)}
-              className="px-3 py-2 border border-slate-600 rounded-lg bg-slate-800 text-foreground text-sm focus:border-primary focus:outline-none"
+              className="px-3 py-2 border border-white/25 rounded-lg bg-white/10 text-foreground text-sm focus:border-primary focus:outline-none"
             >
               <option value="all">All Worlds</option>
               {allWorlds.map((world) => (
@@ -158,7 +158,7 @@ export default function AdminPage() {
                   className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                     filter === type
                       ? 'bg-primary text-white'
-                      : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                      : 'bg-white/10 text-white/60 hover:bg-white/15'
                   }`}
                 >
                   {type.charAt(0).toUpperCase() + type.slice(1)}
@@ -182,7 +182,7 @@ export default function AdminPage() {
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="text-xs text-slate-500">{level.id}</span>
+                        <span className="text-xs text-white/50">{level.id}</span>
                         <span
                           className={`px-2 py-0.5 rounded text-xs font-medium ${getLevelTypeInfo(level.type).badgeClasses}`}
                         >
@@ -193,11 +193,11 @@ export default function AdminPage() {
                         )}
                       </div>
                       <h3 className="font-medium text-foreground">{level.name}</h3>
-                      <p className="text-sm text-slate-400">
+                      <p className="text-sm text-white/60">
                         {chapter?.name} • {level.problems.length} problem(s)
                       </p>
                     </div>
-                    <div className="text-slate-500">→</div>
+                    <div className="text-white/50">→</div>
                   </div>
                 </Card>
               </Link>
@@ -206,7 +206,7 @@ export default function AdminPage() {
         </div>
 
         {filteredLevels.length === 0 && (
-          <div className="text-center py-12 text-slate-400">
+          <div className="text-center py-12 text-white/60">
             No levels match your search criteria
           </div>
         )}

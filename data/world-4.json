@@ -8,11 +8,11 @@
   "totalLevels": 133,
   "estimatedWeeks": 36,
   "colorPalette": {
-    "primary": "#0EA5E9",
-    "secondary": "#F59E0B",
+    "primary": "#818CF8",
+    "secondary": "#C084FC",
     "accent": "#F472B6",
-    "background": "#0F172A",
-    "text": "#E2E8F0"
+    "background": "#5B4FCF",
+    "text": "#FFFFFF"
   },
   "characters": [
     {

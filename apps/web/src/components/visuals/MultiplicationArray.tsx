@@ -20,7 +20,7 @@ export default function MultiplicationArray({
 
   return (
     <div
-      className="inline-block p-3 bg-slate-800/50 rounded-lg"
+      className="inline-block p-3 bg-white/10 rounded-lg"
       data-testid="multiplication-array"
       role="img"
       aria-label={`${safeRows} rows of ${safeCols} dots showing ${safeRows} times ${safeCols} equals ${total}`}
@@ -46,7 +46,7 @@ export default function MultiplicationArray({
           );
         })}
       </div>
-      <p className="text-center text-xs text-slate-400 mt-2">
+      <p className="text-center text-xs text-white/60 mt-2">
         {safeRows} × {safeCols} = {total}
       </p>
     </div>

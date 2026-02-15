@@ -11,11 +11,11 @@ export interface ColorPalette {
 }
 
 const defaultPalette: ColorPalette = {
-  primary: '#3B82F6',
-  secondary: '#F97316',
-  accent: '#22C55E',
-  background: '#0F172A',
-  text: '#E2E8F0',
+  primary: '#6366F1',
+  secondary: '#A855F7',
+  accent: '#22D3EE',
+  background: '#5B4FCF',
+  text: '#FFFFFF',
 };
 
 const WorldThemeContext = createContext<ColorPalette>(defaultPalette);

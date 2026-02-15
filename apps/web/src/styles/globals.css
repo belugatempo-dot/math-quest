@@ -3,23 +3,19 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 226, 232, 240;
-  --background-rgb: 15, 23, 42;
-  --world-primary: #3B82F6;
-  --world-secondary: #F97316;
-  --world-accent: #22C55E;
-  --world-background: #0F172A;
-  --world-text: #E2E8F0;
+  --foreground-rgb: 255, 255, 255;
+  --background-rgb: 91, 79, 207;
+  --world-primary: #6366F1;
+  --world-secondary: #A855F7;
+  --world-accent: #22D3EE;
+  --world-background: #5B4FCF;
+  --world-text: #FFFFFF;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: radial-gradient(
-    ellipse at 50% 0%,
-    var(--world-background) 0%,
-    color-mix(in srgb, var(--world-primary) 12%, #0F172A) 50%,
-    color-mix(in srgb, var(--world-secondary) 8%, #0F172A) 100%
-  );
+  background: linear-gradient(135deg, #6366F1 0%, #7C3AED 40%, #9333EA 100%);
+  background-attachment: fixed;
   min-height: 100vh;
 }
 
@@ -47,7 +43,7 @@ body {
   }
 
   .card {
-    @apply bg-slate-800/90 rounded-xl shadow-md p-6 border border-slate-700/50;
+    @apply bg-white/10 backdrop-blur-lg rounded-xl shadow-lg p-6 border border-white/20;
   }
 
   .star {
@@ -80,7 +76,9 @@ body {
   /* Game card with colored accent border */
   .game-card {
     @apply rounded-2xl p-5 transition-all duration-200;
-    background: linear-gradient(to bottom right, rgb(30 41 59 / 0.9), rgb(15 23 42 / 0.8));
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   .game-card:hover {

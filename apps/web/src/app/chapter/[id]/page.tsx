@@ -90,15 +90,15 @@ export default function ChapterPage() {
       </header>
 
       {/* Progress Bar */}
-      <div className="bg-slate-800/80 backdrop-blur-sm border-b border-slate-700/50">
+      <div className="bg-white/10 backdrop-blur-sm border-b border-white/15">
         <div className="max-w-4xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between text-sm mb-2">
-            <span className="text-slate-400 font-medium">Chapter Progress</span>
+            <span className="text-white/60 font-medium">Chapter Progress</span>
             <span className="font-bold text-primary">
               {completedLevels}/{chapter.levels.length} levels
             </span>
           </div>
-          <div className="h-3 bg-slate-700 rounded-full overflow-hidden">
+          <div className="h-3 bg-white/20 rounded-full overflow-hidden">
             <div
               className={`h-full rounded-full transition-all duration-500 ${
                 completedLevels === chapter.levels.length

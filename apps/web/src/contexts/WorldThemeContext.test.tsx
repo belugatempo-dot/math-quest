@@ -21,8 +21,8 @@ describe('WorldThemeContext', () => {
         <ThemeConsumer />
       </WorldThemeProvider>
     );
-    expect(screen.getByTestId('primary').textContent).toBe('#3B82F6');
-    expect(screen.getByTestId('secondary').textContent).toBe('#F97316');
+    expect(screen.getByTestId('primary').textContent).toBe('#6366F1');
+    expect(screen.getByTestId('secondary').textContent).toBe('#A855F7');
   });
 
   it('should provide custom palette when colorPalette prop is given', () => {
@@ -74,6 +74,6 @@ describe('WorldThemeContext', () => {
 
   it('should provide default palette outside provider via useWorldTheme', () => {
     render(<ThemeConsumer />);
-    expect(screen.getByTestId('primary').textContent).toBe('#3B82F6');
+    expect(screen.getByTestId('primary').textContent).toBe('#6366F1');
   });
 });

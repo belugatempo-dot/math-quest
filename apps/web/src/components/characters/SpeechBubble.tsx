@@ -12,10 +12,10 @@ interface SpeechBubbleProps {
 }
 
 const VARIANT_STYLES: Record<BubbleVariant, string> = {
-  story: 'bg-blue-900/30 border-blue-700/50 text-blue-200',
-  hint: 'bg-amber-900/30 border-amber-700/50 text-amber-200',
-  feedback: 'bg-green-900/30 border-green-700/50 text-green-200',
-  teaching: 'bg-purple-900/30 border-purple-700/50 text-purple-200',
+  story: 'bg-blue-500/20 border-blue-400/30 text-blue-100',
+  hint: 'bg-amber-500/20 border-amber-400/30 text-amber-100',
+  feedback: 'bg-green-500/20 border-green-400/30 text-green-100',
+  teaching: 'bg-purple-500/20 border-purple-400/30 text-purple-100',
 };
 
 export default function SpeechBubble({

@@ -16,8 +16,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       secondary: 'bg-secondary text-white hover:opacity-90 active:opacity-80 rounded-lg',
       success: 'bg-success text-white hover:bg-green-600 active:bg-green-700 rounded-lg',
       outline: 'border-2 border-primary text-primary hover:bg-primary hover:text-white rounded-lg',
-      ghost: 'text-foreground hover:bg-slate-700 rounded-lg',
-      game: 'game-button bg-gradient-to-b from-blue-500 to-blue-700 text-white rounded-2xl shadow-game hover:scale-105 hover:shadow-game-lg active:translate-y-0.5 active:shadow-game-sm font-bold',
+      ghost: 'text-foreground hover:bg-white/15 rounded-lg',
+      game: 'game-button bg-gradient-to-b from-indigo-500 to-indigo-700 text-white rounded-2xl shadow-game hover:scale-105 hover:shadow-game-lg active:translate-y-0.5 active:shadow-game-sm font-bold',
       'game-success': 'game-button bg-gradient-to-b from-green-500 to-green-700 text-white rounded-2xl shadow-game hover:scale-105 hover:shadow-game-lg active:translate-y-0.5 active:shadow-game-sm font-bold',
     };
 

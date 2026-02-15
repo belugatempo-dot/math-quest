@@ -10,18 +10,18 @@ const config: Config = {
     extend: {
       colors: {
         // World-themed via CSS custom properties with fallback defaults
-        primary: 'var(--world-primary, #3B82F6)',
-        secondary: 'var(--world-secondary, #F97316)',
-        accent: 'var(--world-accent, #22C55E)',
-        background: 'var(--world-background, #0F172A)',
-        foreground: 'var(--world-text, #E2E8F0)',
-        // Dark theme surface colors
-        surface: '#1E293B',
-        'surface-light': '#334155',
-        muted: '#94A3B8',
+        primary: 'var(--world-primary, #6366F1)',
+        secondary: 'var(--world-secondary, #A855F7)',
+        accent: 'var(--world-accent, #22D3EE)',
+        background: 'var(--world-background, #5B4FCF)',
+        foreground: 'var(--world-text, #FFFFFF)',
+        // Glassmorphism surface colors
+        surface: 'rgba(255,255,255,0.1)',
+        'surface-light': 'rgba(255,255,255,0.15)',
+        muted: 'rgba(255,255,255,0.6)',
         // Star colors
         'star-gold': '#FCD34D',
-        'star-gray': '#475569',
+        'star-gray': 'rgba(255,255,255,0.3)',
         // UI colors
         success: '#22C55E',
         error: '#EF4444',
@@ -32,14 +32,14 @@ const config: Config = {
         game: ['var(--font-inter)', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
-        'game-sm': '0 2px 0 rgba(0,0,0,0.3)',
-        'game': '0 4px 0 rgba(0,0,0,0.3)',
-        'game-lg': '0 6px 0 rgba(0,0,0,0.4)',
-        'game-glow': '0 0 15px rgba(59,130,246,0.5)',
-        'game-glow-accent': '0 0 15px rgba(34,197,94,0.5)',
+        'game-sm': '0 2px 0 rgba(80,50,180,0.25)',
+        'game': '0 4px 0 rgba(80,50,180,0.25)',
+        'game-lg': '0 6px 0 rgba(80,50,180,0.3)',
+        'game-glow': '0 0 15px rgba(139,92,246,0.5)',
+        'game-glow-accent': '0 0 15px rgba(34,211,238,0.5)',
         'game-glow-gold': '0 0 20px rgba(252,211,77,0.6)',
-        'neon-primary': '0 0 20px rgba(59,130,246,0.4), 0 0 40px rgba(59,130,246,0.2)',
-        'neon-accent': '0 0 20px rgba(34,197,94,0.4), 0 0 40px rgba(34,197,94,0.2)',
+        'neon-primary': '0 0 20px rgba(139,92,246,0.4), 0 0 40px rgba(139,92,246,0.2)',
+        'neon-accent': '0 0 20px rgba(34,211,238,0.4), 0 0 40px rgba(34,211,238,0.2)',
       },
       animation: {
         shake: 'shake 0.5s ease-in-out',
@@ -91,8 +91,8 @@ const config: Config = {
           '50%': { transform: 'translateY(-8px)' },
         },
         'glow-pulse': {
-          '0%, 100%': { boxShadow: '0 0 8px rgba(59,130,246,0.4)' },
-          '50%': { boxShadow: '0 0 25px rgba(59,130,246,0.7)' },
+          '0%, 100%': { boxShadow: '0 0 8px rgba(139,92,246,0.4)' },
+          '50%': { boxShadow: '0 0 25px rgba(139,92,246,0.7)' },
         },
         'bounce-in': {
           '0%': { transform: 'scale(0.3)', opacity: '0' },

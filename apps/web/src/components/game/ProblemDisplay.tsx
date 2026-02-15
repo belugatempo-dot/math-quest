@@ -48,12 +48,12 @@ export default function ProblemDisplay({ problem, showTeachingPoint = false }: P
 
       {/* Teaching Point (shown after correct answer) */}
       {showTeachingPoint && problem.teachingPoint && (
-        <div className="mt-4 p-4 bg-gradient-to-r from-green-900/30 to-emerald-900/30 border border-green-700/50 rounded-2xl animate-slide-up">
+        <div className="mt-4 p-4 bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-400/30 rounded-2xl animate-slide-up">
           <div className="flex items-start gap-2">
             <span className="text-lg" role="img" aria-label="Light bulb">💡</span>
             <div>
-              <p className="text-sm font-bold text-green-300">Key Insight:</p>
-              <p className="mt-1 text-green-400">{problem.teachingPoint}</p>
+              <p className="text-sm font-bold text-green-200">Key Insight:</p>
+              <p className="mt-1 text-green-300">{problem.teachingPoint}</p>
             </div>
           </div>
         </div>

@@ -38,7 +38,7 @@ export default function ChapterCard({
               cy="40"
               r={radius}
               fill="none"
-              stroke="#334155"
+              stroke="rgba(255,255,255,0.2)"
               strokeWidth="5"
             />
             {/* Progress ring */}
@@ -65,7 +65,7 @@ export default function ChapterCard({
                   ? 'fill-yellow-400'
                   : hasProgress
                     ? 'fill-primary'
-                    : 'fill-slate-700'
+                    : 'fill-white/15'
               }
             />
             {/* Chapter number */}
@@ -74,7 +74,7 @@ export default function ChapterCard({
               y="44"
               textAnchor="middle"
               className={`text-xl font-bold ${
-                isComplete || hasProgress ? 'fill-white' : 'fill-slate-500'
+                isComplete || hasProgress ? 'fill-white' : 'fill-white/50'
               }`}
             >
               {chapter.number}
@@ -107,24 +107,24 @@ export default function ChapterCard({
             </div>
             <div className="text-right flex-shrink-0">
               <StarDisplay stars={Math.min(3, Math.floor(totalStars / 3))} size="sm" />
-              <div className="text-xs text-slate-500 mt-1">
+              <div className="text-xs text-white/50 mt-1">
                 {totalStars}/{maxStars}
               </div>
             </div>
           </div>
 
-          <p className="text-sm text-slate-400 mt-1">
+          <p className="text-sm text-white/60 mt-1">
             {chapter.learningObjectives.slice(0, 2).join(', ')}
           </p>
 
           <div className="mt-2 space-y-1">
             <div className="flex justify-between text-sm">
-              <span className="text-slate-500">Progress</span>
+              <span className="text-white/50">Progress</span>
               <span className="font-medium">
                 {completedLevels}/{totalLevels} levels
               </span>
             </div>
-            <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
+            <div className="h-2 bg-white/20 rounded-full overflow-hidden">
               <div
                 className={`h-full rounded-full transition-all duration-500 ${
                   isComplete
@@ -136,7 +136,7 @@ export default function ChapterCard({
             </div>
           </div>
 
-          <div className="mt-2 text-xs text-slate-500">
+          <div className="mt-2 text-xs text-white/50">
             Weeks {chapter.weekStart}-{chapter.weekEnd}
           </div>
         </div>

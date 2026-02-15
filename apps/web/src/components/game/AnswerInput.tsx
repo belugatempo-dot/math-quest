@@ -82,7 +82,7 @@ export default function AnswerInput({
               onKeyDown={handleKeyDown}
               disabled={disabled}
               placeholder="Enter your answer..."
-              className="w-full px-4 py-3 text-2xl text-center font-bold border-2 border-primary/30 rounded-2xl focus:border-primary focus:outline-none focus:shadow-game-glow disabled:bg-slate-900/50 bg-slate-800/80 text-foreground transition-all"
+              className="w-full px-4 py-3 text-2xl text-center font-bold border-2 border-primary/30 rounded-2xl focus:border-primary focus:outline-none focus:shadow-game-glow disabled:bg-white/5 bg-white/10 text-foreground transition-all"
               autoFocus
             />
             {/* Game-style number pad */}
@@ -92,7 +92,7 @@ export default function AnswerInput({
                   key={num}
                   onClick={() => setValue((v) => v + num.toString())}
                   disabled={disabled}
-                  className="min-h-[64px] py-3 text-xl font-bold bg-gradient-to-b from-slate-700 to-slate-800 border-2 border-slate-600 text-foreground shadow-game-sm hover:shadow-game hover:scale-105 active:translate-y-0.5 active:shadow-none rounded-xl transition-all disabled:opacity-50"
+                  className="min-h-[64px] py-3 text-xl font-bold bg-gradient-to-b from-white/15 to-white/10 border-2 border-white/25 text-foreground shadow-game-sm hover:shadow-game hover:scale-105 active:translate-y-0.5 active:shadow-none rounded-xl transition-all disabled:opacity-50"
                 >
                   {num}
                 </button>
@@ -101,14 +101,14 @@ export default function AnswerInput({
               <button
                 onClick={() => setValue((v) => v + '0')}
                 disabled={disabled}
-                className="min-h-[64px] py-3 text-xl font-bold bg-gradient-to-b from-slate-700 to-slate-800 border-2 border-slate-600 text-foreground shadow-game-sm hover:shadow-game hover:scale-105 active:translate-y-0.5 active:shadow-none rounded-xl transition-all disabled:opacity-50"
+                className="min-h-[64px] py-3 text-xl font-bold bg-gradient-to-b from-white/15 to-white/10 border-2 border-white/25 text-foreground shadow-game-sm hover:shadow-game hover:scale-105 active:translate-y-0.5 active:shadow-none rounded-xl transition-all disabled:opacity-50"
               >
                 0
               </button>
               <button
                 onClick={() => setValue((v) => v.slice(0, -1))}
                 disabled={disabled}
-                className="min-h-[64px] py-3 text-xl font-bold bg-gradient-to-b from-red-900/30 to-red-900/40 border-2 border-red-700/50 shadow-game-sm hover:shadow-game hover:scale-105 active:translate-y-0.5 active:shadow-none rounded-xl transition-all disabled:opacity-50 flex items-center justify-center text-red-400"
+                className="min-h-[64px] py-3 text-xl font-bold bg-gradient-to-b from-red-500/20 to-red-500/30 border-2 border-red-400/30 shadow-game-sm hover:shadow-game hover:scale-105 active:translate-y-0.5 active:shadow-none rounded-xl transition-all disabled:opacity-50 flex items-center justify-center text-red-300"
                 aria-label="Backspace"
               >
                 <BackspaceIcon />
@@ -127,7 +127,7 @@ export default function AnswerInput({
               onKeyDown={handleKeyDown}
               disabled={disabled}
               placeholder="Enter your answer (A, B, C, or D)..."
-              className="w-full px-4 py-3 text-lg font-medium border-2 border-primary/30 rounded-2xl focus:border-primary focus:outline-none focus:shadow-game-glow disabled:bg-slate-900/50 bg-slate-800/80 text-foreground transition-all"
+              className="w-full px-4 py-3 text-lg font-medium border-2 border-primary/30 rounded-2xl focus:border-primary focus:outline-none focus:shadow-game-glow disabled:bg-white/5 bg-white/10 text-foreground transition-all"
               autoFocus
             />
           </div>
@@ -143,7 +143,7 @@ export default function AnswerInput({
             onKeyDown={handleKeyDown}
             disabled={disabled}
             placeholder="Type your answer..."
-            className="w-full px-4 py-3 text-lg font-medium border-2 border-primary/30 rounded-2xl focus:border-primary focus:outline-none focus:shadow-game-glow disabled:bg-slate-900/50 bg-slate-800/80 text-foreground transition-all"
+            className="w-full px-4 py-3 text-lg font-medium border-2 border-primary/30 rounded-2xl focus:border-primary focus:outline-none focus:shadow-game-glow disabled:bg-white/5 bg-white/10 text-foreground transition-all"
             autoFocus
           />
         );
@@ -159,8 +159,8 @@ export default function AnswerInput({
         <div
           className={`p-4 rounded-2xl ${feedbackAnimation} ${
             feedback.isCorrect
-              ? 'bg-gradient-to-r from-green-900/30 to-green-900/20 text-green-300 border border-green-700/50'
-              : 'bg-gradient-to-r from-red-900/30 to-red-900/20 text-red-300 border border-red-700/50'
+              ? 'bg-gradient-to-r from-green-500/20 to-green-500/15 text-green-200 border border-green-400/30'
+              : 'bg-gradient-to-r from-red-500/20 to-red-500/15 text-red-200 border border-red-400/30'
           }`}
         >
           <p className="font-bold">

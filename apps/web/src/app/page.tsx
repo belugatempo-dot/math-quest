@@ -9,6 +9,7 @@ import WorldDecoration from '@/components/decorations/WorldDecoration';
 import WorldIcon from '@/components/decorations/WorldIcon';
 import ChapterCard from '@/components/navigation/ChapterCard';
 import ProfilePicker from '@/components/ui/ProfilePicker';
+import SyncStatus from '@/components/auth/SyncStatus';
 import FloatingParticles from '@/components/effects/FloatingParticles';
 
 export default function HomePage() {
@@ -64,9 +65,12 @@ export default function HomePage() {
             <div>
               <p className="text-sm text-white/70 font-medium">World Map</p>
               <h1 className="text-3xl font-bold">{`Level ${selectedWorld.baLevel} - ${selectedWorld.name}`}</h1>
-              <p className="text-white/70 mt-1">
-                {selectedWorld.totalLevels} levels • {selectedWorld.estimatedWeeks} weeks
-              </p>
+              <div className="flex items-center gap-3 mt-1">
+                <p className="text-white/70">
+                  {selectedWorld.totalLevels} levels • {selectedWorld.estimatedWeeks} weeks
+                </p>
+                <SyncStatus />
+              </div>
             </div>
             <div className="flex items-center gap-6">
               <div className="text-right">
@@ -96,7 +100,7 @@ export default function HomePage() {
       <div className="max-w-4xl mx-auto px-4 pt-2 flex justify-end">
         <Link
           href="/admin"
-          className="text-xs text-slate-500 hover:text-slate-300 flex items-center gap-1 transition-colors"
+          className="text-xs text-white/50 hover:text-white/80 flex items-center gap-1 transition-colors"
         >
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
             <circle cx="12" cy="12" r="3" />
@@ -120,7 +124,7 @@ export default function HomePage() {
                 className={`flex-shrink-0 flex flex-col items-center gap-2 px-5 py-3 rounded-2xl text-sm font-bold transition-all ${
                   isSelected
                     ? 'bg-primary text-white shadow-game scale-105'
-                    : 'bg-slate-800/80 text-slate-300 hover:bg-slate-700 hover:shadow-md hover:scale-102 border border-slate-600/50'
+                    : 'bg-white/10 text-white/70 hover:bg-white/20 hover:shadow-md hover:scale-102 border border-white/15'
                 }`}
               >
                 <WorldIcon theme={world.theme ?? 'adventure'} size={28} />
@@ -135,7 +139,7 @@ export default function HomePage() {
       <main className="max-w-4xl mx-auto px-4 py-6 relative">
         <div className="mb-4">
           <h2 className="text-xl font-bold text-foreground">Chapters</h2>
-          <p className="text-slate-400">
+          <p className="text-white/60">
             Complete levels to earn stars and unlock new chapters
           </p>
         </div>
@@ -143,7 +147,7 @@ export default function HomePage() {
         <div className="relative">
           {/* Vertical connecting line */}
           <div
-            className="absolute left-[40px] top-[40px] w-0.5 bg-gradient-to-b from-primary/40 to-slate-700 pointer-events-none"
+            className="absolute left-[40px] top-[40px] w-0.5 bg-gradient-to-b from-primary/40 to-white/15 pointer-events-none"
             style={{ height: `calc(100% - 80px)` }}
             aria-hidden="true"
           />

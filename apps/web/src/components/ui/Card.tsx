@@ -7,10 +7,10 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
 const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ className = '', variant = 'default', children, ...props }, ref) => {
     const variants = {
-      default: 'bg-slate-800/90 border border-slate-700/50 shadow-md',
-      elevated: 'bg-slate-800/90 border border-slate-700/50 shadow-lg',
-      bordered: 'bg-slate-800/90 border border-slate-700/50',
-      game: 'game-card shadow-lg border-b-4 border-primary/30 hover:shadow-game-glow',
+      default: 'bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg',
+      elevated: 'bg-white/15 backdrop-blur-lg border border-white/20 shadow-xl',
+      bordered: 'bg-white/10 backdrop-blur-lg border border-white/20',
+      game: 'bg-white/10 backdrop-blur-lg shadow-lg border border-white/20 border-b-4 border-b-primary/40 hover:shadow-game-glow',
     };
 
     return (

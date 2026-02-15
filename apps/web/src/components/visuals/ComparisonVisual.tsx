@@ -17,17 +17,17 @@ export default function ComparisonVisual({
 
   return (
     <div
-      className="p-3 bg-slate-800/50 rounded-lg"
+      className="p-3 bg-white/10 rounded-lg"
       data-testid="comparison-visual"
       role="img"
       aria-label={`Comparing ${leftLabel ?? leftValue} and ${rightLabel ?? rightValue}`}
     >
       <div className="space-y-3">
         <div className="flex items-center gap-3">
-          <span className="text-sm font-medium w-16 text-right text-slate-400">
+          <span className="text-sm font-medium w-16 text-right text-white/60">
             {leftLabel ?? leftValue}
           </span>
-          <div className="flex-1 h-6 bg-slate-700 rounded-full overflow-hidden">
+          <div className="flex-1 h-6 bg-white/20 rounded-full overflow-hidden">
             <div
               className="h-full bg-blue-500 rounded-full transition-all"
               style={{ width: `${(leftValue / maxValue) * 100}%` }}
@@ -35,10 +35,10 @@ export default function ComparisonVisual({
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <span className="text-sm font-medium w-16 text-right text-slate-400">
+          <span className="text-sm font-medium w-16 text-right text-white/60">
             {rightLabel ?? rightValue}
           </span>
-          <div className="flex-1 h-6 bg-slate-700 rounded-full overflow-hidden">
+          <div className="flex-1 h-6 bg-white/20 rounded-full overflow-hidden">
             <div
               className="h-full bg-green-500 rounded-full transition-all"
               style={{ width: `${(rightValue / maxValue) * 100}%` }}

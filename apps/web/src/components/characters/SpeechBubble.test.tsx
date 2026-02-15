@@ -17,19 +17,19 @@ describe('SpeechBubble', () => {
   it('should apply story variant styles by default', () => {
     render(<SpeechBubble>Content</SpeechBubble>);
     const bubble = screen.getByTestId('speech-bubble');
-    expect(bubble.className).toContain('bg-blue-900/30');
+    expect(bubble.className).toContain('bg-blue-500/20');
   });
 
   it('should apply hint variant styles', () => {
     render(<SpeechBubble variant="hint">Content</SpeechBubble>);
     const bubble = screen.getByTestId('speech-bubble');
-    expect(bubble.className).toContain('bg-amber-900/30');
+    expect(bubble.className).toContain('bg-amber-500/20');
   });
 
   it('should apply feedback variant styles', () => {
     render(<SpeechBubble variant="feedback">Content</SpeechBubble>);
     const bubble = screen.getByTestId('speech-bubble');
-    expect(bubble.className).toContain('bg-green-900/30');
+    expect(bubble.className).toContain('bg-green-500/20');
   });
 
   it('should render triangle pointer as aria-hidden', () => {
