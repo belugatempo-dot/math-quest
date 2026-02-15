@@ -87,9 +87,9 @@ World 3 (Multiplication Mountains) — **120 levels** across 12 chapters (enhanc
 **Schema note**: Problem ID regex in `packages/shared/src/schemas/problem.ts:72` accepts both `problem-\d+-\d+-\d+-\d+` and `problem-level-\d+-\d+-\d+-\d+` formats.
 
 ### `data/world-4.json`
-World 4 (Fraction Islands) — **125 levels** (120 regular + 5 boss battles) across 10 chapters. Created 2026-02-08.
+World 4 (Fraction Islands) — **133 levels** across 12 chapters with **369 problems** (2.8 problems/level). Enhanced 2026-02-14 from initial 125 levels/137 problems.
 
-**World 4 quality status: A-**. Problem ID format: `problem-4-X-Y-Z`. Level ID format: `level-4-X-Y`. Chapters 8 (17 levels) and 10 (13 levels) are the largest.
+**World 4 quality status: A**. All 12 chapters have boss levels. All CCSS Grade 4-5 gaps filled (4.NF.C.5, 5.NBT.A.4, 5.NBT.B.6-7, 4.MD.A.1-3, 4.G.A.1-3, 4.OA.C.5). Problem ID format: `problem-4-X-Y-Z`. Level ID format: `level-4-X-Y`. Largest chapters: Ch 8 (18 levels, 53 problems), Ch 10 (14 levels, 37 problems).
 
 ### `scripts/`
 Utility scripts for content management:
@@ -98,9 +98,9 @@ Utility scripts for content management:
 
 ## Testing
 
-- **Shared**: Vitest with `globals: true`, node environment, v8 coverage. Coverage excludes test files and barrel index files. 100% coverage on all 4 utility modules. **341 tests**.
-- **Web**: Vitest with jsdom, `@testing-library/react`, setup file `vitest.setup.ts`. Hook tests use `renderHook`/`act`. Component tests query by accessibility attributes. **245 tests**.
-- **Total**: 586 tests across shared + web.
+- **Shared**: Vitest with `globals: true`, node environment, v8 coverage. Coverage excludes test files and barrel index files. 100% coverage on all 4 utility modules. **350 tests**.
+- **Web**: Vitest with jsdom, `@testing-library/react`, setup file `vitest.setup.ts`. Hook tests use `renderHook`/`act`. Component tests query by accessibility attributes. **401 tests**.
+- **Total**: 751 tests across shared + web.
 - Turborepo ensures shared package builds before tests run (`dependsOn: ["^build"]`).
 - **Note**: `@mathquest/content` package has no tests (pre-existing, `pnpm test` from root will fail on it — run shared and web tests separately).
 
