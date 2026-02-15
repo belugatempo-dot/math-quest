@@ -13,12 +13,32 @@ const mockProfiles = vi.hoisted(() => ({
 
 const mockStorage = vi.hoisted(() => ({
   loadProgress: vi.fn(),
+  saveProgress: vi.fn(),
   completeLevelProgress: vi.fn(),
   migrateOldProgress: vi.fn(),
 }));
 
 vi.mock('@/lib/profiles', () => mockProfiles);
 vi.mock('@/lib/storage', () => mockStorage);
+
+vi.mock('@/lib/progress-merge', () => ({
+  mergeProgress: vi.fn((local: unknown) => local),
+}));
+
+vi.mock('@/contexts/AuthContext', () => ({
+  useAuth: () => ({ isAuthenticated: false }),
+}));
+
+vi.mock('@/lib/services/child-profile.service', () => ({
+  getChildProfiles: vi.fn().mockResolvedValue([]),
+  createChildProfile: vi.fn().mockResolvedValue(null),
+  deleteChildProfile: vi.fn().mockResolvedValue(false),
+}));
+
+vi.mock('@/lib/services/progress.service', () => ({
+  saveProgressToCloud: vi.fn().mockResolvedValue(true),
+  loadProgressFromCloud: vi.fn().mockResolvedValue(null),
+}));
 
 function TestConsumer() {
   const { activeProfile, profiles, progress } = useProfile();

@@ -32,3 +32,12 @@ export type {
   Title,
   UserPreferences
 } from './user';
+export type {
+  SupabaseProfile,
+  ChildProfile,
+  CloudProgress,
+  CloudLevelProgress,
+  AuthState,
+  CreateChildInput,
+  UpdateChildInput,
+} from './auth';

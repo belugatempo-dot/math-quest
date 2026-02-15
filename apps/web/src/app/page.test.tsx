@@ -98,6 +98,10 @@ vi.mock('@/components/effects/FloatingParticles', () => ({
   default: () => <div data-testid="floating-particles" />,
 }));
 
+vi.mock('@/components/auth/SyncStatus', () => ({
+  default: () => <span data-testid="sync-status">Sync Status</span>,
+}));
+
 import HomePage from './page';
 
 const defaultProgress = {
@@ -200,6 +204,11 @@ describe('HomePage', () => {
     render(<HomePage />);
     expect(screen.getByText('Alice')).toBeInTheDocument();
     expect(screen.getByLabelText('Switch player')).toBeInTheDocument();
+  });
+
+  it('should render SyncStatus in header', () => {
+    render(<HomePage />);
+    expect(screen.getByTestId('sync-status')).toBeInTheDocument();
   });
 
   it('should call switchProfile with empty string when switch player is clicked', () => {

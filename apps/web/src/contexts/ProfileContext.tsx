@@ -22,6 +22,15 @@ import {
   migrateOldProgress,
   type GameProgress,
 } from '@/lib/storage';
+import { useAuth } from '@/contexts/AuthContext';
+import {
+  getChildProfiles,
+  createChildProfile,
+  deleteChildProfile,
+} from '@/lib/services/child-profile.service';
+import { saveProgressToCloud, loadProgressFromCloud } from '@/lib/services/progress.service';
+import { mergeProgress } from '@/lib/progress-merge';
+import { saveProgress } from '@/lib/storage';
 
 export interface ProfileContextValue {
   activeProfile: Profile | null;
@@ -48,6 +57,7 @@ const defaultProgress: GameProgress = {
 const ProfileContext = createContext<ProfileContextValue | null>(null);
 
 export function ProfileProvider({ children }: { children: ReactNode }) {
+  const { isAuthenticated } = useAuth();
   const [store, setStore] = useState<ProfileStore>({
     profiles: [],
     activeProfileId: null,
@@ -57,48 +67,114 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
 
   // Load profiles on mount + handle migration
   useEffect(() => {
-    const loaded = loadProfiles();
+    const init = async () => {
+      // If authenticated, try loading cloud profiles and merge progress
+      if (isAuthenticated) {
+        try {
+          const cloudProfiles = await getChildProfiles();
+          if (cloudProfiles.length > 0) {
+            const profiles: Profile[] = cloudProfiles.map((cp) => ({
+              id: cp.id,
+              name: cp.displayName,
+              avatar: cp.avatar,
+              createdAt: cp.createdAt,
+            }));
+            const loaded: ProfileStore = {
+              profiles,
+              activeProfileId: profiles[0].id,
+            };
+            setStore(loaded);
 
-    // Migration: if no profiles exist but old progress does, create a default profile
-    if (loaded.profiles.length === 0) {
-      const tempId = crypto.randomUUID();
-      const migrated = migrateOldProgress(tempId);
-      if (migrated) {
-        const defaultProfile: Profile = {
-          id: tempId,
-          name: 'Player 1',
-          avatar: '🧒',
-          createdAt: new Date().toISOString(),
-        };
-        loaded.profiles.push(defaultProfile);
-        loaded.activeProfileId = tempId;
-        saveProfiles(loaded);
-        setStore(loaded);
-        setProgress(migrated);
-        setIsLoaded(true);
-        return;
+            // Load local + cloud progress and merge
+            const activeId = loaded.activeProfileId!;
+            const localProgress = loadProgress(activeId);
+            const cloudProgress = await loadProgressFromCloud(activeId);
+
+            if (cloudProgress) {
+              const cloudAsGameProgress: GameProgress = {
+                completedLevels: cloudProgress.completedLevels,
+                totalStars: cloudProgress.totalStars,
+                lastPlayedLevelId: cloudProgress.lastPlayedLevelId,
+                lastPlayedAt: cloudProgress.lastPlayedAt,
+              };
+              const merged = mergeProgress(localProgress, cloudAsGameProgress);
+              // Persist merged progress back to both stores
+              saveProgress(activeId, merged);
+              saveProgressToCloud(
+                activeId,
+                merged.completedLevels,
+                merged.totalStars,
+                merged.lastPlayedLevelId,
+                merged.lastPlayedAt
+              ).catch(() => {});
+              setProgress(merged);
+            } else {
+              setProgress(localProgress);
+            }
+
+            setIsLoaded(true);
+            return;
+          }
+        } catch {
+          // Fall through to localStorage
+        }
       }
-    }
 
-    setStore(loaded);
-    if (loaded.activeProfileId) {
-      setProgress(loadProgress(loaded.activeProfileId));
-    }
-    setIsLoaded(true);
-  }, []);
+      // Fall back to localStorage
+      const loaded = loadProfiles();
+
+      // Migration: if no profiles exist but old progress does, create a default profile
+      if (loaded.profiles.length === 0) {
+        const tempId = crypto.randomUUID();
+        const migrated = migrateOldProgress(tempId);
+        if (migrated) {
+          const defaultProfile: Profile = {
+            id: tempId,
+            name: 'Player 1',
+            avatar: '🧒',
+            createdAt: new Date().toISOString(),
+          };
+          loaded.profiles.push(defaultProfile);
+          loaded.activeProfileId = tempId;
+          saveProfiles(loaded);
+          setStore(loaded);
+          setProgress(migrated);
+          setIsLoaded(true);
+          return;
+        }
+      }
+
+      setStore(loaded);
+      if (loaded.activeProfileId) {
+        setProgress(loadProgress(loaded.activeProfileId));
+      }
+      setIsLoaded(true);
+    };
+
+    init();
+  }, [isAuthenticated]);
 
   const activeProfile =
     store.profiles.find((p) => p.id === store.activeProfileId) ?? null;
 
-  const createProfile = useCallback(
+  const handleCreateProfile = useCallback(
     (name: string, avatar: string): Profile => {
+      // Always create locally first (works offline)
       const profile = createProfileStorage(name, avatar);
       const updated = loadProfiles();
       setStore(updated);
       setProgress(loadProgress(profile.id));
+
+      // If authenticated, also create in cloud (fire-and-forget)
+      if (isAuthenticated) {
+        createChildProfile({ displayName: name, avatar }).catch(() => {
+          // Cloud create failed — local still works
+        });
+      }
+
       return profile;
     },
-    []
+    [isAuthenticated]
   );
 
   const switchProfile = useCallback((profileId: string) => {
@@ -125,8 +201,15 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
       } else {
         setProgress(defaultProgress);
       }
+
+      // If authenticated, also delete from cloud (fire-and-forget)
+      if (isAuthenticated) {
+        deleteChildProfile(profileId).catch(() => {
+          // Cloud delete failed — local still removed
+        });
+      }
     },
-    []
+    [isAuthenticated]
   );
 
   const completeLevel = useCallback(
@@ -145,8 +228,21 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
         hintsUsed
       );
       setProgress(updated);
+
+      // If authenticated, sync to cloud (fire-and-forget)
+      if (isAuthenticated) {
+        saveProgressToCloud(
+          store.activeProfileId,
+          updated.completedLevels,
+          updated.totalStars,
+          updated.lastPlayedLevelId,
+          updated.lastPlayedAt
+        ).catch(() => {
+          // Cloud sync failed — localStorage still has the data
+        });
+      }
     },
-    [store.activeProfileId]
+    [store.activeProfileId, isAuthenticated]
   );
 
   // Don't render children until profiles are loaded to avoid flash
@@ -157,7 +253,7 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
       value={{
         activeProfile,
         profiles: store.profiles,
-        createProfile,
+        createProfile: handleCreateProfile,
         switchProfile,
         deleteProfile: deleteProfileAction,
         progress,

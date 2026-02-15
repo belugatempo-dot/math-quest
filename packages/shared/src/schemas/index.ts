@@ -5,3 +5,4 @@ export * from './level';
 export * from './chapter';
 export * from './world';
 export * from './user';
+export * from './auth';

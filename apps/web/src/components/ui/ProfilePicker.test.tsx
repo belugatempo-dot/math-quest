@@ -4,10 +4,32 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import ProfilePicker from './ProfilePicker';
 
 const mockUseProfile = vi.fn();
+const mockUseAuth = vi.fn();
+const mockGetLocalMigrationCandidates = vi.fn();
 
 vi.mock('@/contexts/ProfileContext', () => ({
   useProfile: () => mockUseProfile(),
 }));
+
+vi.mock('@/contexts/AuthContext', () => ({
+  useAuth: () => mockUseAuth(),
+}));
+
+vi.mock('@/lib/services/migration.service', () => ({
+  getLocalMigrationCandidates: () => mockGetLocalMigrationCandidates(),
+}));
+
+const defaultAuthMock = {
+  isConfigured: false,
+  isAuthenticated: false,
+  isLoading: false,
+  user: null,
+  error: null,
+  signUp: vi.fn(),
+  signIn: vi.fn(),
+  signOut: vi.fn(),
+  clearError: vi.fn(),
+};
 
 const defaultMock = {
   profiles: [],
@@ -23,6 +45,8 @@ describe('ProfilePicker', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockUseProfile.mockReturnValue({ ...defaultMock });
+    mockUseAuth.mockReturnValue({ ...defaultAuthMock });
+    mockGetLocalMigrationCandidates.mockReturnValue([]);
   });
 
   describe('no profiles state', () => {
@@ -179,6 +203,102 @@ describe('ProfilePicker', () => {
       fireEvent.click(screen.getByLabelText('Cancel delete'));
       expect(deleteProfile).not.toHaveBeenCalled();
       expect(screen.getByLabelText('Delete Alice')).toBeInTheDocument();
+    });
+  });
+
+  describe('auth integration', () => {
+    it('should not show auth bar when Supabase is not configured', () => {
+      mockUseAuth.mockReturnValue({ ...defaultAuthMock, isConfigured: false });
+      render(<ProfilePicker />);
+
+      expect(screen.queryByText('Sign in to sync progress across devices')).not.toBeInTheDocument();
+      expect(screen.queryByLabelText('Sign in or sign up')).not.toBeInTheDocument();
+    });
+
+    it('should show sign in prompt when Supabase is configured but not authenticated', () => {
+      mockUseAuth.mockReturnValue({ ...defaultAuthMock, isConfigured: true });
+      render(<ProfilePicker />);
+
+      expect(screen.getByText('Sign in to sync progress across devices')).toBeInTheDocument();
+      expect(screen.getByLabelText('Sign in or sign up')).toBeInTheDocument();
+    });
+
+    it('should show user info when authenticated', () => {
+      mockUseAuth.mockReturnValue({
+        ...defaultAuthMock,
+        isConfigured: true,
+        isAuthenticated: true,
+        user: {
+          id: 'user-123',
+          displayName: 'Test Parent',
+          email: 'test@test.com',
+          createdAt: '2026-01-01T00:00:00.000Z',
+          updatedAt: '2026-01-01T00:00:00.000Z',
+        },
+      });
+      render(<ProfilePicker />);
+
+      expect(screen.getByText('Test Parent')).toBeInTheDocument();
+      expect(screen.getByText(/Signed in as/)).toBeInTheDocument();
+      expect(screen.getByLabelText('Sign out')).toBeInTheDocument();
+    });
+
+    it('should show auth form when Sign in button is clicked', () => {
+      mockUseAuth.mockReturnValue({ ...defaultAuthMock, isConfigured: true });
+      render(<ProfilePicker />);
+
+      fireEvent.click(screen.getByLabelText('Sign in or sign up'));
+
+      expect(screen.getByText('Sign in to save progress to the cloud')).toBeInTheDocument();
+      // AuthForm is rendered (it's mocked via useAuth)
+    });
+
+    it('should call signOut when Sign out is clicked', () => {
+      const mockSignOut = vi.fn();
+      mockUseAuth.mockReturnValue({
+        ...defaultAuthMock,
+        isConfigured: true,
+        isAuthenticated: true,
+        user: {
+          id: 'user-123',
+          displayName: 'Test Parent',
+          email: 'test@test.com',
+          createdAt: '2026-01-01T00:00:00.000Z',
+          updatedAt: '2026-01-01T00:00:00.000Z',
+        },
+        signOut: mockSignOut,
+      });
+      render(<ProfilePicker />);
+
+      fireEvent.click(screen.getByLabelText('Sign out'));
+      expect(mockSignOut).toHaveBeenCalled();
+    });
+
+    it('should show migration prompt after auth when local profiles exist', () => {
+      mockUseAuth.mockReturnValue({ ...defaultAuthMock, isConfigured: true });
+      mockGetLocalMigrationCandidates.mockReturnValue([
+        {
+          profile: { id: 'a', name: 'Alice', avatar: '🦊', createdAt: '2026-01-01' },
+          progress: { completedLevels: {}, totalStars: 0, lastPlayedLevelId: null, lastPlayedAt: null },
+          hasProgress: false,
+        },
+      ]);
+
+      render(<ProfilePicker />);
+
+      // Click sign in to show auth form
+      fireEvent.click(screen.getByLabelText('Sign in or sign up'));
+      expect(screen.getByText('Sign in to save progress to the cloud')).toBeInTheDocument();
+    });
+
+    it('should not show migration prompt when no local profiles exist after auth', () => {
+      mockUseAuth.mockReturnValue({ ...defaultAuthMock, isConfigured: true });
+      mockGetLocalMigrationCandidates.mockReturnValue([]);
+
+      render(<ProfilePicker />);
+
+      // The migration prompt should not be visible
+      expect(screen.queryByText('Migrate Progress to Cloud?')).not.toBeInTheDocument();
     });
   });
 });
