@@ -30,7 +30,7 @@ describe('AnswerInput', () => {
         expect(screen.getByRole('button', { name: String(i) })).toBeInTheDocument();
       }
       // Backspace button
-      expect(screen.getByRole('button', { name: '←' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Backspace' })).toBeInTheDocument();
     });
 
     it('should render multiple_choice with text input', () => {
@@ -192,7 +192,7 @@ describe('AnswerInput', () => {
       render(<AnswerInput problem={baseProblem} onSubmit={vi.fn()} />);
       fireEvent.click(screen.getByRole('button', { name: '1' }));
       fireEvent.click(screen.getByRole('button', { name: '5' }));
-      fireEvent.click(screen.getByRole('button', { name: '←' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Backspace' }));
       const input = screen.getByPlaceholderText('Enter your answer...') as HTMLInputElement;
       expect(input.value).toBe('1');
     });

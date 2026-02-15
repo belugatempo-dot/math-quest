@@ -4,12 +4,20 @@ import { useState } from 'react';
 import type { Hint } from '@mathquest/shared';
 import { HINT_COSTS } from '@mathquest/shared';
 import Button from '@/components/ui/Button';
+import CharacterMessage from '@/components/characters/CharacterMessage';
+import type { CharacterId, Expression } from '@/components/characters/CharacterAvatar';
 
 interface HintPanelProps {
   hints: Hint[];
   isChallenge?: boolean;
   onRevealHint?: (tier: 1 | 2 | 3) => void;
 }
+
+const HINT_CHARACTERS: Record<number, { characterId: CharacterId; expression: Expression }> = {
+  1: { characterId: 'prof-owlbert', expression: 'thinking' },
+  2: { characterId: 'lizzie', expression: 'encouraging' },
+  3: { characterId: 'grogg', expression: 'happy' },
+};
 
 export default function HintPanel({
   hints,
@@ -20,9 +28,9 @@ export default function HintPanel({
 
   if (isChallenge || hints.length === 0) {
     return (
-      <div className="p-4 bg-amber-50 border border-amber-200 rounded-lg">
-        <p className="text-amber-800 font-medium">Challenge Level</p>
-        <p className="text-sm text-amber-600 mt-1">
+      <div className="p-4 bg-gradient-to-r from-amber-900/30 to-orange-900/30 border border-amber-700/50 rounded-2xl">
+        <p className="text-amber-300 font-bold">Challenge Level</p>
+        <p className="text-sm text-amber-400 mt-1">
           No hints available - you can do this!
         </p>
       </div>
@@ -55,10 +63,13 @@ export default function HintPanel({
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h3 className="font-semibold text-foreground">Hints</h3>
+        <h3 className="font-bold text-foreground flex items-center gap-2">
+          <span className="text-lg" aria-hidden="true">💡</span>
+          Hints
+        </h3>
         {canReveal && (
           <Button
-            variant="outline"
+            variant="game"
             size="sm"
             onClick={() => handleReveal(nextTier)}
           >
@@ -69,29 +80,50 @@ export default function HintPanel({
 
       {hints.map((hint) => {
         const isRevealed = revealedTiers.has(hint.tier);
+        const character = HINT_CHARACTERS[hint.tier];
         return (
           <div
             key={hint.tier}
-            className={`p-4 rounded-lg transition-all ${
+            className={`rounded-2xl transition-all ${
               isRevealed
-                ? 'bg-blue-50 border border-blue-200'
-                : 'bg-gray-100 border border-gray-200'
+                ? ''
+                : 'p-4 bg-gradient-to-r from-slate-700/50 to-slate-800/50 border-2 border-dashed border-slate-600'
             }`}
           >
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-sm font-medium text-gray-500">
-                Hint {hint.tier}
-              </span>
-              <span className="text-xs text-gray-400">
-                {getHintCostLabel(hint.tier)}
-              </span>
-            </div>
             {isRevealed ? (
-              <p className="text-blue-800">{hint.text}</p>
+              <CharacterMessage
+                characterId={character.characterId}
+                expression={character.expression}
+                variant="hint"
+                size="sm"
+              >
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-sm font-bold">Hint {hint.tier}</span>
+                  <span className="text-xs opacity-60">
+                    {getHintCostLabel(hint.tier)}
+                  </span>
+                </div>
+                <p>{hint.text}</p>
+              </CharacterMessage>
             ) : (
-              <p className="text-gray-400 italic">
-                {hint.tier === 1 ? 'Click "Get Hint" to reveal' : 'Reveal previous hints first'}
-              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-slate-600 flex items-center justify-center text-slate-400 font-bold text-sm">
+                  ?
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between mb-0.5">
+                    <span className="text-sm font-medium text-slate-400">
+                      Hint {hint.tier}
+                    </span>
+                    <span className="text-xs text-slate-500">
+                      {getHintCostLabel(hint.tier)}
+                    </span>
+                  </div>
+                  <p className="text-slate-500 italic text-sm">
+                    {hint.tier === 1 ? 'Click "Get Hint" to reveal' : 'Reveal previous hints first'}
+                  </p>
+                </div>
+              </div>
             )}
           </div>
         );

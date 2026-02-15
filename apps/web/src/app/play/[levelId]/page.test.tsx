@@ -49,6 +49,34 @@ vi.mock('@/components/ui/Card', () => ({
   ),
 }));
 
+vi.mock('@/components/game/GameProgressBar', () => ({
+  default: () => <div data-testid="game-progress-bar" />,
+}));
+
+vi.mock('@/components/game/StreakIndicator', () => ({
+  default: () => <div data-testid="streak-indicator" />,
+}));
+
+vi.mock('@/components/characters/CharacterMessage', () => ({
+  default: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="character-message">{children}</div>
+  ),
+}));
+
+vi.mock('@/components/game/TeachingPanel', () => ({
+  default: ({ steps, currentStep }: { steps: unknown[]; currentStep: number }) => (
+    <div data-testid="teaching-panel">Step {currentStep + 1} of {steps.length}</div>
+  ),
+}));
+
+vi.mock('@/components/game/AdaptiveReteachModal', () => ({
+  default: () => <div data-testid="adaptive-reteach-modal" />,
+}));
+
+vi.mock('@/contexts/WorldThemeContext', () => ({
+  WorldThemeProvider: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+}));
+
 import { useParams } from 'next/navigation';
 import { useGameState } from '@/hooks/useGameState';
 
@@ -61,6 +89,11 @@ const mockProblem = {
   teachingPoint: 'Multiplication is fun',
 };
 
+const mockTeachingSteps = [
+  { id: 'step-1', characterId: 'prof-owlbert', expression: 'happy', dialogue: 'Lesson step 1' },
+  { id: 'step-2', characterId: 'prof-owlbert', expression: 'thinking', dialogue: 'Lesson step 2' },
+];
+
 const mockGameState = {
   state: {
     currentProblemIndex: 0,
@@ -70,10 +103,22 @@ const mockGameState = {
     isComplete: false,
     earnedStars: 0,
     showTeachingPoint: false,
+    correctStreak: 0,
+    phase: 'problem' as const,
+    currentTeachingStep: 0,
+    teachingCompleted: false,
+    consecutiveWrong: 0,
+    hasSeenAdaptiveReteach: false,
   },
   actions: {
     submitAnswer: vi.fn(),
     handleRevealHint: vi.fn(),
+    nextTeachingStep: vi.fn(),
+    prevTeachingStep: vi.fn(),
+    skipTeaching: vi.fn(),
+    acceptReteaching: vi.fn(),
+    declineReteaching: vi.fn(),
+    reviewLesson: vi.fn(),
   },
   context: {
     level: {
@@ -189,6 +234,98 @@ describe('PlayPage', () => {
       vi.mocked(useGameState).mockReturnValue(completeState as ReturnType<typeof useGameState>);
       render(<PlayPage />);
       expect(screen.getByTestId('level-complete')).toBeInTheDocument();
+    });
+  });
+
+  describe('teaching phase', () => {
+    it('should show TeachingPanel when phase is teaching', () => {
+      const teachingState = {
+        ...mockGameState,
+        state: { ...mockGameState.state, phase: 'teaching' as const },
+        context: {
+          ...mockGameState.context,
+          level: {
+            ...mockGameState.context.level,
+            teaching: {
+              format: 'multi-step-lesson',
+              steps: mockTeachingSteps,
+            },
+          },
+        },
+      };
+      vi.mocked(useGameState).mockReturnValue(teachingState as ReturnType<typeof useGameState>);
+      render(<PlayPage />);
+      expect(screen.getByTestId('teaching-panel')).toBeInTheDocument();
+    });
+
+    it('should hide problem display during teaching phase', () => {
+      const teachingState = {
+        ...mockGameState,
+        state: { ...mockGameState.state, phase: 'teaching' as const },
+        context: {
+          ...mockGameState.context,
+          level: {
+            ...mockGameState.context.level,
+            teaching: {
+              format: 'multi-step-lesson',
+              steps: mockTeachingSteps,
+            },
+          },
+        },
+      };
+      vi.mocked(useGameState).mockReturnValue(teachingState as ReturnType<typeof useGameState>);
+      render(<PlayPage />);
+      expect(screen.queryByTestId('problem-display')).not.toBeInTheDocument();
+    });
+
+    it('should show AdaptiveReteachModal when phase is adaptive-reteach', () => {
+      const reteachState = {
+        ...mockGameState,
+        state: { ...mockGameState.state, phase: 'adaptive-reteach' as const },
+        context: {
+          ...mockGameState.context,
+          level: {
+            ...mockGameState.context.level,
+            teaching: {
+              format: 'multi-step-lesson',
+              steps: mockTeachingSteps,
+            },
+          },
+        },
+      };
+      vi.mocked(useGameState).mockReturnValue(reteachState as ReturnType<typeof useGameState>);
+      render(<PlayPage />);
+      expect(screen.getByTestId('adaptive-reteach-modal')).toBeInTheDocument();
+    });
+
+    it('should show Review Lesson button when teaching is completed', () => {
+      const completedTeachingState = {
+        ...mockGameState,
+        state: {
+          ...mockGameState.state,
+          phase: 'problem' as const,
+          teachingCompleted: true,
+        },
+        context: {
+          ...mockGameState.context,
+          level: {
+            ...mockGameState.context.level,
+            teaching: {
+              format: 'multi-step-lesson',
+              steps: mockTeachingSteps,
+            },
+          },
+        },
+      };
+      vi.mocked(useGameState).mockReturnValue(completedTeachingState as ReturnType<typeof useGameState>);
+      render(<PlayPage />);
+      expect(screen.getByRole('button', { name: /review lesson/i })).toBeInTheDocument();
+    });
+
+    it('should not show Review Lesson button when no teaching content', () => {
+      vi.mocked(useGameState).mockReturnValue(mockGameState as ReturnType<typeof useGameState>);
+      render(<PlayPage />);
+      expect(screen.queryByRole('button', { name: /review lesson/i })).not.toBeInTheDocument();
     });
   });
 });

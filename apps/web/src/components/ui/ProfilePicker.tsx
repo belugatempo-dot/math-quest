@@ -28,11 +28,11 @@ export default function ProfilePicker() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-50 to-purple-50">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-900 to-slate-950">
       <div className="max-w-md w-full mx-4">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-foreground">MathQuest</h1>
-          <p className="text-gray-500 mt-2">
+          <p className="text-slate-400 mt-2">
             {profiles.length === 0
               ? 'Create your player profile to get started!'
               : 'Who is playing today?'}
@@ -46,7 +46,7 @@ export default function ProfilePicker() {
               <div key={profile.id} className="relative">
                 <button
                   onClick={() => switchProfile(profile.id)}
-                  className="w-full flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm border-2 border-transparent hover:border-primary transition-colors text-left"
+                  className="w-full flex items-center gap-4 p-4 bg-slate-800 rounded-xl shadow-sm border-2 border-transparent hover:border-primary transition-colors text-left"
                   aria-label={`Select ${profile.name}`}
                 >
                   <span className="text-4xl" role="img" aria-hidden="true">
@@ -67,7 +67,7 @@ export default function ProfilePicker() {
                     </button>
                     <button
                       onClick={() => setConfirmDeleteId(null)}
-                      className="px-2 py-1 text-xs bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+                      className="px-2 py-1 text-xs bg-slate-700 text-slate-300 rounded hover:bg-slate-600"
                       aria-label="Cancel delete"
                     >
                       Cancel
@@ -76,7 +76,7 @@ export default function ProfilePicker() {
                 ) : (
                   <button
                     onClick={() => setConfirmDeleteId(profile.id)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-red-500 transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-red-500 transition-colors"
                     aria-label={`Delete ${profile.name}`}
                   >
                     <svg
@@ -101,14 +101,14 @@ export default function ProfilePicker() {
 
         {/* Create Profile Form */}
         {isCreating ? (
-          <div className="bg-white rounded-xl shadow-sm p-6">
+          <div className="bg-slate-800 rounded-xl shadow-sm p-6 border border-slate-700">
             <h2 className="text-lg font-semibold text-foreground mb-4">
               New Player
             </h2>
 
             <label
               htmlFor="player-name"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="block text-sm font-medium text-slate-400 mb-1"
             >
               Name
             </label>
@@ -121,13 +121,13 @@ export default function ProfilePicker() {
                 if (e.key === 'Enter') handleCreate();
               }}
               placeholder="Enter your name"
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary mb-4"
+              className="w-full px-3 py-2 border border-slate-600 rounded-lg bg-slate-700 text-foreground focus:outline-none focus:ring-2 focus:ring-primary mb-4"
               maxLength={20}
               autoFocus
             />
 
             <fieldset>
-              <legend className="text-sm font-medium text-gray-700 mb-2">
+              <legend className="text-sm font-medium text-slate-400 mb-2">
                 Choose your avatar
               </legend>
               <div className="grid grid-cols-4 gap-2 mb-6">
@@ -139,7 +139,7 @@ export default function ProfilePicker() {
                     className={`text-3xl p-2 rounded-lg transition-colors ${
                       selectedAvatar === avatar
                         ? 'bg-primary/10 ring-2 ring-primary'
-                        : 'hover:bg-gray-100'
+                        : 'hover:bg-slate-700'
                     }`}
                     aria-label={`Select avatar ${avatar}`}
                     aria-pressed={selectedAvatar === avatar}
@@ -161,7 +161,7 @@ export default function ProfilePicker() {
               {profiles.length > 0 && (
                 <button
                   onClick={() => setIsCreating(false)}
-                  className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+                  className="px-4 py-2 bg-slate-700 text-slate-300 rounded-lg hover:bg-slate-600 transition-colors"
                 >
                   Back
                 </button>
@@ -171,7 +171,7 @@ export default function ProfilePicker() {
         ) : (
           <button
             onClick={() => setIsCreating(true)}
-            className="w-full py-3 border-2 border-dashed border-gray-300 rounded-xl text-gray-500 hover:border-primary hover:text-primary transition-colors font-medium"
+            className="w-full py-3 border-2 border-dashed border-slate-600 rounded-xl text-slate-400 hover:border-primary hover:text-primary transition-colors font-medium"
           >
             + Add Player
           </button>

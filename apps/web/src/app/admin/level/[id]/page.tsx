@@ -15,7 +15,7 @@ export default function AdminLevelPage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-800">Level not found</h1>
+          <h1 className="text-2xl font-bold text-foreground">Level not found</h1>
           <Link href="/admin" className="mt-4 text-primary hover:underline">
             Back to Content Browser
           </Link>
@@ -24,10 +24,10 @@ export default function AdminLevelPage() {
     );
   }
 
-  const { level, chapter, world } = levelContext;
+  const { level, chapter } = levelContext;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       {/* Header */}
       <header className="bg-gray-800 text-white">
         <div className="max-w-4xl mx-auto px-4 py-6">
@@ -58,27 +58,27 @@ export default function AdminLevelPage() {
           <h2 className="font-bold text-lg mb-4">Level Info</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
             <div>
-              <p className="text-gray-500">Type</p>
+              <p className="text-slate-400">Type</p>
               <p className="font-medium">{level.type}</p>
             </div>
             <div>
-              <p className="text-gray-500">Difficulty</p>
+              <p className="text-slate-400">Difficulty</p>
               <p className="font-medium">{level.difficulty}/5</p>
             </div>
             <div>
-              <p className="text-gray-500">Est. Time</p>
+              <p className="text-slate-400">Est. Time</p>
               <p className="font-medium">{level.estimatedMinutes} min</p>
             </div>
             <div>
-              <p className="text-gray-500">Challenge</p>
+              <p className="text-slate-400">Challenge</p>
               <p className="font-medium">{level.isChallenge ? 'Yes' : 'No'}</p>
             </div>
           </div>
 
           {level.storyContext && (
-            <div className="mt-4 p-4 bg-blue-50 rounded-lg">
-              <p className="text-sm text-blue-600 font-medium">Story Context</p>
-              <p className="text-blue-800 mt-1">{level.storyContext}</p>
+            <div className="mt-4 p-4 bg-blue-900/30 rounded-lg border border-blue-700/50">
+              <p className="text-sm text-blue-400 font-medium">Story Context</p>
+              <p className="text-blue-200 mt-1">{level.storyContext}</p>
             </div>
           )}
         </Card>
@@ -89,10 +89,10 @@ export default function AdminLevelPage() {
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-bold text-lg">Problem {index + 1}</h2>
               <div className="flex gap-2">
-                <span className="px-2 py-1 bg-gray-100 rounded text-xs">
+                <span className="px-2 py-1 bg-slate-700 rounded text-xs text-slate-300">
                   {problem.type}
                 </span>
-                <span className="px-2 py-1 bg-gray-100 rounded text-xs">
+                <span className="px-2 py-1 bg-slate-700 rounded text-xs text-slate-300">
                   {problem.inputType}
                 </span>
               </div>
@@ -100,23 +100,23 @@ export default function AdminLevelPage() {
 
             {/* Statement */}
             <div className="mb-4">
-              <p className="text-sm text-gray-500 mb-1">Statement</p>
-              <div className="p-4 bg-gray-50 rounded-lg">
+              <p className="text-sm text-slate-400 mb-1">Statement</p>
+              <div className="p-4 bg-slate-900/50 rounded-lg">
                 <p className="text-lg">{problem.statement}</p>
               </div>
             </div>
 
             {/* Answer */}
             <div className="mb-4">
-              <p className="text-sm text-gray-500 mb-1">Correct Answer</p>
-              <div className="p-4 bg-green-50 rounded-lg">
-                <p className="text-green-800 font-medium">
+              <p className="text-sm text-slate-400 mb-1">Correct Answer</p>
+              <div className="p-4 bg-green-900/30 rounded-lg border border-green-700/50">
+                <p className="text-green-300 font-medium">
                   {typeof problem.correctAnswer.value === 'object'
                     ? JSON.stringify(problem.correctAnswer.value)
                     : String(problem.correctAnswer.value)}
                 </p>
                 {problem.correctAnswer.displayValue && (
-                  <p className="text-sm text-green-600 mt-1">
+                  <p className="text-sm text-green-400 mt-1">
                     Display: {problem.correctAnswer.displayValue}
                   </p>
                 )}
@@ -126,9 +126,9 @@ export default function AdminLevelPage() {
             {/* Teaching Point */}
             {problem.teachingPoint && (
               <div className="mb-4">
-                <p className="text-sm text-gray-500 mb-1">Teaching Point</p>
-                <div className="p-4 bg-blue-50 rounded-lg">
-                  <p className="text-blue-800">{problem.teachingPoint}</p>
+                <p className="text-sm text-slate-400 mb-1">Teaching Point</p>
+                <div className="p-4 bg-blue-900/30 rounded-lg border border-blue-700/50">
+                  <p className="text-blue-200">{problem.teachingPoint}</p>
                 </div>
               </div>
             )}
@@ -136,9 +136,9 @@ export default function AdminLevelPage() {
             {/* Solution Explanation */}
             {problem.solutionExplanation && (
               <div className="mb-4">
-                <p className="text-sm text-gray-500 mb-1">Solution Explanation</p>
-                <div className="p-4 bg-amber-50 rounded-lg">
-                  <p className="text-amber-800">{problem.solutionExplanation}</p>
+                <p className="text-sm text-slate-400 mb-1">Solution Explanation</p>
+                <div className="p-4 bg-amber-900/30 rounded-lg border border-amber-700/50">
+                  <p className="text-amber-200">{problem.solutionExplanation}</p>
                 </div>
               </div>
             )}
@@ -146,19 +146,19 @@ export default function AdminLevelPage() {
             {/* Hints */}
             {problem.hints && problem.hints.length > 0 && (
               <div className="mb-4">
-                <p className="text-sm text-gray-500 mb-2">
+                <p className="text-sm text-slate-400 mb-2">
                   Hints ({problem.hints.length})
                 </p>
                 <div className="space-y-2">
                   {problem.hints.map((hint, hintIndex) => (
                     <div
                       key={hintIndex}
-                      className="p-3 bg-purple-50 rounded-lg flex gap-3"
+                      className="p-3 bg-purple-900/30 rounded-lg border border-purple-700/50 flex gap-3"
                     >
-                      <span className="px-2 py-1 bg-purple-200 text-purple-800 rounded text-xs font-medium">
+                      <span className="px-2 py-1 bg-purple-700 text-purple-200 rounded text-xs font-medium">
                         Tier {hint.tier}
                       </span>
-                      <p className="text-purple-800">{hint.text}</p>
+                      <p className="text-purple-200">{hint.text}</p>
                     </div>
                   ))}
                 </div>
@@ -168,12 +168,12 @@ export default function AdminLevelPage() {
             {/* Tags */}
             {problem.tags && problem.tags.length > 0 && (
               <div>
-                <p className="text-sm text-gray-500 mb-2">Tags</p>
+                <p className="text-sm text-slate-400 mb-2">Tags</p>
                 <div className="flex flex-wrap gap-2">
                   {problem.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2 py-1 bg-gray-100 text-gray-600 rounded text-xs"
+                      className="px-2 py-1 bg-slate-700 text-slate-300 rounded text-xs"
                     >
                       {tag}
                     </span>
@@ -183,7 +183,7 @@ export default function AdminLevelPage() {
             )}
 
             {/* Metadata */}
-            <div className="mt-4 pt-4 border-t text-xs text-gray-400">
+            <div className="mt-4 pt-4 border-t border-slate-700 text-xs text-slate-500">
               ID: {problem.id} • Category: {problem.category} • Difficulty:{' '}
               {problem.difficulty}/5
             </div>

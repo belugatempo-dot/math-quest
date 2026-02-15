@@ -36,7 +36,8 @@ describe('ProblemDisplay', () => {
     const problemNoTags = { ...mockProblem, tags: [] };
     const { container } = render(<ProblemDisplay problem={problemNoTags} />);
     // No tag badges should be rendered
-    expect(container.querySelectorAll('.bg-blue-100')).toHaveLength(0);
+    // No tag badges should be rendered
+    expect(container.querySelectorAll('[class*="rounded-full"]')).toHaveLength(0);
   });
 
   it('should not show teaching point by default', () => {
@@ -55,5 +56,70 @@ describe('ProblemDisplay', () => {
     const problemNoTeaching = { ...mockProblem, teachingPoint: '' };
     render(<ProblemDisplay problem={problemNoTeaching} showTeachingPoint />);
     expect(screen.queryByText('Key Insight:')).not.toBeInTheDocument();
+  });
+
+  describe('multiple-choice formatting', () => {
+    it('should insert line breaks before inline A)/B)/C)/D) options', () => {
+      const mcProblem: Problem = {
+        ...mockProblem,
+        statement: 'Which is largest? A) 12 B) 8 C) 15 D) 3',
+      };
+      const { container } = render(<ProblemDisplay problem={mcProblem} />);
+      const statementEl = container.querySelector('[class*="whitespace-pre-line"]');
+      expect(statementEl).toBeInTheDocument();
+      // The text content should have newlines before each option
+      expect(statementEl!.textContent).toContain('Which is largest?');
+      expect(statementEl!.textContent).toContain('\nA) 12');
+      expect(statementEl!.textContent).toContain('\nB) 8');
+      expect(statementEl!.textContent).toContain('\nC) 15');
+      expect(statementEl!.textContent).toContain('\nD) 3');
+    });
+
+    it('should preserve existing newlines in statements', () => {
+      const nlProblem: Problem = {
+        ...mockProblem,
+        statement: 'Line one\nLine two\nLine three',
+      };
+      const { container } = render(<ProblemDisplay problem={nlProblem} />);
+      const statementEl = container.querySelector('[class*="whitespace-pre-line"]');
+      expect(statementEl).toBeInTheDocument();
+      expect(statementEl!.textContent).toBe('Line one\nLine two\nLine three');
+    });
+
+    it('should not modify statements without multiple-choice options', () => {
+      render(<ProblemDisplay problem={mockProblem} />);
+      const statementEl = screen.getByText('What is 5 times 3?');
+      expect(statementEl).toBeInTheDocument();
+      expect(statementEl.textContent).toBe('What is 5 times 3?');
+    });
+
+    it('should insert line breaks before Triangle A:/B:/C: options', () => {
+      const triangleProblem: Problem = {
+        ...mockProblem,
+        statement: 'Which triangle is equilateral? Triangle A: sides 5,5,5 Triangle B: sides 5,5,3 Triangle C: sides 3,4,5',
+      };
+      const { container } = render(<ProblemDisplay problem={triangleProblem} />);
+      const statementEl = container.querySelector('[class*="whitespace-pre-line"]');
+      expect(statementEl).toBeInTheDocument();
+      expect(statementEl!.textContent).toContain('Which triangle is equilateral?');
+      expect(statementEl!.textContent).toContain('\nTriangle A: sides 5,5,5');
+      expect(statementEl!.textContent).toContain('\nTriangle B: sides 5,5,3');
+      expect(statementEl!.textContent).toContain('\nTriangle C: sides 3,4,5');
+    });
+
+    it('should insert line breaks before A./B./C. dot-format options', () => {
+      const dotProblem: Problem = {
+        ...mockProblem,
+        statement: 'Which shape has 4 equal sides? A. Square B. Rectangle C. Parallelogram D. Trapezoid',
+      };
+      const { container } = render(<ProblemDisplay problem={dotProblem} />);
+      const statementEl = container.querySelector('[class*="whitespace-pre-line"]');
+      expect(statementEl).toBeInTheDocument();
+      expect(statementEl!.textContent).toContain('Which shape has 4 equal sides?');
+      expect(statementEl!.textContent).toContain('\nA. Square');
+      expect(statementEl!.textContent).toContain('\nB. Rectangle');
+      expect(statementEl!.textContent).toContain('\nC. Parallelogram');
+      expect(statementEl!.textContent).toContain('\nD. Trapezoid');
+    });
   });
 });

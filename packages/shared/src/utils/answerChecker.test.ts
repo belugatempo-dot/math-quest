@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { checkAnswer, answersAreEquivalent } from './answerChecker';
-import type { Answer, Problem } from '../types';
+import type { Problem } from '../types';
 
 function makeProblem(overrides: Partial<Problem> = {}): Problem {
   return {

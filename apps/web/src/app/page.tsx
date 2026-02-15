@@ -4,18 +4,22 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { allWorlds, getWorld } from '@/lib/world-data';
 import { useProfile } from '@/contexts/ProfileContext';
+import { WorldThemeProvider } from '@/contexts/WorldThemeContext';
+import WorldDecoration from '@/components/decorations/WorldDecoration';
+import WorldIcon from '@/components/decorations/WorldIcon';
 import ChapterCard from '@/components/navigation/ChapterCard';
 import ProfilePicker from '@/components/ui/ProfilePicker';
+import FloatingParticles from '@/components/effects/FloatingParticles';
 
 export default function HomePage() {
   const { activeProfile, progress, switchProfile } = useProfile();
-  const [selectedWorldId, setSelectedWorldId] = useState(allWorlds[0].id);
+  const [selectedWorldId, setSelectedWorldId] = useState(allWorlds[allWorlds.length - 1].id);
 
   if (!activeProfile) {
     return <ProfilePicker />;
   }
 
-  const selectedWorld = getWorld(selectedWorldId) ?? allWorlds[0];
+  const selectedWorld = getWorld(selectedWorldId) ?? allWorlds[allWorlds.length - 1];
 
   const getChapterProgress = (chapterId: string) => {
     if (!progress) return { stars: 0, completed: 0 };
@@ -49,14 +53,18 @@ export default function HomePage() {
   );
 
   return (
-    <div className="min-h-screen">
+    <WorldThemeProvider colorPalette={selectedWorld.colorPalette}>
+    <div className="min-h-screen relative">
+      <FloatingParticles />
+
       {/* Header */}
-      <header className="bg-primary text-white">
-        <div className="max-w-4xl mx-auto px-4 py-8">
+      <header className="relative bg-gradient-to-br from-primary via-primary to-secondary text-white overflow-hidden">
+        <div className="max-w-4xl mx-auto px-4 py-8 relative z-10">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold">{selectedWorld.name}</h1>
-              <p className="text-blue-100 mt-1">
+              <p className="text-sm text-white/70 font-medium">World Map</p>
+              <h1 className="text-3xl font-bold">{`Level ${selectedWorld.baLevel} - ${selectedWorld.name}`}</h1>
+              <p className="text-white/70 mt-1">
                 {selectedWorld.totalLevels} levels • {selectedWorld.estimatedWeeks} weeks
               </p>
             </div>
@@ -66,11 +74,11 @@ export default function HomePage() {
                   <span className="text-2xl">⭐</span>
                   <span className="text-3xl font-bold">{totalStars}</span>
                 </div>
-                <p className="text-sm text-blue-100">of {maxStars} stars</p>
+                <p className="text-sm text-white/70">of {maxStars} stars</p>
               </div>
               <button
                 onClick={() => switchProfile('')}
-                className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
+                className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 transition-all hover:scale-105"
                 aria-label="Switch player"
               >
                 <span className="text-xl" role="img" aria-hidden="true">
@@ -81,70 +89,81 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+        <WorldDecoration theme={selectedWorld.theme ?? 'adventure'} />
       </header>
 
-      {/* Navigation */}
-      <nav className="bg-white border-b">
-        <div className="max-w-4xl mx-auto px-4 py-3 flex gap-4">
-          <Link
-            href="/"
-            className="text-primary font-medium border-b-2 border-primary pb-1"
-          >
-            World Map
-          </Link>
-          <Link
-            href="/admin"
-            className="text-gray-500 hover:text-gray-700"
-          >
-            Content Preview
-          </Link>
-        </div>
-      </nav>
+      {/* Compact admin link */}
+      <div className="max-w-4xl mx-auto px-4 pt-2 flex justify-end">
+        <Link
+          href="/admin"
+          className="text-xs text-slate-500 hover:text-slate-300 flex items-center gap-1 transition-colors"
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="3" />
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+          </svg>
+          Content Preview
+        </Link>
+      </div>
 
       {/* World Selector */}
-      <div className="max-w-4xl mx-auto px-4 pt-6">
-        <div className="flex gap-2" role="tablist" aria-label="Select world">
-          {allWorlds.map((world) => (
-            <button
-              key={world.id}
-              role="tab"
-              aria-selected={world.id === selectedWorldId}
-              onClick={() => setSelectedWorldId(world.id)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                world.id === selectedWorldId
-                  ? 'bg-primary text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              {world.name}
-            </button>
-          ))}
+      <div className="max-w-4xl mx-auto px-4 pt-4">
+        <div className="flex gap-3 overflow-x-auto pb-2" role="tablist" aria-label="Select world">
+          {allWorlds.map((world) => {
+            const isSelected = world.id === selectedWorldId;
+            return (
+              <button
+                key={world.id}
+                role="tab"
+                aria-selected={isSelected}
+                onClick={() => setSelectedWorldId(world.id)}
+                className={`flex-shrink-0 flex flex-col items-center gap-2 px-5 py-3 rounded-2xl text-sm font-bold transition-all ${
+                  isSelected
+                    ? 'bg-primary text-white shadow-game scale-105'
+                    : 'bg-slate-800/80 text-slate-300 hover:bg-slate-700 hover:shadow-md hover:scale-102 border border-slate-600/50'
+                }`}
+              >
+                <WorldIcon theme={world.theme ?? 'adventure'} size={28} />
+                {`Level ${world.baLevel} - ${world.name}`}
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      {/* Chapter Grid */}
-      <main className="max-w-4xl mx-auto px-4 py-6">
-        <div className="mb-6">
+      {/* Chapter Path */}
+      <main className="max-w-4xl mx-auto px-4 py-6 relative">
+        <div className="mb-4">
           <h2 className="text-xl font-bold text-foreground">Chapters</h2>
-          <p className="text-gray-500">
+          <p className="text-slate-400">
             Complete levels to earn stars and unlock new chapters
           </p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2">
-          {selectedWorld.chapters.map((chapter) => {
-            const { stars, completed } = getChapterProgress(chapter.id);
-            return (
-              <ChapterCard
-                key={chapter.id}
-                chapter={chapter}
-                totalStars={stars}
-                completedLevels={completed}
-              />
-            );
-          })}
+        <div className="relative">
+          {/* Vertical connecting line */}
+          <div
+            className="absolute left-[40px] top-[40px] w-0.5 bg-gradient-to-b from-primary/40 to-slate-700 pointer-events-none"
+            style={{ height: `calc(100% - 80px)` }}
+            aria-hidden="true"
+          />
+
+          <div className="space-y-1">
+            {selectedWorld.chapters.map((chapter) => {
+              const { stars, completed } = getChapterProgress(chapter.id);
+              return (
+                <ChapterCard
+                  key={chapter.id}
+                  chapter={chapter}
+                  totalStars={stars}
+                  completedLevels={completed}
+                />
+              );
+            })}
+          </div>
         </div>
       </main>
     </div>
+    </WorldThemeProvider>
   );
 }

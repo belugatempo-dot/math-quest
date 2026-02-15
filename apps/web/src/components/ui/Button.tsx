@@ -3,20 +3,22 @@
 import { ButtonHTMLAttributes, forwardRef } from 'react';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'success' | 'outline' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'success' | 'outline' | 'ghost' | 'game' | 'game-success';
   size?: 'sm' | 'md' | 'lg';
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className = '', variant = 'primary', size = 'md', children, ...props }, ref) => {
-    const baseStyles = 'inline-flex items-center justify-center font-medium rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed';
+    const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed';
 
     const variants = {
-      primary: 'bg-primary text-white hover:bg-blue-600 active:bg-blue-700',
-      secondary: 'bg-secondary text-white hover:bg-orange-600 active:bg-orange-700',
-      success: 'bg-success text-white hover:bg-green-600 active:bg-green-700',
-      outline: 'border-2 border-primary text-primary hover:bg-primary hover:text-white',
-      ghost: 'text-foreground hover:bg-gray-100',
+      primary: 'bg-primary text-white hover:opacity-90 active:opacity-80 rounded-lg',
+      secondary: 'bg-secondary text-white hover:opacity-90 active:opacity-80 rounded-lg',
+      success: 'bg-success text-white hover:bg-green-600 active:bg-green-700 rounded-lg',
+      outline: 'border-2 border-primary text-primary hover:bg-primary hover:text-white rounded-lg',
+      ghost: 'text-foreground hover:bg-slate-700 rounded-lg',
+      game: 'game-button bg-gradient-to-b from-blue-500 to-blue-700 text-white rounded-2xl shadow-game hover:scale-105 hover:shadow-game-lg active:translate-y-0.5 active:shadow-game-sm font-bold',
+      'game-success': 'game-button bg-gradient-to-b from-green-500 to-green-700 text-white rounded-2xl shadow-game hover:scale-105 hover:shadow-game-lg active:translate-y-0.5 active:shadow-game-sm font-bold',
     };
 
     const sizes = {

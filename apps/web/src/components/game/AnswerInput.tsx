@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import type { Problem, InputType } from '@mathquest/shared';
+import type { Problem } from '@mathquest/shared';
 import Button from '@/components/ui/Button';
 
 interface AnswerInputProps {
@@ -9,6 +9,26 @@ interface AnswerInputProps {
   onSubmit: (answer: string | number) => void;
   disabled?: boolean;
   feedback?: { isCorrect: boolean; message?: string } | null;
+}
+
+function BackspaceIcon() {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z" />
+      <line x1="18" y1="9" x2="12" y2="15" />
+      <line x1="12" y1="9" x2="18" y2="15" />
+    </svg>
+  );
 }
 
 export default function AnswerInput({
@@ -44,6 +64,12 @@ export default function AnswerInput({
     [handleSubmit, disabled]
   );
 
+  const feedbackAnimation = feedback
+    ? feedback.isCorrect
+      ? 'animate-pulse-correct'
+      : 'animate-shake'
+    : '';
+
   const renderInput = () => {
     switch (problem.inputType) {
       case 'number_pad':
@@ -56,27 +82,36 @@ export default function AnswerInput({
               onKeyDown={handleKeyDown}
               disabled={disabled}
               placeholder="Enter your answer..."
-              className="w-full px-4 py-3 text-xl text-center border-2 border-gray-300 rounded-lg focus:border-primary focus:outline-none disabled:bg-gray-100"
+              className="w-full px-4 py-3 text-2xl text-center font-bold border-2 border-primary/30 rounded-2xl focus:border-primary focus:outline-none focus:shadow-game-glow disabled:bg-slate-900/50 bg-slate-800/80 text-foreground transition-all"
               autoFocus
             />
-            {/* Number pad for touch */}
+            {/* Game-style number pad */}
             <div className="grid grid-cols-3 gap-2">
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((num) => (
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
                 <button
                   key={num}
                   onClick={() => setValue((v) => v + num.toString())}
                   disabled={disabled}
-                  className="py-3 text-xl font-medium bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors disabled:opacity-50"
+                  className="min-h-[64px] py-3 text-xl font-bold bg-gradient-to-b from-slate-700 to-slate-800 border-2 border-slate-600 text-foreground shadow-game-sm hover:shadow-game hover:scale-105 active:translate-y-0.5 active:shadow-none rounded-xl transition-all disabled:opacity-50"
                 >
                   {num}
                 </button>
               ))}
+              <div /> {/* Empty cell for alignment */}
+              <button
+                onClick={() => setValue((v) => v + '0')}
+                disabled={disabled}
+                className="min-h-[64px] py-3 text-xl font-bold bg-gradient-to-b from-slate-700 to-slate-800 border-2 border-slate-600 text-foreground shadow-game-sm hover:shadow-game hover:scale-105 active:translate-y-0.5 active:shadow-none rounded-xl transition-all disabled:opacity-50"
+              >
+                0
+              </button>
               <button
                 onClick={() => setValue((v) => v.slice(0, -1))}
                 disabled={disabled}
-                className="py-3 text-xl font-medium bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors disabled:opacity-50"
+                className="min-h-[64px] py-3 text-xl font-bold bg-gradient-to-b from-red-900/30 to-red-900/40 border-2 border-red-700/50 shadow-game-sm hover:shadow-game hover:scale-105 active:translate-y-0.5 active:shadow-none rounded-xl transition-all disabled:opacity-50 flex items-center justify-center text-red-400"
+                aria-label="Backspace"
               >
-                ←
+                <BackspaceIcon />
               </button>
             </div>
           </div>
@@ -85,7 +120,6 @@ export default function AnswerInput({
       case 'multiple_choice':
         return (
           <div className="space-y-2">
-            {/* This would need options from the problem - simplified for now */}
             <input
               type="text"
               value={value}
@@ -93,7 +127,7 @@ export default function AnswerInput({
               onKeyDown={handleKeyDown}
               disabled={disabled}
               placeholder="Enter your answer (A, B, C, or D)..."
-              className="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-primary focus:outline-none disabled:bg-gray-100"
+              className="w-full px-4 py-3 text-lg font-medium border-2 border-primary/30 rounded-2xl focus:border-primary focus:outline-none focus:shadow-game-glow disabled:bg-slate-900/50 bg-slate-800/80 text-foreground transition-all"
               autoFocus
             />
           </div>
@@ -109,7 +143,7 @@ export default function AnswerInput({
             onKeyDown={handleKeyDown}
             disabled={disabled}
             placeholder="Type your answer..."
-            className="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-primary focus:outline-none disabled:bg-gray-100"
+            className="w-full px-4 py-3 text-lg font-medium border-2 border-primary/30 rounded-2xl focus:border-primary focus:outline-none focus:shadow-game-glow disabled:bg-slate-900/50 bg-slate-800/80 text-foreground transition-all"
             autoFocus
           />
         );
@@ -123,13 +157,13 @@ export default function AnswerInput({
       {/* Feedback */}
       {feedback && (
         <div
-          className={`p-4 rounded-lg ${
+          className={`p-4 rounded-2xl ${feedbackAnimation} ${
             feedback.isCorrect
-              ? 'bg-green-100 text-green-800'
-              : 'bg-red-100 text-red-800'
+              ? 'bg-gradient-to-r from-green-900/30 to-green-900/20 text-green-300 border border-green-700/50'
+              : 'bg-gradient-to-r from-red-900/30 to-red-900/20 text-red-300 border border-red-700/50'
           }`}
         >
-          <p className="font-medium">
+          <p className="font-bold">
             {feedback.isCorrect ? '✓ Correct!' : '✗ Not quite right'}
           </p>
           {feedback.message && <p className="mt-1 text-sm">{feedback.message}</p>}
@@ -138,11 +172,11 @@ export default function AnswerInput({
 
       {/* Submit Button */}
       <Button
-        variant={feedback?.isCorrect ? 'success' : 'primary'}
+        variant={feedback?.isCorrect ? 'game-success' : 'game'}
         size="lg"
         onClick={handleSubmit}
         disabled={disabled || !value.trim()}
-        className="w-full"
+        className={`w-full text-lg ${!disabled && value.trim() && !feedback?.isCorrect ? 'animate-glow-pulse' : ''}`}
       >
         {feedback?.isCorrect ? 'Continue' : 'Check Answer'}
       </Button>

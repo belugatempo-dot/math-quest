@@ -86,4 +86,31 @@ describe('StarDisplay', () => {
     const stars = container.querySelectorAll('span');
     expect(stars[0].className).toContain('text-star-gray');
   });
+
+  describe('animated prop', () => {
+    it('should not apply animation class by default', () => {
+      render(<StarDisplay stars={2} />);
+      const container = screen.getByRole('img');
+      const stars = container.querySelectorAll('span');
+      expect(stars[0].className).not.toContain('animate-pop-in');
+    });
+
+    it('should apply animate-pop-in to filled stars when animated', () => {
+      render(<StarDisplay stars={2} animated />);
+      const container = screen.getByRole('img');
+      const stars = container.querySelectorAll('span');
+      expect(stars[0].className).toContain('animate-pop-in');
+      expect(stars[1].className).toContain('animate-pop-in');
+      expect(stars[2].className).not.toContain('animate-pop-in');
+    });
+
+    it('should stagger animation delay for each star', () => {
+      render(<StarDisplay stars={3} animated />);
+      const container = screen.getByRole('img');
+      const stars = container.querySelectorAll('span');
+      expect(stars[0].style.animationDelay).toBe('0s');
+      expect(stars[1].style.animationDelay).toBe('0.2s');
+      expect(stars[2].style.animationDelay).toBe('0.4s');
+    });
+  });
 });

@@ -8,9 +8,10 @@ import {
   calculateStars,
   calculateExpectedTime,
 } from '@mathquest/shared';
-import type { Level, Chapter, World, Problem } from '@mathquest/shared';
+import type { Level, Chapter, World, Problem, GamePhase } from '@mathquest/shared';
 
 const ANSWER_TRANSITION_DELAY_MS = 1500;
+const ADAPTIVE_RETEACH_THRESHOLD = 2;
 
 export interface FeedbackState {
   isCorrect: boolean;
@@ -25,11 +26,23 @@ export interface GameState {
   isComplete: boolean;
   earnedStars: number;
   showTeachingPoint: boolean;
+  correctStreak: number;
+  phase: GamePhase;
+  currentTeachingStep: number;
+  teachingCompleted: boolean;
+  consecutiveWrong: number;
+  hasSeenAdaptiveReteach: boolean;
 }
 
 export interface GameActions {
   submitAnswer: (answer: string | number) => void;
   handleRevealHint: (tier: 1 | 2 | 3) => void;
+  nextTeachingStep: () => void;
+  prevTeachingStep: () => void;
+  skipTeaching: () => void;
+  acceptReteaching: () => void;
+  declineReteaching: () => void;
+  reviewLesson: () => void;
 }
 
 export interface GameContext {
@@ -40,6 +53,15 @@ export interface GameContext {
   nextLevel: Level | undefined;
 }
 
+function hasMultiStepTeaching(level: Level): boolean {
+  return !!(
+    level.teaching &&
+    level.teaching.format === 'multi-step-lesson' &&
+    level.teaching.steps &&
+    level.teaching.steps.length > 0
+  );
+}
+
 export function useGameState(levelId: string): {
   state: GameState;
   actions: GameActions;
@@ -48,6 +70,11 @@ export function useGameState(levelId: string): {
   const levelContext = getLevelWithContext(levelId);
   const { completeLevel } = useProfile();
 
+  const levelRef = useRef(levelContext?.level);
+  const initialPhase: GamePhase = levelRef.current && hasMultiStepTeaching(levelRef.current)
+    ? 'teaching'
+    : 'problem';
+
   const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
   const [attempts, setAttempts] = useState(0);
   const [hintsUsed, setHintsUsed] = useState(0);
@@ -55,6 +82,12 @@ export function useGameState(levelId: string): {
   const [isComplete, setIsComplete] = useState(false);
   const [earnedStars, setEarnedStars] = useState(0);
   const [showTeachingPoint, setShowTeachingPoint] = useState(false);
+  const [correctStreak, setCorrectStreak] = useState(0);
+  const [phase, setPhase] = useState<GamePhase>(initialPhase);
+  const [currentTeachingStep, setCurrentTeachingStep] = useState(0);
+  const [teachingCompleted, setTeachingCompleted] = useState(false);
+  const [consecutiveWrong, setConsecutiveWrong] = useState(0);
+  const [hasSeenAdaptiveReteach, setHasSeenAdaptiveReteach] = useState(false);
   const startTimeRef = useRef(Date.now());
 
   if (!levelContext) return null;
@@ -62,6 +95,43 @@ export function useGameState(levelId: string): {
   const { level, chapter, world } = levelContext;
   const currentProblem = level.problems[currentProblemIndex];
   const nextLevel = getNextLevel(levelId);
+
+  const teachingSteps = level.teaching?.steps;
+  const totalTeachingSteps = teachingSteps?.length ?? 0;
+
+  const nextTeachingStep = useCallback(() => {
+    if (currentTeachingStep < totalTeachingSteps - 1) {
+      setCurrentTeachingStep((s) => s + 1);
+    } else {
+      setPhase('problem');
+      setTeachingCompleted(true);
+    }
+  }, [currentTeachingStep, totalTeachingSteps]);
+
+  const prevTeachingStep = useCallback(() => {
+    setCurrentTeachingStep((s) => Math.max(0, s - 1));
+  }, []);
+
+  const skipTeaching = useCallback(() => {
+    setPhase('problem');
+    setTeachingCompleted(false);
+  }, []);
+
+  const acceptReteaching = useCallback(() => {
+    setPhase('teaching');
+    setCurrentTeachingStep(0);
+    setHasSeenAdaptiveReteach(true);
+  }, []);
+
+  const declineReteaching = useCallback(() => {
+    setPhase('problem');
+    setHasSeenAdaptiveReteach(true);
+  }, []);
+
+  const reviewLesson = useCallback(() => {
+    setPhase('teaching');
+    setCurrentTeachingStep(0);
+  }, []);
 
   const submitAnswer = useCallback(
     (answer: string | number) => {
@@ -71,6 +141,8 @@ export function useGameState(levelId: string): {
       if (result.isCorrect) {
         setFeedback({ isCorrect: true });
         setShowTeachingPoint(true);
+        setCorrectStreak((s) => s + 1);
+        setConsecutiveWrong(0);
 
         setTimeout(() => {
           if (currentProblemIndex < level.problems.length - 1) {
@@ -96,9 +168,21 @@ export function useGameState(levelId: string): {
           isCorrect: false,
           message: result.feedback ?? 'Try again! Check your work.',
         });
+        setCorrectStreak(0);
+        setConsecutiveWrong((c) => {
+          const next = c + 1;
+          if (
+            next >= ADAPTIVE_RETEACH_THRESHOLD &&
+            !hasSeenAdaptiveReteach &&
+            hasMultiStepTeaching(level)
+          ) {
+            setPhase('adaptive-reteach');
+          }
+          return next;
+        });
       }
     },
-    [currentProblem, currentProblemIndex, level, levelId, hintsUsed, attempts, completeLevel]
+    [currentProblem, currentProblemIndex, level, levelId, hintsUsed, attempts, completeLevel, hasSeenAdaptiveReteach]
   );
 
   const handleRevealHint = useCallback((tier: 1 | 2 | 3) => {
@@ -116,8 +200,23 @@ export function useGameState(levelId: string): {
       isComplete,
       earnedStars,
       showTeachingPoint,
+      correctStreak,
+      phase,
+      currentTeachingStep,
+      teachingCompleted,
+      consecutiveWrong,
+      hasSeenAdaptiveReteach,
     },
-    actions: { submitAnswer, handleRevealHint },
+    actions: {
+      submitAnswer,
+      handleRevealHint,
+      nextTeachingStep,
+      prevTeachingStep,
+      skipTeaching,
+      acceptReteaching,
+      declineReteaching,
+      reviewLesson,
+    },
     context: { level, chapter, world, currentProblem, nextLevel },
   };
 }

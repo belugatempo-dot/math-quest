@@ -3,12 +3,16 @@
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { useGameState } from '@/hooks/useGameState';
+import { WorldThemeProvider } from '@/contexts/WorldThemeContext';
 import ProblemDisplay from '@/components/game/ProblemDisplay';
 import AnswerInput from '@/components/game/AnswerInput';
 import HintPanel from '@/components/game/HintPanel';
 import LevelComplete from '@/components/game/LevelComplete';
-import StarDisplay from '@/components/game/StarDisplay';
-import Card from '@/components/ui/Card';
+import CharacterMessage from '@/components/characters/CharacterMessage';
+import StreakIndicator from '@/components/game/StreakIndicator';
+import GameProgressBar from '@/components/game/GameProgressBar';
+import TeachingPanel from '@/components/game/TeachingPanel';
+import AdaptiveReteachModal from '@/components/game/AdaptiveReteachModal';
 
 export default function PlayPage() {
   const params = useParams();
@@ -29,105 +33,143 @@ export default function PlayPage() {
   }
 
   const { state, actions, context } = game;
-  const { level, chapter, currentProblem, nextLevel } = context;
+  const { level, chapter, world, currentProblem, nextLevel } = context;
+
+  const teachingSteps = level.teaching?.format === 'multi-step-lesson' ? level.teaching.steps : undefined;
+  const isTeachingPhase = state.phase === 'teaching';
+  const isProblemPhase = state.phase === 'problem' || state.phase === 'feedback' || state.phase === 'teaching-point';
+  const isAdaptiveReteach = state.phase === 'adaptive-reteach';
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="bg-white border-b sticky top-0 z-10">
-        <div className="max-w-4xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
+    <WorldThemeProvider colorPalette={world.colorPalette}>
+    <div className="min-h-screen relative">
+      {/* Game HUD Header */}
+      <header className="sticky top-0 z-10 bg-gradient-to-r from-primary/95 to-primary/90 backdrop-blur-sm text-white">
+        <div className="max-w-3xl mx-auto px-4 py-3">
+          <div className="flex items-center justify-between mb-2">
             <div>
               <Link
                 href={`/chapter/${chapter.id}`}
-                className="text-gray-500 hover:text-gray-700 text-sm"
+                className="text-white/60 hover:text-white text-xs transition-colors"
               >
                 ← {chapter.name}
               </Link>
-              <h1 className="font-bold text-foreground">{level.name}</h1>
+              <h1 className="font-bold text-sm text-white">{level.name}</h1>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="text-sm text-gray-500">
-                Problem {state.currentProblemIndex + 1}/{level.problems.length}
-              </div>
+            <div className="flex items-center gap-3">
+              <StreakIndicator streak={state.correctStreak} />
+              {!isTeachingPhase && (
+                <div className="text-xs text-white/70 font-medium">
+                  Problem {state.currentProblemIndex + 1}/{level.problems.length}
+                </div>
+              )}
               {level.isChallenge && (
-                <span className="px-2 py-1 text-xs font-medium bg-amber-100 text-amber-700 rounded">
+                <span className="px-2 py-0.5 text-xs font-bold bg-amber-400/20 text-amber-200 rounded-full">
                   Challenge ⭐
                 </span>
               )}
             </div>
           </div>
 
-          {/* Progress Bar */}
-          <div className="mt-3 h-2 bg-gray-200 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-primary transition-all duration-300"
-              style={{
-                width: `${((state.currentProblemIndex + (state.feedback?.isCorrect ? 1 : 0)) / level.problems.length) * 100}%`,
-              }}
+          {/* Segmented progress bar */}
+          {!isTeachingPhase && (
+            <GameProgressBar
+              total={level.problems.length}
+              current={state.currentProblemIndex}
+              isCurrentCorrect={state.feedback?.isCorrect}
             />
-          </div>
+          )}
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-4 py-8">
-        <div className="grid gap-6 lg:grid-cols-3">
-          {/* Problem Area */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Story Context */}
-            {level.storyContext && state.currentProblemIndex === 0 && (
-              <Card className="bg-blue-50 border border-blue-200">
-                <p className="text-blue-800 italic">{level.storyContext}</p>
-              </Card>
-            )}
-
-            {/* Problem */}
-            <Card>
-              <ProblemDisplay
-                problem={currentProblem}
-                showTeachingPoint={state.showTeachingPoint}
+      <main className="max-w-3xl mx-auto px-4 py-6">
+        <div className="space-y-5">
+          {/* Teaching Phase */}
+          {isTeachingPhase && teachingSteps && (
+            <div className="rounded-2xl border-2 border-purple-300/30 bg-slate-800/90 backdrop-blur-sm p-5 shadow-lg">
+              <TeachingPanel
+                steps={teachingSteps}
+                currentStep={state.currentTeachingStep}
+                onNext={actions.nextTeachingStep}
+                onPrev={actions.prevTeachingStep}
+                onSkip={actions.skipTeaching}
               />
-            </Card>
+            </div>
+          )}
 
-            {/* Answer Input */}
-            <Card>
-              <AnswerInput
-                problem={currentProblem}
-                onSubmit={actions.submitAnswer}
-                disabled={state.feedback?.isCorrect}
-                feedback={state.feedback}
-              />
-            </Card>
-          </div>
+          {/* Problem Phase */}
+          {isProblemPhase && (
+            <>
+              {/* Review Lesson Button */}
+              {state.teachingCompleted && teachingSteps && (
+                <button
+                  onClick={actions.reviewLesson}
+                  className="w-full py-2 text-sm font-medium text-purple-400 border border-purple-400/30 rounded-lg hover:bg-purple-400/10 transition-colors"
+                >
+                  Review Lesson
+                </button>
+              )}
 
-          {/* Sidebar - Hints */}
-          <div className="lg:col-span-1">
-            <Card>
-              <HintPanel
-                hints={currentProblem.hints}
-                isChallenge={level.isChallenge}
-                onRevealHint={actions.handleRevealHint}
-              />
-            </Card>
+              {/* Story Context */}
+              {level.storyContext && state.currentProblemIndex === 0 && !state.teachingCompleted && (
+                <CharacterMessage characterId="grogg" expression="happy" variant="story">
+                  <p className="italic">{level.storyContext}</p>
+                </CharacterMessage>
+              )}
 
-            {/* Stats */}
-            <Card className="mt-4">
-              <h3 className="font-semibold text-foreground mb-3">Your Progress</h3>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-gray-500">Attempts</span>
-                  <span className="font-medium">{state.attempts}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-500">Hints Used</span>
-                  <span className="font-medium">{state.hintsUsed}</span>
+              {/* Problem Area */}
+              <div className="rounded-2xl border-2 border-primary/30 bg-slate-800/90 backdrop-blur-sm p-5 shadow-lg">
+                <ProblemDisplay
+                  problem={currentProblem}
+                  showTeachingPoint={state.showTeachingPoint}
+                />
+              </div>
+
+              {/* Answer Input */}
+              <div className="rounded-2xl bg-slate-800/90 backdrop-blur-sm p-5 shadow-md">
+                <AnswerInput
+                  problem={currentProblem}
+                  onSubmit={actions.submitAnswer}
+                  disabled={state.feedback?.isCorrect}
+                  feedback={state.feedback}
+                />
+              </div>
+
+              {/* Hints */}
+              <div className="rounded-2xl bg-slate-800/90 backdrop-blur-sm p-5 shadow-md">
+                <HintPanel
+                  hints={currentProblem.hints}
+                  isChallenge={level.isChallenge}
+                  onRevealHint={actions.handleRevealHint}
+                />
+              </div>
+
+              {/* Stats */}
+              <div className="rounded-2xl bg-slate-800/60 backdrop-blur-sm p-4">
+                <div className="flex gap-6 text-sm justify-center">
+                  <div className="text-center">
+                    <p className="text-slate-400 text-xs">Attempts</p>
+                    <p className="font-bold text-foreground text-lg">{state.attempts}</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-slate-400 text-xs">Hints Used</p>
+                    <p className="font-bold text-foreground text-lg">{state.hintsUsed}</p>
+                  </div>
                 </div>
               </div>
-            </Card>
-          </div>
+            </>
+          )}
         </div>
       </main>
+
+      {/* Adaptive Re-teach Modal */}
+      {isAdaptiveReteach && (
+        <AdaptiveReteachModal
+          onAccept={actions.acceptReteaching}
+          onDecline={actions.declineReteaching}
+        />
+      )}
 
       {/* Level Complete Modal */}
       {state.isComplete && (
@@ -142,5 +184,6 @@ export default function PlayPage() {
         />
       )}
     </div>
+    </WorldThemeProvider>
   );
 }

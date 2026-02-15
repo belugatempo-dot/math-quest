@@ -48,6 +48,7 @@ const mockChapter = {
 
 vi.mock('@/lib/world-data', () => ({
   getChapter: vi.fn(),
+  getWorldForChapter: vi.fn(() => undefined),
 }));
 
 const mockUseProfile = vi.fn();
@@ -69,6 +70,14 @@ vi.mock('@/components/navigation/LevelCard', () => ({
 
 vi.mock('@/components/game/StarDisplay', () => ({
   default: () => <div data-testid="star-display" />,
+}));
+
+vi.mock('@/contexts/WorldThemeContext', () => ({
+  WorldThemeProvider: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+}));
+
+vi.mock('@/components/effects/FloatingParticles', () => ({
+  default: () => <div data-testid="floating-particles" />,
 }));
 
 import { useParams } from 'next/navigation';

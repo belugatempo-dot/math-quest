@@ -11,40 +11,40 @@ interface LevelTypeInfo {
 const LEVEL_TYPE_MAP: Record<string, LevelTypeInfo> = {
   teaching: {
     label: 'Learn',
-    badgeClasses: 'bg-blue-100 text-blue-700',
+    badgeClasses: 'bg-blue-900/40 text-blue-300',
     badgeSolidClasses: 'bg-blue-500',
-    cardClasses: 'border-blue-200 bg-blue-50',
-    labelColor: 'text-blue-600',
+    cardClasses: 'border-blue-700/50 bg-blue-900/30',
+    labelColor: 'text-blue-400',
   },
   practice: {
     label: 'Practice',
-    badgeClasses: 'bg-green-100 text-green-700',
+    badgeClasses: 'bg-green-900/40 text-green-300',
     badgeSolidClasses: 'bg-green-500',
-    cardClasses: 'border-green-200 bg-green-50',
-    labelColor: 'text-green-600',
+    cardClasses: 'border-green-700/50 bg-green-900/30',
+    labelColor: 'text-green-400',
   },
   challenge: {
     label: 'Challenge',
-    badgeClasses: 'bg-amber-100 text-amber-700',
+    badgeClasses: 'bg-amber-900/40 text-amber-300',
     badgeSolidClasses: 'bg-amber-500',
-    cardClasses: 'border-amber-200 bg-amber-50',
-    labelColor: 'text-amber-600',
+    cardClasses: 'border-amber-700/50 bg-amber-900/30',
+    labelColor: 'text-amber-400',
   },
   boss: {
     label: 'Boss',
-    badgeClasses: 'bg-purple-100 text-purple-700',
+    badgeClasses: 'bg-purple-900/40 text-purple-300',
     badgeSolidClasses: 'bg-purple-500',
-    cardClasses: 'border-purple-200 bg-purple-50',
-    labelColor: 'text-purple-600',
+    cardClasses: 'border-purple-700/50 bg-purple-900/30',
+    labelColor: 'text-purple-400',
   },
 };
 
 const DEFAULT_INFO: LevelTypeInfo = {
   label: 'Level',
-  badgeClasses: 'bg-gray-100 text-gray-700',
-  badgeSolidClasses: 'bg-gray-500',
-  cardClasses: 'border-gray-200 bg-white',
-  labelColor: 'text-gray-600',
+  badgeClasses: 'bg-slate-700 text-slate-300',
+  badgeSolidClasses: 'bg-slate-500',
+  cardClasses: 'border-slate-700 bg-slate-800',
+  labelColor: 'text-slate-400',
 };
 
 export function getLevelTypeInfo(type: LevelType | string): LevelTypeInfo {

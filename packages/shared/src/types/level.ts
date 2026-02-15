@@ -29,11 +29,33 @@ export type LevelType =
   | 'quiz'          // Chapter assessment
   | 'boss';         // Multi-part final
 
+export type VisualType = 'angle-diagram' | 'worked-example' | 'concept-diagram' | 'none';
+
+export type InteractionType = 'click-to-continue' | 'click-to-reveal' | 'highlight-interactive';
+
+export type TeachingFormat = 'single-message' | 'multi-step-lesson';
+
+export type GamePhase = 'teaching' | 'problem' | 'feedback' | 'teaching-point' | 'adaptive-reteach' | 'complete';
+
+export interface TeachingStep {
+  id: string;
+  characterId: string;
+  expression: string;
+  dialogue: string;
+  visualType?: VisualType;
+  visualProps?: Record<string, unknown>;
+  interactionType?: InteractionType;
+}
+
 export interface TeachingContent {
-  text: string;
+  format?: TeachingFormat;
+  text?: string;                       // For single-message or legacy
   characterId?: string;
-  visualUrl?: string;
-  audioUrl?: string;
+  steps?: TeachingStep[];              // For multi-step
+  estimatedSeconds?: number;
+  skippable?: boolean;
+  visualUrl?: string;                  // Legacy field
+  audioUrl?: string;                   // Legacy field
 }
 
 export interface ReflectionPrompt {

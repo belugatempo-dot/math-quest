@@ -2,8 +2,9 @@
 
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
-import Card from '@/components/ui/Card';
 import StarDisplay from './StarDisplay';
+import Confetti from '@/components/effects/Confetti';
+import CharacterMessage from '@/components/characters/CharacterMessage';
 
 interface LevelCompleteProps {
   levelName: string;
@@ -31,46 +32,70 @@ export default function LevelComplete({
     return 'Level Complete ';
   };
 
+  const getGroggMessage = () => {
+    if (stars === 3) return 'Amazing work! You nailed every problem!';
+    if (stars === 2) return 'Really well done! You\'re getting stronger!';
+    if (stars === 1) return 'You made it through! Keep practicing to earn more stars!';
+    return 'Don\'t give up! Try again to earn some stars!';
+  };
+
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <Card className="max-w-md w-full text-center animate-in fade-in zoom-in duration-300">
+    <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50">
+      {stars >= 2 && <Confetti />}
+      <div className="max-w-md w-full text-center animate-bounce-in rounded-3xl bg-slate-800 border border-slate-700 p-8 shadow-2xl">
         <div className="mb-4">
           <div className="text-4xl mb-2">{getMessage()}</div>
           <h2 className="text-xl font-bold text-foreground">{levelName}</h2>
         </div>
 
         <div className="flex justify-center mb-6">
-          <StarDisplay stars={stars} size="lg" />
+          <StarDisplay stars={stars} size="lg" animated />
         </div>
 
-        <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
-          <div className="p-3 bg-gray-50 rounded-lg">
-            <p className="text-gray-500">Attempts</p>
-            <p className="text-xl font-bold text-foreground">{attempts}</p>
+        {/* Character congratulation */}
+        <div className="mb-6">
+          <CharacterMessage
+            characterId="grogg"
+            expression={stars >= 2 ? 'happy' : 'encouraging'}
+            variant="feedback"
+            size="sm"
+          >
+            <p>{getGroggMessage()}</p>
+          </CharacterMessage>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3 mb-6">
+          <div className="p-3 rounded-2xl bg-gradient-to-br from-blue-900/30 to-blue-900/20 border border-blue-700/50">
+            <p className="text-slate-400 text-xs font-medium">Attempts</p>
+            <p className="text-2xl font-bold text-foreground">{attempts}</p>
           </div>
-          <div className="p-3 bg-gray-50 rounded-lg">
-            <p className="text-gray-500">Hints Used</p>
-            <p className="text-xl font-bold text-foreground">{hintsUsed}</p>
+          <div className="p-3 rounded-2xl bg-gradient-to-br from-purple-900/30 to-purple-900/20 border border-purple-700/50">
+            <p className="text-slate-400 text-xs font-medium">Hints Used</p>
+            <p className="text-2xl font-bold text-foreground">{hintsUsed}</p>
           </div>
         </div>
 
         {teachingPoint && (
-          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-left">
-            <p className="text-sm font-medium text-green-800">Remember:</p>
-            <p className="mt-1 text-green-700">{teachingPoint}</p>
+          <div className="mb-6 p-4 bg-gradient-to-r from-green-900/30 to-emerald-900/30 border border-green-700/50 rounded-2xl text-left">
+            <p className="text-sm font-bold text-green-300">Remember:</p>
+            <p className="mt-1 text-green-400">{teachingPoint}</p>
           </div>
         )}
 
         <div className="space-y-2">
           {nextLevelId ? (
             <Link href={`/play/${nextLevelId}`} className="block">
-              <Button variant="primary" size="lg" className="w-full">
+              <Button variant="game" size="lg" className="w-full text-lg animate-glow-pulse">
                 Next Level →
               </Button>
             </Link>
           ) : (
             <Link href={`/chapter/${chapterId}`} className="block">
-              <Button variant="success" size="lg" className="w-full">
+              <Button
+                variant="game-success"
+                size="lg"
+                className="w-full text-lg bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 animate-shimmer bg-[length:200%_auto]"
+              >
                 Chapter Complete!
               </Button>
             </Link>
@@ -81,7 +106,7 @@ export default function LevelComplete({
             </Button>
           </Link>
         </div>
-      </Card>
+      </div>
     </div>
   );
 }

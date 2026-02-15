@@ -12,6 +12,7 @@ const { mockWorld3, mockWorld4, mockAllWorlds } = vi.hoisted(() => {
   const mockWorld3 = {
     id: 'world-3',
     name: 'Multiplication Mountains',
+    baLevel: 3,
     totalLevels: 15,
     estimatedWeeks: 8,
     chapters: [
@@ -44,6 +45,7 @@ const { mockWorld3, mockWorld4, mockAllWorlds } = vi.hoisted(() => {
   const mockWorld4 = {
     id: 'world-4',
     name: 'Fraction Islands',
+    baLevel: 4,
     totalLevels: 10,
     estimatedWeeks: 6,
     chapters: [
@@ -92,6 +94,10 @@ vi.mock('@/components/ui/ProfilePicker', () => ({
   default: () => <div data-testid="profile-picker">Profile Picker</div>,
 }));
 
+vi.mock('@/components/effects/FloatingParticles', () => ({
+  default: () => <div data-testid="floating-particles" />,
+}));
+
 import HomePage from './page';
 
 const defaultProgress = {
@@ -133,35 +139,41 @@ describe('HomePage', () => {
     expect(screen.getByTestId('profile-picker')).toBeInTheDocument();
   });
 
-  it('should render world name for default selected world', () => {
+  it('should render world name for default selected world (last world)', () => {
     render(<HomePage />);
-    expect(screen.getByRole('heading', { name: 'Multiplication Mountains' })).toBeInTheDocument();
+    // Default is the last world (world-4)
+    expect(screen.getByRole('heading', { name: 'Level 4 - Fraction Islands' })).toBeInTheDocument();
   });
 
   it('should render chapter cards for the default world', () => {
     render(<HomePage />);
-    expect(screen.getByTestId('chapter-card-chapter-3-1')).toBeInTheDocument();
-    expect(screen.getByTestId('chapter-card-chapter-3-2')).toBeInTheDocument();
+    // Default is world-4
+    expect(screen.getByTestId('chapter-card-chapter-4-1')).toBeInTheDocument();
   });
 
   it('should compute chapter progress correctly from completed levels', () => {
     render(<HomePage />);
+    // Switch to world 3 to see progress
+    fireEvent.click(screen.getByRole('tab', { name: /Multiplication Mountains/ }));
     expect(screen.getByText('Getting Started - Stars: 5 - Completed: 2')).toBeInTheDocument();
   });
 
   it('should show zero progress for chapter with no completions', () => {
     render(<HomePage />);
+    fireEvent.click(screen.getByRole('tab', { name: /Multiplication Mountains/ }));
     expect(screen.getByText('Going Further - Stars: 0 - Completed: 0')).toBeInTheDocument();
   });
 
   it('should show total stars in header', () => {
     render(<HomePage />);
-    expect(screen.getByText('5')).toBeInTheDocument();
+    // Default is world-4, which has 0 stars completed
+    expect(screen.getByText('0')).toBeInTheDocument();
   });
 
   it('should show max stars for selected world', () => {
     render(<HomePage />);
-    expect(screen.getByText('of 9 stars')).toBeInTheDocument();
+    // Default is world-4 with 2 levels = 6 max stars
+    expect(screen.getByText('of 6 stars')).toBeInTheDocument();
   });
 
   it('should render navigation links', () => {
@@ -181,7 +193,7 @@ describe('HomePage', () => {
       completeLevel: vi.fn(),
     });
     render(<HomePage />);
-    expect(screen.getByText('Getting Started - Stars: 0 - Completed: 0')).toBeInTheDocument();
+    expect(screen.getByText('Halves and Quarters - Stars: 0 - Completed: 0')).toBeInTheDocument();
   });
 
   it('should show active profile name and avatar', () => {
@@ -210,50 +222,51 @@ describe('HomePage', () => {
     it('should render world selector tabs', () => {
       render(<HomePage />);
       expect(screen.getByRole('tablist', { name: 'Select world' })).toBeInTheDocument();
-      expect(screen.getByRole('tab', { name: 'Multiplication Mountains' })).toBeInTheDocument();
-      expect(screen.getByRole('tab', { name: 'Fraction Islands' })).toBeInTheDocument();
+      expect(screen.getByRole('tab', { name: /Multiplication Mountains/ })).toBeInTheDocument();
+      expect(screen.getByRole('tab', { name: /Fraction Islands/ })).toBeInTheDocument();
     });
 
     it('should mark the default world tab as selected', () => {
       render(<HomePage />);
-      const world3Tab = screen.getByRole('tab', { name: 'Multiplication Mountains' });
-      expect(world3Tab).toHaveAttribute('aria-selected', 'true');
-      const world4Tab = screen.getByRole('tab', { name: 'Fraction Islands' });
-      expect(world4Tab).toHaveAttribute('aria-selected', 'false');
+      // Default is world-4 (last world)
+      const world4Tab = screen.getByRole('tab', { name: /Fraction Islands/ });
+      expect(world4Tab).toHaveAttribute('aria-selected', 'true');
+      const world3Tab = screen.getByRole('tab', { name: /Multiplication Mountains/ });
+      expect(world3Tab).toHaveAttribute('aria-selected', 'false');
     });
 
-    it('should switch to world 4 when its tab is clicked', () => {
+    it('should switch to world 3 when its tab is clicked', () => {
       render(<HomePage />);
-      fireEvent.click(screen.getByRole('tab', { name: 'Fraction Islands' }));
+      fireEvent.click(screen.getByRole('tab', { name: /Multiplication Mountains/ }));
 
-      expect(screen.getByRole('heading', { name: 'Fraction Islands' })).toBeInTheDocument();
-      expect(screen.getByTestId('chapter-card-chapter-4-1')).toBeInTheDocument();
-      expect(screen.queryByTestId('chapter-card-chapter-3-1')).not.toBeInTheDocument();
+      expect(screen.getByRole('heading', { name: 'Level 3 - Multiplication Mountains' })).toBeInTheDocument();
+      expect(screen.getByTestId('chapter-card-chapter-3-1')).toBeInTheDocument();
+      expect(screen.queryByTestId('chapter-card-chapter-4-1')).not.toBeInTheDocument();
     });
 
     it('should update aria-selected when switching worlds', () => {
       render(<HomePage />);
-      fireEvent.click(screen.getByRole('tab', { name: 'Fraction Islands' }));
+      fireEvent.click(screen.getByRole('tab', { name: /Multiplication Mountains/ }));
 
-      const world4Tab = screen.getByRole('tab', { name: 'Fraction Islands' });
-      expect(world4Tab).toHaveAttribute('aria-selected', 'true');
-      const world3Tab = screen.getByRole('tab', { name: 'Multiplication Mountains' });
-      expect(world3Tab).toHaveAttribute('aria-selected', 'false');
+      const world3Tab = screen.getByRole('tab', { name: /Multiplication Mountains/ });
+      expect(world3Tab).toHaveAttribute('aria-selected', 'true');
+      const world4Tab = screen.getByRole('tab', { name: /Fraction Islands/ });
+      expect(world4Tab).toHaveAttribute('aria-selected', 'false');
     });
 
     it('should show correct max stars after switching worlds', () => {
       render(<HomePage />);
-      fireEvent.click(screen.getByRole('tab', { name: 'Fraction Islands' }));
-      expect(screen.getByText('of 6 stars')).toBeInTheDocument();
+      fireEvent.click(screen.getByRole('tab', { name: /Multiplication Mountains/ }));
+      expect(screen.getByText('of 9 stars')).toBeInTheDocument();
     });
 
-    it('should switch back to world 3', () => {
+    it('should switch back to world 4', () => {
       render(<HomePage />);
-      fireEvent.click(screen.getByRole('tab', { name: 'Fraction Islands' }));
-      fireEvent.click(screen.getByRole('tab', { name: 'Multiplication Mountains' }));
+      fireEvent.click(screen.getByRole('tab', { name: /Multiplication Mountains/ }));
+      fireEvent.click(screen.getByRole('tab', { name: /Fraction Islands/ }));
 
-      expect(screen.getByTestId('chapter-card-chapter-3-1')).toBeInTheDocument();
-      expect(screen.queryByTestId('chapter-card-chapter-4-1')).not.toBeInTheDocument();
+      expect(screen.getByTestId('chapter-card-chapter-4-1')).toBeInTheDocument();
+      expect(screen.queryByTestId('chapter-card-chapter-3-1')).not.toBeInTheDocument();
     });
   });
 });
