@@ -8835,7 +8835,8 @@
               "inputType": "text_field",
               "correctAnswer": {
                 "value": "1, 2, 3, 4, 6, 8, 12, 24",
-                "displayValue": "1, 2, 3, 4, 6, 8, 12, 24"
+                "displayValue": "1, 2, 3, 4, 6, 8, 12, 24",
+                "orderIndependent": true
               },
               "hints": [
                 {
@@ -8914,7 +8915,8 @@
               "inputType": "text_field",
               "correctAnswer": {
                 "value": "(1,36), (2,18), (3,12), (4,9), (6,6)",
-                "displayValue": "(1,36), (2,18), (3,12), (4,9), (6,6)"
+                "displayValue": "(1,36), (2,18), (3,12), (4,9), (6,6)",
+                "orderIndependent": true
               },
               "hints": [
                 {
@@ -8969,7 +8971,8 @@
               "inputType": "text_field",
               "correctAnswer": {
                 "value": "(1,36), (2,18), (3,12), (4,9), (6,6)",
-                "displayValue": "(1,36), (2,18), (3,12), (4,9), (6,6)"
+                "displayValue": "(1,36), (2,18), (3,12), (4,9), (6,6)",
+                "orderIndependent": true
               },
               "hints": [
                 {
@@ -9063,7 +9066,8 @@
               "inputType": "text_field",
               "correctAnswer": {
                 "value": "2, 3, 5, 7, 11, 13, 17, 19",
-                "displayValue": "2, 3, 5, 7, 11, 13, 17, 19"
+                "displayValue": "2, 3, 5, 7, 11, 13, 17, 19",
+                "orderIndependent": true
               },
               "hints": [
                 {

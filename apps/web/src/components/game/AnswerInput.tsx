@@ -171,6 +171,11 @@ export default function AnswerInput({
     <div className="space-y-4">
       {renderInput()}
 
+      {/* Order hint for set-type problems */}
+      {problem.correctAnswer.orderIndependent && (
+        <p className="text-sm text-white/50 text-center">(any order)</p>
+      )}
+
       {/* Feedback */}
       {feedback && (
         <div

@@ -90,6 +90,112 @@ describe('answersAreEquivalent', () => {
       expect(answersAreEquivalent({ value: 'C' }, { value: 'Cat' })).toBe(false);
     });
   });
+
+  describe('comma spacing normalization', () => {
+    it('matches strings with different comma spacing', () => {
+      expect(answersAreEquivalent({ value: '1,2,3' }, { value: '1, 2, 3' })).toBe(true);
+    });
+
+    it('matches strings with extra spaces around commas', () => {
+      expect(answersAreEquivalent({ value: '1 , 2 , 3' }, { value: '1, 2, 3' })).toBe(true);
+    });
+
+    it('matches strings with no spaces to strings with spaces', () => {
+      expect(answersAreEquivalent({ value: 'a,b,c' }, { value: 'a, b, c' })).toBe(true);
+    });
+  });
+
+  describe('order-independent set comparison', () => {
+    it('accepts items in different order when orderIndependent is true', () => {
+      expect(
+        answersAreEquivalent(
+          { value: '3, 1, 2' },
+          { value: '1, 2, 3', orderIndependent: true }
+        )
+      ).toBe(true);
+    });
+
+    it('accepts the exact bug report scenario: factors of 24 in different order', () => {
+      expect(
+        answersAreEquivalent(
+          { value: '1,24,2,12,3,8,4,6' },
+          { value: '1, 2, 3, 4, 6, 8, 12, 24', orderIndependent: true }
+        )
+      ).toBe(true);
+    });
+
+    it('rejects missing items even with orderIndependent', () => {
+      expect(
+        answersAreEquivalent(
+          { value: '1, 2, 3' },
+          { value: '1, 2, 3, 4', orderIndependent: true }
+        )
+      ).toBe(false);
+    });
+
+    it('rejects extra items even with orderIndependent', () => {
+      expect(
+        answersAreEquivalent(
+          { value: '1, 2, 3, 4, 5' },
+          { value: '1, 2, 3, 4', orderIndependent: true }
+        )
+      ).toBe(false);
+    });
+
+    it('rejects wrong items even with orderIndependent', () => {
+      expect(
+        answersAreEquivalent(
+          { value: '1, 2, 99' },
+          { value: '1, 2, 3', orderIndependent: true }
+        )
+      ).toBe(false);
+    });
+
+    it('still rejects wrong order when orderIndependent is absent', () => {
+      expect(
+        answersAreEquivalent(
+          { value: '3, 2, 1' },
+          { value: '1, 2, 3' }
+        )
+      ).toBe(false);
+    });
+
+    it('still rejects wrong order when orderIndependent is false', () => {
+      expect(
+        answersAreEquivalent(
+          { value: '3, 2, 1' },
+          { value: '1, 2, 3', orderIndependent: false }
+        )
+      ).toBe(false);
+    });
+
+    it('handles single-item answers (no comma) with orderIndependent', () => {
+      expect(
+        answersAreEquivalent(
+          { value: '42' },
+          { value: '42', orderIndependent: true }
+        )
+      ).toBe(true);
+    });
+
+    it('is case-insensitive with orderIndependent', () => {
+      expect(
+        answersAreEquivalent(
+          { value: 'C, A, B' },
+          { value: 'a, b, c', orderIndependent: true }
+        )
+      ).toBe(true);
+    });
+
+    it('handles factor pairs in different order with orderIndependent', () => {
+      expect(
+        answersAreEquivalent(
+          { value: '(6,6), (1,36), (4,9), (2,18), (3,12)' },
+          { value: '(1,36), (2,18), (3,12), (4,9), (6,6)', orderIndependent: true }
+        )
+      ).toBe(true);
+    });
+  });
 });
 
 describe('checkAnswer', () => {

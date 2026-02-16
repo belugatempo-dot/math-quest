@@ -11841,7 +11841,8 @@
               "inputType": "text_field",
               "correctAnswer": {
                 "value": "0, 1, 2",
-                "displayValue": "0, 1, and 2"
+                "displayValue": "0, 1, and 2",
+                "orderIndependent": true
               },
               "hints": [
                 {

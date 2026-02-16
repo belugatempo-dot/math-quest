@@ -64,6 +64,7 @@ export interface Answer {
   value: string | number | number[] | string[];
   displayValue?: string;         // How to show it
   explanation?: string;          // Why it's correct
+  orderIndependent?: boolean;    // Treat comma-separated values as a set (order doesn't matter)
 }
 
 export interface VisualAsset {

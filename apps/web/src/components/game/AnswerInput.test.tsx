@@ -234,6 +234,38 @@ describe('AnswerInput', () => {
     });
   });
 
+  describe('order-independent hint', () => {
+    it('should show "(any order)" hint when correctAnswer has orderIndependent: true', () => {
+      const setProblem = {
+        ...baseProblem,
+        inputType: 'text_field' as const,
+        correctAnswer: { value: '1, 2, 3', orderIndependent: true },
+      };
+      render(<AnswerInput problem={setProblem} onSubmit={vi.fn()} />);
+      expect(screen.getByText('(any order)')).toBeInTheDocument();
+    });
+
+    it('should not show "(any order)" hint when orderIndependent is absent', () => {
+      const normalProblem = {
+        ...baseProblem,
+        inputType: 'text_field' as const,
+        correctAnswer: { value: '1, 2, 3' },
+      };
+      render(<AnswerInput problem={normalProblem} onSubmit={vi.fn()} />);
+      expect(screen.queryByText('(any order)')).not.toBeInTheDocument();
+    });
+
+    it('should not show "(any order)" hint when orderIndependent is false', () => {
+      const orderedProblem = {
+        ...baseProblem,
+        inputType: 'text_field' as const,
+        correctAnswer: { value: '1, 2, 3', orderIndependent: false },
+      };
+      render(<AnswerInput problem={orderedProblem} onSubmit={vi.fn()} />);
+      expect(screen.queryByText('(any order)')).not.toBeInTheDocument();
+    });
+  });
+
   describe('number pad interaction', () => {
     it('should append number when pad button is clicked', () => {
       render(<AnswerInput problem={baseProblem} onSubmit={vi.fn()} />);

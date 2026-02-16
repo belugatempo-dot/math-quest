@@ -101,6 +101,28 @@ describe('AnswerSchema', () => {
   it('should reject object value', () => {
     expect(AnswerSchema.safeParse({ value: { nested: true } }).success).toBe(false);
   });
+
+  it('should accept optional orderIndependent boolean', () => {
+    const result = AnswerSchema.safeParse({ value: '1, 2, 3', orderIndependent: true });
+    expect(result.success).toBe(true);
+    if (result.success) expect(result.data.orderIndependent).toBe(true);
+  });
+
+  it('should accept orderIndependent: false', () => {
+    const result = AnswerSchema.safeParse({ value: '1, 2, 3', orderIndependent: false });
+    expect(result.success).toBe(true);
+    if (result.success) expect(result.data.orderIndependent).toBe(false);
+  });
+
+  it('should accept answer without orderIndependent (optional)', () => {
+    const result = AnswerSchema.safeParse({ value: '1, 2, 3' });
+    expect(result.success).toBe(true);
+    if (result.success) expect(result.data.orderIndependent).toBeUndefined();
+  });
+
+  it('should reject non-boolean orderIndependent', () => {
+    expect(AnswerSchema.safeParse({ value: '1, 2, 3', orderIndependent: 'yes' }).success).toBe(false);
+  });
 });
 
 describe('CommonMistakeSchema', () => {
