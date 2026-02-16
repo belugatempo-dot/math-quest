@@ -28,8 +28,8 @@ export interface AuthContextValue {
   user: SupabaseProfile | null;
   /** Last auth error message */
   error: string | null;
-  /** Sign up a new parent */
-  signUp: (email: string, password: string, displayName: string) => Promise<boolean>;
+  /** Sign up a new parent. Returns true on success, false on error, 'confirmation' if email confirmation needed. */
+  signUp: (email: string, password: string, displayName: string) => Promise<boolean | 'confirmation'>;
   /** Sign in an existing parent */
   signIn: (email: string, password: string) => Promise<boolean>;
   /** Sign out */
@@ -81,17 +81,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [configured]);
 
   const handleSignUp = useCallback(
-    async (email: string, password: string, displayName: string): Promise<boolean> => {
+    async (email: string, password: string, displayName: string): Promise<boolean | 'confirmation'> => {
       setError(null);
       setIsLoading(true);
       try {
         const result = await authSignUp(email, password, displayName);
+        if (result.requiresConfirmation) {
+          return 'confirmation';
+        }
         if (!result.success) {
           setError(result.error);
           return false;
         }
         setUser(result.profile);
         return true;
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'An unexpected error occurred');
+        return false;
       } finally {
         setIsLoading(false);
       }
@@ -111,6 +117,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
         setUser(result.profile);
         return true;
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'An unexpected error occurred');
+        return false;
       } finally {
         setIsLoading(false);
       }

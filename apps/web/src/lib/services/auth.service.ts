@@ -5,6 +5,7 @@ export interface AuthResult {
   success: boolean;
   error: string | null;
   profile: SupabaseProfile | null;
+  requiresConfirmation: boolean;
 }
 
 /**
@@ -19,7 +20,7 @@ export async function signUp(
 ): Promise<AuthResult> {
   const supabase = getSupabaseBrowserClient();
   if (!supabase) {
-    return { success: false, error: 'Supabase is not configured', profile: null };
+    return { success: false, error: 'Supabase is not configured', profile: null, requiresConfirmation: false };
   }
 
   const { data, error } = await supabase.auth.signUp({
@@ -27,15 +28,27 @@ export async function signUp(
     password,
     options: {
       data: { display_name: displayName },
+      emailRedirectTo: `${window.location.origin}/auth/callback`,
     },
   });
 
   if (error) {
-    return { success: false, error: error.message, profile: null };
+    return { success: false, error: error.message, profile: null, requiresConfirmation: false };
   }
 
   if (!data.user) {
-    return { success: false, error: 'No user returned from sign up', profile: null };
+    return { success: false, error: 'No user returned from sign up', profile: null, requiresConfirmation: false };
+  }
+
+  // Detect unconfirmed user: Supabase returns user with empty identities
+  // when email confirmation is required but not yet completed
+  if (data.user.identities?.length === 0) {
+    return {
+      success: false,
+      requiresConfirmation: true,
+      error: 'Please check your email to confirm your account before signing in.',
+      profile: null,
+    };
   }
 
   // Fetch the profile created by the DB trigger
@@ -50,6 +63,7 @@ export async function signUp(
     return {
       success: true,
       error: null,
+      requiresConfirmation: false,
       profile: {
         id: data.user.id,
         displayName,
@@ -63,6 +77,7 @@ export async function signUp(
   return {
     success: true,
     error: null,
+    requiresConfirmation: false,
     profile: mapDbProfile(profile),
   };
 }
@@ -76,7 +91,7 @@ export async function signIn(
 ): Promise<AuthResult> {
   const supabase = getSupabaseBrowserClient();
   if (!supabase) {
-    return { success: false, error: 'Supabase is not configured', profile: null };
+    return { success: false, error: 'Supabase is not configured', profile: null, requiresConfirmation: false };
   }
 
   const { data, error } = await supabase.auth.signInWithPassword({
@@ -85,11 +100,11 @@ export async function signIn(
   });
 
   if (error) {
-    return { success: false, error: error.message, profile: null };
+    return { success: false, error: error.message, profile: null, requiresConfirmation: false };
   }
 
   if (!data.user) {
-    return { success: false, error: 'No user returned from sign in', profile: null };
+    return { success: false, error: 'No user returned from sign in', profile: null, requiresConfirmation: false };
   }
 
   const { data: profile } = await supabase
@@ -101,6 +116,7 @@ export async function signIn(
   return {
     success: true,
     error: null,
+    requiresConfirmation: false,
     profile: profile ? mapDbProfile(profile) : {
       id: data.user.id,
       displayName: data.user.user_metadata?.display_name ?? 'Parent',

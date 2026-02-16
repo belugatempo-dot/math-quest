@@ -22,11 +22,13 @@ export default function AuthForm({
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [validationError, setValidationError] = useState<string | null>(null);
+  const [pendingConfirmation, setPendingConfirmation] = useState(false);
 
   const switchMode = (newMode: AuthMode) => {
     setMode(newMode);
     clearError();
     setValidationError(null);
+    setPendingConfirmation(false);
     setEmail('');
     setPassword('');
     setDisplayName('');
@@ -63,15 +65,20 @@ export default function AuthForm({
     e.preventDefault();
     if (!validate()) return;
 
-    let success: boolean;
     if (mode === 'signup') {
-      success = await signUp(email.trim(), password, displayName.trim());
+      const result = await signUp(email.trim(), password, displayName.trim());
+      if (result === 'confirmation') {
+        setPendingConfirmation(true);
+        return;
+      }
+      if (result === true) {
+        onSuccess?.();
+      }
     } else {
-      success = await signIn(email.trim(), password);
-    }
-
-    if (success) {
-      onSuccess?.();
+      const success = await signIn(email.trim(), password);
+      if (success) {
+        onSuccess?.();
+      }
     }
   };
 
@@ -83,98 +90,111 @@ export default function AuthForm({
         {mode === 'signup' ? 'Create Parent Account' : 'Parent Sign In'}
       </h2>
 
-      {mode === 'signup' && (
+      {mode === 'signup' && !pendingConfirmation && (
         <p className="text-sm text-white/70 mb-4">
           Create an account to save your children&apos;s progress to the cloud.
         </p>
       )}
 
-      <form onSubmit={handleSubmit} noValidate>
-        {mode === 'signup' && (
+      {pendingConfirmation && (
+        <div role="status" className="bg-cyan-500/20 border border-cyan-400/30 rounded-lg p-4 mb-4">
+          <p className="text-cyan-200 text-sm font-medium">
+            Check your email! We&apos;ve sent a confirmation link. Click it to activate your account, then sign in.
+          </p>
+        </div>
+      )}
+
+      {!pendingConfirmation && (
+        <form onSubmit={handleSubmit} noValidate>
+          {mode === 'signup' && (
+            <div className="mb-4">
+              <label
+                htmlFor="auth-name"
+                className="block text-sm font-medium text-white/90 mb-1"
+              >
+                Your Name
+              </label>
+              <input
+                id="auth-name"
+                type="text"
+                value={displayName}
+                onChange={(e) => setDisplayName(e.target.value)}
+                placeholder="Enter your name"
+                className="w-full px-3 py-2 border border-white/25 rounded-lg bg-white/10 text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                maxLength={100}
+                autoFocus={mode === 'signup'}
+                autoComplete="name"
+              />
+            </div>
+          )}
+
           <div className="mb-4">
             <label
-              htmlFor="auth-name"
+              htmlFor="auth-email"
               className="block text-sm font-medium text-white/90 mb-1"
             >
-              Your Name
+              Email
             </label>
             <input
-              id="auth-name"
-              type="text"
-              value={displayName}
-              onChange={(e) => setDisplayName(e.target.value)}
-              placeholder="Enter your name"
+              id="auth-email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="parent@example.com"
               className="w-full px-3 py-2 border border-white/25 rounded-lg bg-white/10 text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-              maxLength={100}
-              autoFocus={mode === 'signup'}
+              autoFocus={mode === 'signin'}
+              autoComplete="email"
             />
           </div>
-        )}
 
-        <div className="mb-4">
-          <label
-            htmlFor="auth-email"
-            className="block text-sm font-medium text-white/90 mb-1"
-          >
-            Email
-          </label>
-          <input
-            id="auth-email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="parent@example.com"
-            className="w-full px-3 py-2 border border-white/25 rounded-lg bg-white/10 text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-            autoFocus={mode === 'signin'}
-          />
-        </div>
-
-        <div className="mb-4">
-          <label
-            htmlFor="auth-password"
-            className="block text-sm font-medium text-white/90 mb-1"
-          >
-            Password
-          </label>
-          <input
-            id="auth-password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder={mode === 'signup' ? 'At least 8 characters' : 'Enter password'}
-            className="w-full px-3 py-2 border border-white/25 rounded-lg bg-white/10 text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-          />
-        </div>
-
-        {displayError && (
-          <p className="text-red-400 text-sm mb-4" role="alert">
-            {displayError}
-          </p>
-        )}
-
-        <div className="flex gap-2 mb-4">
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="flex-1 py-2 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-            {isLoading
-              ? 'Loading...'
-              : mode === 'signup'
-                ? 'Create Account'
-                : 'Sign In'}
-          </button>
-          {onCancel && (
-            <button
-              type="button"
-              onClick={onCancel}
-              className="px-4 py-2 bg-white/15 text-white/70 rounded-lg hover:bg-white/20 transition-colors"
+          <div className="mb-4">
+            <label
+              htmlFor="auth-password"
+              className="block text-sm font-medium text-white/90 mb-1"
             >
-              Cancel
-            </button>
+              Password
+            </label>
+            <input
+              id="auth-password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder={mode === 'signup' ? 'At least 8 characters' : 'Enter password'}
+              className="w-full px-3 py-2 border border-white/25 rounded-lg bg-white/10 text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+              autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
+            />
+          </div>
+
+          {displayError && (
+            <p className="text-red-400 text-sm mb-4" role="alert">
+              {displayError}
+            </p>
           )}
-        </div>
-      </form>
+
+          <div className="flex gap-2 mb-4">
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="flex-1 py-2 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              {isLoading
+                ? 'Loading...'
+                : mode === 'signup'
+                  ? 'Create Account'
+                  : 'Sign In'}
+            </button>
+            {onCancel && (
+              <button
+                type="button"
+                onClick={onCancel}
+                className="px-4 py-2 bg-white/15 text-white/70 rounded-lg hover:bg-white/20 transition-colors"
+              >
+                Cancel
+              </button>
+            )}
+          </div>
+        </form>
+      )}
 
       <div className="text-center">
         {mode === 'signin' ? (

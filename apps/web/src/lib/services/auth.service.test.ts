@@ -46,6 +46,7 @@ describe('AuthService', () => {
         success: false,
         error: 'Supabase is not configured',
         profile: null,
+        requiresConfirmation: false,
       });
     });
 
@@ -105,7 +106,10 @@ describe('AuthService', () => {
       expect(mockSignUp).toHaveBeenCalledWith({
         email: 'test@test.com',
         password: 'password',
-        options: { data: { display_name: 'Test Parent' } },
+        options: {
+          data: { display_name: 'Test Parent' },
+          emailRedirectTo: expect.stringContaining('/auth/callback'),
+        },
       });
     });
 
@@ -127,6 +131,86 @@ describe('AuthService', () => {
 
       expect(result.success).toBe(true);
       expect(result.profile?.displayName).toBe('Test Parent');
+    });
+
+    it('should detect unconfirmed user and return requiresConfirmation', async () => {
+      const mockUser = {
+        id: 'user-123',
+        email: 'test@test.com',
+        created_at: '2026-01-01T00:00:00.000Z',
+        identities: [],
+      };
+      mockSignUp.mockResolvedValue({
+        data: { user: mockUser },
+        error: null,
+      });
+
+      const result = await signUp('test@test.com', 'password', 'Test Parent');
+
+      expect(result.success).toBe(false);
+      expect(result.requiresConfirmation).toBe(true);
+      expect(result.error).toContain('check your email');
+      expect(result.profile).toBeNull();
+    });
+
+    it('should pass through confirmed user with identities', async () => {
+      const mockUser = {
+        id: 'user-123',
+        email: 'test@test.com',
+        created_at: '2026-01-01T00:00:00.000Z',
+        identities: [{ id: 'ident-1' }],
+      };
+      mockSignUp.mockResolvedValue({
+        data: { user: mockUser },
+        error: null,
+      });
+      mockFrom.mockReturnValue(
+        mockQuery({
+          id: 'user-123',
+          display_name: 'Test Parent',
+          email: 'test@test.com',
+          created_at: '2026-01-01T00:00:00.000Z',
+          updated_at: '2026-01-01T00:00:00.000Z',
+        })
+      );
+
+      const result = await signUp('test@test.com', 'password', 'Test Parent');
+
+      expect(result.success).toBe(true);
+      expect(result.requiresConfirmation).toBe(false);
+      expect(result.profile).not.toBeNull();
+    });
+
+    it('should include emailRedirectTo in signUp options', async () => {
+      const mockUser = {
+        id: 'user-123',
+        email: 'test@test.com',
+        created_at: '2026-01-01T00:00:00.000Z',
+        identities: [{ id: 'ident-1' }],
+      };
+      mockSignUp.mockResolvedValue({
+        data: { user: mockUser },
+        error: null,
+      });
+      mockFrom.mockReturnValue(
+        mockQuery({
+          id: 'user-123',
+          display_name: 'Test',
+          email: 'test@test.com',
+          created_at: '2026-01-01T00:00:00.000Z',
+          updated_at: '2026-01-01T00:00:00.000Z',
+        })
+      );
+
+      await signUp('test@test.com', 'password', 'Test');
+
+      expect(mockSignUp).toHaveBeenCalledWith(
+        expect.objectContaining({
+          options: expect.objectContaining({
+            emailRedirectTo: expect.stringContaining('/auth/callback'),
+          }),
+        })
+      );
     });
   });
 

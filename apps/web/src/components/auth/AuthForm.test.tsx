@@ -273,6 +273,48 @@ describe('AuthForm', () => {
     });
   });
 
+  describe('email confirmation message', () => {
+    it('should show confirmation message when signup requires email confirmation', async () => {
+      mockSignUp.mockResolvedValue('confirmation');
+      render(<AuthForm initialMode="signup" />);
+
+      fireEvent.change(screen.getByLabelText('Your Name'), {
+        target: { value: 'Test Parent' },
+      });
+      fireEvent.change(screen.getByLabelText('Email'), {
+        target: { value: 'test@test.com' },
+      });
+      fireEvent.change(screen.getByLabelText('Password'), {
+        target: { value: 'password123' },
+      });
+      fireEvent.click(screen.getByRole('button', { name: 'Create Account' }));
+
+      await waitFor(() => {
+        expect(screen.getByText(/check your email/i)).toBeInTheDocument();
+      });
+      // Should be styled as success (not error)
+      const message = screen.getByText(/check your email/i);
+      expect(message.closest('[role="status"]')).toBeInTheDocument();
+    });
+  });
+
+  describe('autoComplete attributes', () => {
+    it('should have autoComplete attributes on all inputs in signup mode', () => {
+      render(<AuthForm initialMode="signup" />);
+
+      expect(screen.getByLabelText('Your Name')).toHaveAttribute('autoComplete', 'name');
+      expect(screen.getByLabelText('Email')).toHaveAttribute('autoComplete', 'email');
+      expect(screen.getByLabelText('Password')).toHaveAttribute('autoComplete', 'new-password');
+    });
+
+    it('should have autoComplete attributes on all inputs in signin mode', () => {
+      render(<AuthForm />);
+
+      expect(screen.getByLabelText('Email')).toHaveAttribute('autoComplete', 'email');
+      expect(screen.getByLabelText('Password')).toHaveAttribute('autoComplete', 'current-password');
+    });
+  });
+
   describe('error display', () => {
     it('should display error from auth context via role alert', () => {
       vi.mocked(vi.fn()).mockReturnValue(undefined);

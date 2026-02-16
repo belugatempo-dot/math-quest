@@ -164,6 +164,90 @@ describe('AuthContext', () => {
     });
   });
 
+  describe('signUp - confirmation', () => {
+    it('should return confirmation when requiresConfirmation is true', async () => {
+      mockSignUp.mockResolvedValue({
+        success: false,
+        requiresConfirmation: true,
+        error: 'Check your email',
+        profile: null,
+      });
+
+      const { result } = renderHook(() => useAuth(), { wrapper });
+
+      await waitFor(() => {
+        expect(result.current.isLoading).toBe(false);
+      });
+
+      let signUpResult: boolean | 'confirmation' = false;
+      await act(async () => {
+        signUpResult = await result.current.signUp('test@test.com', 'password', 'Test');
+      });
+
+      expect(signUpResult).toBe('confirmation');
+      expect(result.current.user).toBeNull();
+      expect(result.current.error).toBeNull();
+    });
+  });
+
+  describe('signUp - network error handling', () => {
+    it('should catch thrown errors and set error state', async () => {
+      mockSignUp.mockRejectedValue(new Error('Network failure'));
+
+      const { result } = renderHook(() => useAuth(), { wrapper });
+
+      await waitFor(() => {
+        expect(result.current.isLoading).toBe(false);
+      });
+
+      let success: boolean | 'confirmation' = true;
+      await act(async () => {
+        success = await result.current.signUp('test@test.com', 'password', 'Test');
+      });
+
+      expect(success).toBe(false);
+      expect(result.current.error).toBe('Network failure');
+    });
+
+    it('should handle non-Error thrown values', async () => {
+      mockSignUp.mockRejectedValue('string error');
+
+      const { result } = renderHook(() => useAuth(), { wrapper });
+
+      await waitFor(() => {
+        expect(result.current.isLoading).toBe(false);
+      });
+
+      let success: boolean | 'confirmation' = true;
+      await act(async () => {
+        success = await result.current.signUp('test@test.com', 'password', 'Test');
+      });
+
+      expect(success).toBe(false);
+      expect(result.current.error).toBe('An unexpected error occurred');
+    });
+  });
+
+  describe('signIn - network error handling', () => {
+    it('should catch thrown errors and set error state', async () => {
+      mockSignIn.mockRejectedValue(new Error('Connection refused'));
+
+      const { result } = renderHook(() => useAuth(), { wrapper });
+
+      await waitFor(() => {
+        expect(result.current.isLoading).toBe(false);
+      });
+
+      let success = true;
+      await act(async () => {
+        success = await result.current.signIn('test@test.com', 'password');
+      });
+
+      expect(success).toBe(false);
+      expect(result.current.error).toBe('Connection refused');
+    });
+  });
+
   describe('signIn', () => {
     it('should sign in successfully', async () => {
       const mockProfile = {
