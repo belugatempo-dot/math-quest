@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import type { Chapter } from '@mathquest/shared';
 import StarDisplay from '@/components/game/StarDisplay';
+import { getTopicEmoji } from '@/lib/topic-styles';
 
 interface ChapterCardProps {
   chapter: Chapter;
@@ -68,17 +69,22 @@ export default function ChapterCard({
                     : 'fill-white/15'
               }
             />
-            {/* Chapter number */}
-            <text
-              x="40"
-              y="44"
-              textAnchor="middle"
-              className={`text-xl font-bold ${
-                isComplete || hasProgress ? 'fill-white' : 'fill-white/50'
-              }`}
-            >
-              {chapter.number}
-            </text>
+            {/* Topic emoji */}
+            <foreignObject x="12" y="12" width="56" height="56">
+              <div
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '28px',
+                  lineHeight: 1,
+                }}
+              >
+                {getTopicEmoji(chapter.topic)}
+              </div>
+            </foreignObject>
           </svg>
 
           {/* Complete checkmark */}
@@ -107,7 +113,7 @@ export default function ChapterCard({
             </div>
             <div className="text-right flex-shrink-0">
               <StarDisplay stars={Math.min(3, Math.floor(totalStars / 3))} size="sm" />
-              <div className="text-xs text-white/50 mt-1">
+              <div className="text-xs text-white/60 mt-1">
                 {totalStars}/{maxStars}
               </div>
             </div>
@@ -119,7 +125,7 @@ export default function ChapterCard({
 
           <div className="mt-2 space-y-1">
             <div className="flex justify-between text-sm">
-              <span className="text-white/50">Progress</span>
+              <span className="text-white/60">Progress</span>
               <span className="font-medium">
                 {completedLevels}/{totalLevels} levels
               </span>
@@ -136,7 +142,7 @@ export default function ChapterCard({
             </div>
           </div>
 
-          <div className="mt-2 text-xs text-white/50">
+          <div className="mt-2 text-xs text-white/60">
             Weeks {chapter.weekStart}-{chapter.weekEnd}
           </div>
         </div>

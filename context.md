@@ -32,7 +32,7 @@
 - Monorepo structure (pnpm + Turborepo)
 - Content pipeline with markdown parser
 - **World 3** (Multiplication Mountains): 135 levels, 424 problems, A- quality
-- **World 4** (Fraction Islands): 133 levels, 369 problems, A quality, 12 boss levels
+- **World 4** (Fraction Islands): 143 levels, 405 problems, A+ quality (BA4-calibrated), 13 boss levels
 - **Multi-world navigation**: world selector tabs, cross-world helpers (`getWorld`, `getChapter`, `getLevel`, `getLevelWithContext`, `getWorldForChapter`)
 - Next.js 14 web app with Tailwind CSS, purple-blue gradient glassmorphism UI with world-themed CSS custom properties
 - Character-led teaching system (TeachingPanel, TeachingVisual, AdaptiveReteachModal)
@@ -48,7 +48,7 @@
 - **Supabase Auth + Cloud Sync**: Parent auth (email/password), child profiles, cloud progress save/load, localStorage migration
 - COPPA-compliant: children never have auth accounts, parents own child profiles
 - Offline-first: localStorage primary, cloud sync is fire-and-forget
-- Comprehensive test suite: **1,042 tests (431 shared + 611 web), 100% shared coverage, 97%+ web coverage**
+- Comprehensive test suite: **1,069 tests (431 shared + 638 web), 100% shared coverage, 97%+ web coverage**
 - **Deployed to Vercel**: https://math-quest-lime.vercel.app (auto-deploys on push to main)
 
 **No Current Blockers** - App is functional and playable.

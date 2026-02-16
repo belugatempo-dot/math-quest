@@ -50,11 +50,11 @@ export default function PlayPage() {
             <div>
               <Link
                 href={`/chapter/${chapter.id}`}
-                className="text-white/60 hover:text-white text-xs transition-colors"
+                className="text-white/70 hover:text-white text-sm transition-colors"
               >
                 ← {chapter.name}
               </Link>
-              <h1 className="font-bold text-sm text-white">{level.name}</h1>
+              <h1 className="font-bold text-base text-white">{level.name}</h1>
             </div>
             <div className="flex items-center gap-3">
               <StreakIndicator streak={state.correctStreak} />
@@ -149,11 +149,11 @@ export default function PlayPage() {
               <div className="rounded-2xl bg-white/8 backdrop-blur-sm p-4">
                 <div className="flex gap-6 text-sm justify-center">
                   <div className="text-center">
-                    <p className="text-white/60 text-xs">Attempts</p>
+                    <p className="text-white/70 text-xs">Attempts</p>
                     <p className="font-bold text-foreground text-lg">{state.attempts}</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-white/60 text-xs">Hints Used</p>
+                    <p className="text-white/70 text-xs">Hints Used</p>
                     <p className="font-bold text-foreground text-lg">{state.hintsUsed}</p>
                   </div>
                 </div>

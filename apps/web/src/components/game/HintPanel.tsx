@@ -107,7 +107,7 @@ export default function HintPanel({
               </CharacterMessage>
             ) : (
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white/50 font-bold text-sm">
+                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white/60 font-bold text-sm">
                   ?
                 </div>
                 <div className="flex-1">
@@ -115,11 +115,11 @@ export default function HintPanel({
                     <span className="text-sm font-medium text-white/60">
                       Hint {hint.tier}
                     </span>
-                    <span className="text-xs text-white/50">
+                    <span className="text-xs text-white/60">
                       {getHintCostLabel(hint.tier)}
                     </span>
                   </div>
-                  <p className="text-white/50 italic text-sm">
+                  <p className="text-white/60 italic text-sm">
                     {hint.tier === 1 ? 'Click "Get Hint" to reveal' : 'Reveal previous hints first'}
                   </p>
                 </div>

@@ -127,7 +127,7 @@ describe('ChapterCard', () => {
       <ChapterCard chapter={mockChapter} totalStars={0} completedLevels={1} />
     );
     // 1/2 levels = 50%
-    const progressBar = container.querySelector('[style*="width"]');
+    const progressBar = container.querySelector('.h-2 > div');
     expect(progressBar).toBeTruthy();
     expect(progressBar!.getAttribute('style')).toContain('50%');
   });
@@ -136,7 +136,7 @@ describe('ChapterCard', () => {
     const { container } = render(
       <ChapterCard chapter={mockChapter} totalStars={0} completedLevels={0} />
     );
-    const progressBar = container.querySelector('[style*="width"]');
+    const progressBar = container.querySelector('.h-2 > div');
     expect(progressBar!.getAttribute('style')).toContain('0%');
   });
 
@@ -144,7 +144,19 @@ describe('ChapterCard', () => {
     const { container } = render(
       <ChapterCard chapter={mockChapter} totalStars={6} completedLevels={2} />
     );
-    const progressBar = container.querySelector('[style*="width"]');
+    const progressBar = container.querySelector('.h-2 > div');
     expect(progressBar!.getAttribute('style')).toContain('100%');
+  });
+
+  it('should render a topic emoji in the progress ring', () => {
+    render(<ChapterCard chapter={mockChapter} totalStars={0} completedLevels={0} />);
+    // mockChapter topic is "Introduction to Multiplication" which is unknown → fallback 📘
+    expect(screen.getByText('📘')).toBeInTheDocument();
+  });
+
+  it('should render the correct emoji for a known topic', () => {
+    const divisionChapter = { ...mockChapter, topic: 'division' };
+    render(<ChapterCard chapter={divisionChapter} totalStars={0} completedLevels={0} />);
+    expect(screen.getByText('➗')).toBeInTheDocument();
   });
 });

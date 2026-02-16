@@ -100,7 +100,7 @@ export default function HomePage() {
       <div className="max-w-4xl mx-auto px-4 pt-2 flex justify-end">
         <Link
           href="/admin"
-          className="text-xs text-white/50 hover:text-white/80 flex items-center gap-1 transition-colors"
+          className="text-xs text-white/60 hover:text-white/80 flex items-center gap-1 transition-colors"
         >
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
             <circle cx="12" cy="12" r="3" />
@@ -139,7 +139,7 @@ export default function HomePage() {
       <main className="max-w-4xl mx-auto px-4 py-6 relative">
         <div className="mb-4">
           <h2 className="text-xl font-bold text-foreground">Chapters</h2>
-          <p className="text-white/60">
+          <p className="text-white/70">
             Complete levels to earn stars and unlock new chapters
           </p>
         </div>

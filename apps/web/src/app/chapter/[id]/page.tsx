@@ -66,13 +66,13 @@ export default function ChapterPage() {
         <div className="max-w-4xl mx-auto px-4 py-5">
           <Link
             href="/"
-            className="text-white/60 hover:text-white text-sm mb-2 inline-flex items-center gap-1 transition-colors"
+            className="text-white/70 hover:text-white text-sm mb-2 inline-flex items-center gap-1 transition-colors"
           >
             ← Back to World Map
           </Link>
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-sm text-white/60 font-medium">Chapter {chapter.number}</div>
+              <div className="text-sm text-white/70 font-medium">Chapter {chapter.number}</div>
               <h1 className="text-2xl font-bold">{chapter.name}</h1>
               <p className="text-white/70 mt-1 text-sm">
                 {chapter.learningObjectives.join(' • ')}
@@ -93,7 +93,7 @@ export default function ChapterPage() {
       <div className="bg-white/10 backdrop-blur-sm border-b border-white/15">
         <div className="max-w-4xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between text-sm mb-2">
-            <span className="text-white/60 font-medium">Chapter Progress</span>
+            <span className="text-white/70 font-medium">Chapter Progress</span>
             <span className="font-bold text-primary">
               {completedLevels}/{chapter.levels.length} levels
             </span>

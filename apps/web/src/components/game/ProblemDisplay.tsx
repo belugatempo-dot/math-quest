@@ -25,7 +25,7 @@ export default function ProblemDisplay({ problem, showTeachingPoint = false }: P
   return (
     <div className="space-y-4 animate-slide-up" key={problem.id}>
       {/* Problem Statement */}
-      <div className="text-2xl leading-relaxed text-foreground font-bold whitespace-pre-line" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>
+      <div className="text-lg leading-relaxed text-foreground font-semibold whitespace-pre-line" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>
         {formatStatement(problem.statement)}
       </div>
 

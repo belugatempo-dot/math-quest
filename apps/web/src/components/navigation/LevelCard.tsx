@@ -53,8 +53,8 @@ export default function LevelCard({
           </div>
         </div>
         <div className="min-w-0">
-          <div className="text-sm text-white/50">{typeInfo.label}</div>
-          <h4 className="font-medium text-white/50">{level.name}</h4>
+          <div className="text-sm text-white/60">{typeInfo.label}</div>
+          <h4 className="font-medium text-white/60">{level.name}</h4>
         </div>
       </div>
     );
@@ -93,7 +93,7 @@ export default function LevelCard({
 
           {/* Next playable indicator */}
           {isNext && (
-            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 px-1.5 py-0.5 bg-white/10 rounded-full text-[9px] font-bold text-primary shadow-sm whitespace-nowrap">
+            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 px-1.5 py-0.5 bg-white/10 rounded-full text-[10px] font-bold text-primary shadow-sm whitespace-nowrap">
               PLAY
             </div>
           )}
@@ -121,10 +121,10 @@ export default function LevelCard({
           </div>
 
           {level.storyContext && (
-            <p className="text-xs text-white/50 line-clamp-2 mt-0.5">{level.storyContext}</p>
+            <p className="text-xs text-white/60 line-clamp-2 mt-0.5">{level.storyContext}</p>
           )}
 
-          <div className="mt-1 flex items-center gap-2 text-xs text-white/50">
+          <div className="mt-1 flex items-center gap-2 text-xs text-white/60">
             <span>{level.problems.length} problem{level.problems.length !== 1 ? 's' : ''}</span>
             <span>•</span>
             <span>~{level.estimatedMinutes} min</span>

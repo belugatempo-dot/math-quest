@@ -66,11 +66,11 @@ export default function LevelComplete({
 
         <div className="grid grid-cols-2 gap-3 mb-6">
           <div className="p-3 rounded-2xl bg-gradient-to-br from-blue-500/15 to-blue-500/10 border border-blue-400/30">
-            <p className="text-white/60 text-xs font-medium">Attempts</p>
+            <p className="text-white/70 text-xs font-medium">Attempts</p>
             <p className="text-2xl font-bold text-foreground">{attempts}</p>
           </div>
           <div className="p-3 rounded-2xl bg-gradient-to-br from-purple-500/15 to-purple-500/10 border border-purple-400/30">
-            <p className="text-white/60 text-xs font-medium">Hints Used</p>
+            <p className="text-white/70 text-xs font-medium">Hints Used</p>
             <p className="text-2xl font-bold text-foreground">{hintsUsed}</p>
           </div>
         </div>

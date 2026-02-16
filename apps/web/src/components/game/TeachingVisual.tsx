@@ -42,28 +42,28 @@ function AngleDiagram({ visualProps }: { visualProps: Record<string, unknown> })
     <div data-testid="visual-angle-diagram" className="flex flex-col items-center gap-3">
       <svg viewBox="0 0 200 150" className="w-full max-w-[280px]" role="img" aria-label={`${angleValue} degree angle diagram`}>
         {/* Base arm (horizontal) */}
-        <line x1="100" y1="100" x2="180" y2="100" stroke="currentColor" strokeWidth="2.5" className="text-purple-600" />
+        <line x1="100" y1="100" x2="180" y2="100" stroke="currentColor" strokeWidth="2.5" className="text-purple-300" />
         {/* Angle arm */}
-        <line x1="100" y1="100" x2={endX} y2={endY} stroke="currentColor" strokeWidth="2.5" className="text-purple-600" />
+        <line x1="100" y1="100" x2={endX} y2={endY} stroke="currentColor" strokeWidth="2.5" className="text-purple-300" />
         {/* Arc */}
         <path
           d={`M ${100 + arcRadius} 100 A ${arcRadius} ${arcRadius} 0 ${largeArc} 0 ${arcEndX} ${arcEndY}`}
           fill="none"
           stroke="currentColor"
           strokeWidth="1.5"
-          className="text-purple-400"
+          className="text-purple-300/70"
         />
         {/* Vertex dot */}
-        <circle cx="100" cy="100" r="3" fill="currentColor" className="text-purple-700" />
+        <circle cx="100" cy="100" r="3" fill="currentColor" className="text-purple-300" />
         {/* Right angle square indicator */}
         {angleValue === 90 && (
-          <rect x="100" y="88" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-purple-400" />
+          <rect x="100" y="88" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-purple-300/70" />
         )}
       </svg>
       {showLabel && (
         <div className="text-center space-y-1">
-          <p className="text-lg font-bold text-purple-700">{angleValue}°</p>
-          <p className="text-sm text-purple-600">{ANGLE_TYPE_LABELS[angleType] || angleType}</p>
+          <p className="text-lg font-bold text-white">{angleValue}°</p>
+          <p className="text-sm text-white/70">{ANGLE_TYPE_LABELS[angleType] || angleType}</p>
         </div>
       )}
     </div>
@@ -82,19 +82,19 @@ function WorkedExample({ visualProps }: { visualProps: Record<string, unknown> }
         {steps.slice(0, revealedCount).map((step, i) => (
           <li
             key={i}
-            className="flex items-start gap-2 rounded-lg bg-white/80 p-3 border border-purple-100 animate-fadeIn"
+            className="flex items-start gap-2 rounded-lg bg-white/10 p-3 border border-white/20 animate-fadeIn"
           >
-            <span className="flex-shrink-0 w-6 h-6 rounded-full bg-purple-100 text-purple-700 text-xs font-bold flex items-center justify-center">
+            <span className="flex-shrink-0 w-6 h-6 rounded-full bg-cyan-500/30 text-cyan-200 text-xs font-bold flex items-center justify-center">
               {i + 1}
             </span>
-            <span className="text-sm text-gray-700">{step}</span>
+            <span className="text-sm text-white/90">{step}</span>
           </li>
         ))}
       </ol>
       {!allRevealed && steps.length > 0 && (
         <button
           onClick={() => setRevealedCount((c) => c + 1)}
-          className="w-full py-2 text-sm font-medium text-purple-600 border border-purple-200 rounded-lg hover:bg-purple-50 transition-colors"
+          className="w-full py-2 text-sm font-medium text-white/80 border border-white/25 rounded-lg hover:bg-white/15 transition-colors"
           aria-label="Reveal next step"
         >
           Reveal Next Step
@@ -110,35 +110,35 @@ function ConceptDiagram({ visualProps }: { visualProps: Record<string, unknown> 
 
   return (
     <div data-testid="visual-concept-diagram" className="flex flex-col items-center gap-3">
-      <p className="text-sm font-semibold text-purple-700">{title}</p>
+      <p className="text-sm font-semibold text-white">{title}</p>
       <svg viewBox="0 0 200 120" className="w-full max-w-[280px]" role="img" aria-label={title}>
         {diagramId === 'complementary-angles' && (
           <g>
-            <line x1="20" y1="100" x2="180" y2="100" stroke="currentColor" strokeWidth="2" className="text-purple-600" />
-            <line x1="100" y1="100" x2="100" y2="20" stroke="currentColor" strokeWidth="2" className="text-purple-600" />
-            <line x1="100" y1="100" x2="160" y2="40" stroke="currentColor" strokeWidth="2" className="text-purple-400" strokeDasharray="4" />
-            <rect x="100" y="88" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1" className="text-purple-400" />
-            <text x="120" y="70" fontSize="11" fill="currentColor" className="text-purple-600">a°</text>
-            <text x="85" y="70" fontSize="11" fill="currentColor" className="text-purple-600">b°</text>
-            <text x="60" y="115" fontSize="10" fill="currentColor" className="text-purple-500">a + b = 90°</text>
+            <line x1="20" y1="100" x2="180" y2="100" stroke="currentColor" strokeWidth="2" className="text-purple-300" />
+            <line x1="100" y1="100" x2="100" y2="20" stroke="currentColor" strokeWidth="2" className="text-purple-300" />
+            <line x1="100" y1="100" x2="160" y2="40" stroke="currentColor" strokeWidth="2" className="text-purple-300/70" strokeDasharray="4" />
+            <rect x="100" y="88" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1" className="text-purple-300/70" />
+            <text x="120" y="70" fontSize="11" fill="currentColor" className="text-white/90">a°</text>
+            <text x="85" y="70" fontSize="11" fill="currentColor" className="text-white/90">b°</text>
+            <text x="60" y="115" fontSize="11" fill="currentColor" className="text-white/70">a + b = 90°</text>
           </g>
         )}
         {diagramId === 'supplementary-angles' && (
           <g>
-            <line x1="20" y1="80" x2="180" y2="80" stroke="currentColor" strokeWidth="2" className="text-purple-600" />
-            <line x1="100" y1="80" x2="60" y2="20" stroke="currentColor" strokeWidth="2" className="text-purple-400" />
-            <text x="70" y="65" fontSize="11" fill="currentColor" className="text-purple-600">a°</text>
-            <text x="120" y="65" fontSize="11" fill="currentColor" className="text-purple-600">b°</text>
-            <text x="55" y="105" fontSize="10" fill="currentColor" className="text-purple-500">a + b = 180°</text>
+            <line x1="20" y1="80" x2="180" y2="80" stroke="currentColor" strokeWidth="2" className="text-purple-300" />
+            <line x1="100" y1="80" x2="60" y2="20" stroke="currentColor" strokeWidth="2" className="text-purple-300/70" />
+            <text x="70" y="65" fontSize="11" fill="currentColor" className="text-white/90">a°</text>
+            <text x="120" y="65" fontSize="11" fill="currentColor" className="text-white/90">b°</text>
+            <text x="55" y="105" fontSize="11" fill="currentColor" className="text-white/70">a + b = 180°</text>
           </g>
         )}
         {diagramId === 'triangle-angle-sum' && (
           <g>
-            <polygon points="100,15 30,100 170,100" fill="none" stroke="currentColor" strokeWidth="2" className="text-purple-600" />
-            <text x="90" y="35" fontSize="11" fill="currentColor" className="text-purple-600">a°</text>
-            <text x="35" y="95" fontSize="11" fill="currentColor" className="text-purple-600">b°</text>
-            <text x="150" y="95" fontSize="11" fill="currentColor" className="text-purple-600">c°</text>
-            <text x="50" y="115" fontSize="10" fill="currentColor" className="text-purple-500">a + b + c = 180°</text>
+            <polygon points="100,15 30,100 170,100" fill="none" stroke="currentColor" strokeWidth="2" className="text-purple-300" />
+            <text x="90" y="35" fontSize="11" fill="currentColor" className="text-white/90">a°</text>
+            <text x="35" y="95" fontSize="11" fill="currentColor" className="text-white/90">b°</text>
+            <text x="150" y="95" fontSize="11" fill="currentColor" className="text-white/90">c°</text>
+            <text x="50" y="115" fontSize="11" fill="currentColor" className="text-white/70">a + b + c = 180°</text>
           </g>
         )}
       </svg>
