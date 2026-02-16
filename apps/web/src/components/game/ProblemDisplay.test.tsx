@@ -107,6 +107,32 @@ describe('ProblemDisplay', () => {
       expect(statementEl!.textContent).toContain('\nTriangle C: sides 3,4,5');
     });
 
+    it('should strip options from display when inputType is multiple_choice', () => {
+      const mcProblem: Problem = {
+        ...mockProblem,
+        inputType: 'multiple_choice',
+        statement: 'Which is NOT a triangle? A) A shape with 3 sides B) A shape with 3 angles C) A shape with 4 corners D) A shape with 3 vertices',
+      };
+      render(<ProblemDisplay problem={mcProblem} />);
+      // Question text should be present
+      expect(screen.getByText('Which is NOT a triangle?')).toBeInTheDocument();
+      // Options should NOT appear in the display
+      expect(screen.queryByText(/A\) A shape with 3 sides/)).not.toBeInTheDocument();
+      expect(screen.queryByText(/B\) A shape with 3 angles/)).not.toBeInTheDocument();
+      expect(screen.queryByText(/C\) A shape with 4 corners/)).not.toBeInTheDocument();
+    });
+
+    it('should not strip options for non-MC problems', () => {
+      const nonMcProblem: Problem = {
+        ...mockProblem,
+        inputType: 'number_pad',
+        statement: 'Which is largest? A) 12 B) 8 C) 15 D) 3',
+      };
+      const { container } = render(<ProblemDisplay problem={nonMcProblem} />);
+      const statementEl = container.querySelector('[class*="whitespace-pre-line"]');
+      expect(statementEl!.textContent).toContain('A) 12');
+    });
+
     it('should insert line breaks before A./B./C. dot-format options', () => {
       const dotProblem: Problem = {
         ...mockProblem,

@@ -50,7 +50,13 @@ export function answersAreEquivalent(given: Answer, correct: Answer): boolean {
 
   // String comparison (case insensitive, trimmed)
   if (typeof g === 'string' && typeof c === 'string') {
-    return g.trim().toLowerCase() === c.trim().toLowerCase();
+    const gNorm = g.trim().toLowerCase();
+    const cNorm = c.trim().toLowerCase();
+    if (gNorm === cNorm) return true;
+    // MC shorthand: accept just the letter for "X) ..." answers
+    const mcMatch = cNorm.match(/^([a-d])\)/);
+    if (mcMatch && gNorm === mcMatch[1]) return true;
+    return false;
   }
 
   // Array comparison (order matters for ordering problems)

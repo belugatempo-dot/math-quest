@@ -31,6 +31,16 @@ function BackspaceIcon() {
   );
 }
 
+function parseMultipleChoiceOptions(statement: string): string[] {
+  const options: string[] = [];
+  const regex = /([A-D]\))\s*(.*?)(?=\s+[A-D]\)|$)/g;
+  let match;
+  while ((match = regex.exec(statement)) !== null) {
+    options.push(`${match[1]} ${match[2].trim()}`);
+  }
+  return options;
+}
+
 export default function AnswerInput({
   problem,
   onSubmit,
@@ -117,21 +127,28 @@ export default function AnswerInput({
           </div>
         );
 
-      case 'multiple_choice':
+      case 'multiple_choice': {
+        const options = parseMultipleChoiceOptions(problem.statement);
         return (
           <div className="space-y-2">
-            <input
-              type="text"
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-              onKeyDown={handleKeyDown}
-              disabled={disabled}
-              placeholder="Enter your answer (A, B, C, or D)..."
-              className="w-full px-4 py-3 text-lg font-medium border-2 border-primary/30 rounded-2xl focus:border-primary focus:outline-none focus:shadow-game-glow disabled:bg-white/5 bg-white/10 text-foreground transition-all"
-              autoFocus
-            />
+            {options.map((option) => (
+              <button
+                key={option}
+                type="button"
+                onClick={() => setValue(option)}
+                disabled={disabled}
+                className={`w-full text-left px-4 py-3 text-lg font-medium border-2 rounded-2xl transition-all ${
+                  value === option
+                    ? 'border-primary ring-2 ring-primary/50 bg-primary/20 text-foreground'
+                    : 'border-white/20 bg-white/10 text-foreground hover:border-white/40 hover:bg-white/15'
+                } disabled:opacity-50 disabled:cursor-not-allowed`}
+              >
+                {option}
+              </button>
+            ))}
           </div>
         );
+      }
 
       case 'text_field':
       default:

@@ -33,12 +33,20 @@ describe('AnswerInput', () => {
       expect(screen.getByRole('button', { name: 'Backspace' })).toBeInTheDocument();
     });
 
-    it('should render multiple_choice with text input', () => {
-      const mcProblem = { ...baseProblem, inputType: 'multiple_choice' as const };
+    it('should render multiple_choice with clickable option buttons', () => {
+      const mcProblem = {
+        ...baseProblem,
+        inputType: 'multiple_choice' as const,
+        statement: 'Which is NOT a triangle? A) A shape with 3 sides B) A shape with 3 angles C) A shape with 4 corners D) A shape with 3 vertices',
+      };
       render(<AnswerInput problem={mcProblem} onSubmit={vi.fn()} />);
-      expect(
-        screen.getByPlaceholderText('Enter your answer (A, B, C, or D)...')
-      ).toBeInTheDocument();
+      // Should NOT render a text input
+      expect(screen.queryByPlaceholderText('Enter your answer (A, B, C, or D)...')).not.toBeInTheDocument();
+      // Should render option buttons
+      expect(screen.getByRole('button', { name: 'A) A shape with 3 sides' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'B) A shape with 3 angles' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'C) A shape with 4 corners' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'D) A shape with 3 vertices' })).toBeInTheDocument();
     });
 
     it('should render text_field with text input', () => {
@@ -176,6 +184,53 @@ describe('AnswerInput', () => {
         />
       );
       expect(screen.getByRole('button', { name: 'Continue' })).toBeInTheDocument();
+    });
+  });
+
+  describe('multiple choice interaction', () => {
+    const mcProblem = {
+      ...baseProblem,
+      inputType: 'multiple_choice' as const,
+      statement: 'Which is largest? A) 12 B) 8 C) 15 D) 3',
+    };
+
+    it('should select option on click and highlight it', () => {
+      render(<AnswerInput problem={mcProblem} onSubmit={vi.fn()} />);
+      const optionC = screen.getByRole('button', { name: 'C) 15' });
+      fireEvent.click(optionC);
+      // Selected button should have highlighted style
+      expect(optionC.className).toMatch(/ring/);
+    });
+
+    it('should enable submit after selecting an option', () => {
+      render(<AnswerInput problem={mcProblem} onSubmit={vi.fn()} />);
+      const submitButton = screen.getByRole('button', { name: 'Check Answer' });
+      expect(submitButton).toBeDisabled();
+      fireEvent.click(screen.getByRole('button', { name: 'B) 8' }));
+      expect(submitButton).not.toBeDisabled();
+    });
+
+    it('should submit full option string on check', () => {
+      const onSubmit = vi.fn();
+      render(<AnswerInput problem={mcProblem} onSubmit={onSubmit} />);
+      fireEvent.click(screen.getByRole('button', { name: 'C) 15' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Check Answer' }));
+      expect(onSubmit).toHaveBeenCalledWith('C) 15');
+    });
+
+    it('should disable option buttons when disabled prop is true', () => {
+      render(<AnswerInput problem={mcProblem} onSubmit={vi.fn()} disabled />);
+      expect(screen.getByRole('button', { name: 'A) 12' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'B) 8' })).toBeDisabled();
+    });
+
+    it('should allow changing selection before submit', () => {
+      const onSubmit = vi.fn();
+      render(<AnswerInput problem={mcProblem} onSubmit={onSubmit} />);
+      fireEvent.click(screen.getByRole('button', { name: 'A) 12' }));
+      fireEvent.click(screen.getByRole('button', { name: 'D) 3' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Check Answer' }));
+      expect(onSubmit).toHaveBeenCalledWith('D) 3');
     });
   });
 

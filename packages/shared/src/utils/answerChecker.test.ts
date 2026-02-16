@@ -60,6 +60,36 @@ describe('answersAreEquivalent', () => {
     expect(answersAreEquivalent({ value: '42' }, { value: 42 as unknown as string })).toBe(false);
     expect(answersAreEquivalent({ value: 0 }, { value: '' as unknown as number })).toBe(false);
   });
+
+  describe('multiple choice letter shorthand', () => {
+    it('accepts just the letter for "X) ..." answers', () => {
+      expect(answersAreEquivalent({ value: 'C' }, { value: 'C) A shape with 4 corners' })).toBe(true);
+    });
+
+    it('accepts lowercase letter for MC answers', () => {
+      expect(answersAreEquivalent({ value: 'c' }, { value: 'C) A shape with 4 corners' })).toBe(true);
+    });
+
+    it('accepts letter A for "A) ..." answers', () => {
+      expect(answersAreEquivalent({ value: 'A' }, { value: 'A) Option one' })).toBe(true);
+    });
+
+    it('accepts letter D for "D) ..." answers', () => {
+      expect(answersAreEquivalent({ value: 'd' }, { value: 'D) Last option' })).toBe(true);
+    });
+
+    it('rejects wrong letter for MC answers', () => {
+      expect(answersAreEquivalent({ value: 'A' }, { value: 'C) A shape with 4 corners' })).toBe(false);
+    });
+
+    it('still matches full MC string exactly', () => {
+      expect(answersAreEquivalent({ value: 'C) A shape with 4 corners' }, { value: 'C) A shape with 4 corners' })).toBe(true);
+    });
+
+    it('does not apply MC shorthand to non-MC strings', () => {
+      expect(answersAreEquivalent({ value: 'C' }, { value: 'Cat' })).toBe(false);
+    });
+  });
 });
 
 describe('checkAnswer', () => {

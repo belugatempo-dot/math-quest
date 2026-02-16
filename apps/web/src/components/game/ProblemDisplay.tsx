@@ -16,6 +16,14 @@ function formatStatement(text: string): string {
     .replace(/ ([A-D]\) )/g, '\n$1');
 }
 
+/**
+ * Strip inline options from statement text for MC problems
+ * (options are rendered as clickable buttons in AnswerInput instead).
+ */
+function stripOptions(text: string): string {
+  return text.replace(/\s*[A-D]\)[\s\S]*$/, '').trim();
+}
+
 interface ProblemDisplayProps {
   problem: Problem;
   showTeachingPoint?: boolean;
@@ -26,7 +34,7 @@ export default function ProblemDisplay({ problem, showTeachingPoint = false }: P
     <div className="space-y-4 animate-slide-up" key={problem.id}>
       {/* Problem Statement */}
       <div className="text-lg leading-relaxed text-foreground font-semibold whitespace-pre-line" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>
-        {formatStatement(problem.statement)}
+        {problem.inputType === 'multiple_choice' ? stripOptions(problem.statement) : formatStatement(problem.statement)}
       </div>
 
       {/* Visual */}
