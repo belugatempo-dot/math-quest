@@ -84,7 +84,7 @@ export default function AuthForm({
       </h2>
 
       {mode === 'signup' && (
-        <p className="text-sm text-white/60 mb-4">
+        <p className="text-sm text-white/70 mb-4">
           Create an account to save your children&apos;s progress to the cloud.
         </p>
       )}
@@ -94,7 +94,7 @@ export default function AuthForm({
           <div className="mb-4">
             <label
               htmlFor="auth-name"
-              className="block text-sm font-medium text-white/60 mb-1"
+              className="block text-sm font-medium text-white/90 mb-1"
             >
               Your Name
             </label>
@@ -114,7 +114,7 @@ export default function AuthForm({
         <div className="mb-4">
           <label
             htmlFor="auth-email"
-            className="block text-sm font-medium text-white/60 mb-1"
+            className="block text-sm font-medium text-white/90 mb-1"
           >
             Email
           </label>
@@ -132,7 +132,7 @@ export default function AuthForm({
         <div className="mb-4">
           <label
             htmlFor="auth-password"
-            className="block text-sm font-medium text-white/60 mb-1"
+            className="block text-sm font-medium text-white/90 mb-1"
           >
             Password
           </label>
