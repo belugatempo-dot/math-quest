@@ -109,9 +109,9 @@ World 3 (Multiplication Mountains) — **135 levels** across 12 chapters with **
 **Schema note**: Problem ID regex in `packages/shared/src/schemas/problem.ts:72` accepts both `problem-\d+-\d+-\d+-\d+` and `problem-level-\d+-\d+-\d+-\d+` formats.
 
 ### `data/world-4.json`
-World 4 (Fraction Islands) — **133 levels** across 12 chapters with **369 problems** (2.8 problems/level). Enhanced 2026-02-14 from initial 125 levels/137 problems.
+World 4 (Fraction Islands) — **143 levels** across 12 chapters with **405 problems** (2.8 problems/level), **13 boss levels**. BA4-calibrated 2026-02-15.
 
-**World 4 quality status: A**. All 12 chapters have boss levels. All CCSS Grade 4-5 gaps filled (4.NF.C.5, 5.NBT.A.4, 5.NBT.B.6-7, 4.MD.A.1-3, 4.G.A.1-3, 4.OA.C.5). Problem ID format: `problem-4-X-Y-Z`. Level ID format: `level-4-X-Y`. Largest chapters: Ch 8 (18 levels, 53 problems), Ch 10 (14 levels, 37 problems). Chapter 1 (Angle Island) has character-led teaching content (4 multi-step lessons, 3 single-message reminders).
+**World 4 quality status: A+**. All 12 chapters have boss levels. All CCSS Grade 4-5 gaps filled (4.NF.C.5, 5.NBT.A.4, 5.NBT.B.6-7, 4.MD.A.1-3, 4.G.A.1-3, 4.OA.C.5). Problem ID format: `problem-4-X-Y-Z`. Level ID format: `level-4-X-Y`. Largest chapters: Ch 8 (18 levels, 53 problems), Ch 10 (14 levels, 37 problems). Chapter 1 (Shape Island) has character-led teaching content (4 multi-step lessons, 3 single-message reminders).
 
 ### `data/world-5.json`
 World 5 (Algebra Archipelago) — **158 levels** across 12 chapters with **474 problems** (3.0 problems/level). Created 2026-02-16.

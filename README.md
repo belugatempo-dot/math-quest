@@ -7,7 +7,7 @@ Gamified math learning platform for elementary students. Players progress throug
 - **Framework:** Next.js 14 (App Router), React 18, TypeScript 5.4
 - **Styling:** Tailwind CSS 3.4
 - **Monorepo:** pnpm workspaces + Turborepo
-- **Testing:** Vitest + Testing Library (876 tests)
+- **Testing:** Vitest + Testing Library (1,118 tests)
 - **Validation:** Zod schemas
 - **Content pipeline:** remark/unified (Markdown to JSON)
 
@@ -29,8 +29,8 @@ pnpm dev          # Start dev server
 ### Run Tests
 
 ```bash
-cd packages/shared && pnpm test    # Shared package (390 tests)
-cd apps/web && pnpm test           # Web app (486 tests)
+cd packages/shared && pnpm test    # Shared package (455 tests)
+cd apps/web && pnpm test           # Web app (663 tests)
 ```
 
 > **Note:** Running `pnpm test` from the root will fail because `@mathquest/content` has no tests yet. Run shared and web tests separately.
@@ -48,18 +48,20 @@ scripts/                 — Utility scripts (validation, enrichment, teaching c
 
 ## Game Content
 
-| World | Theme                  | Chapters | Levels | Problems | Standards    |
-|-------|------------------------|----------|--------|----------|--------------|
-| 3     | Multiplication Mountains | 12     | 135    | 424      | CCSS Grade 3 |
-| 4     | Fraction Islands         | 12     | 133    | 369      | CCSS Grades 4-5 |
+| World | Theme                    | Chapters | Levels | Problems | Standards         |
+|-------|--------------------------|----------|--------|----------|-------------------|
+| 3     | Multiplication Mountains | 12       | 135    | 424      | CCSS Grade 3      |
+| 4     | Fraction Islands         | 12       | 143    | 405      | CCSS Grades 4-5   |
+| 5     | Algebra Archipelago      | 12       | 158    | 474      | BA5 (ages 10-12)  |
 
-World 4 Chapter 1 (Angle Island) includes character-led teaching content: 4 multi-step lessons and 3 single-message reminders across 7/10 levels.
+World 4 Chapter 1 (Shape Island) includes character-led teaching content: 4 multi-step lessons and 3 single-message reminders across 7/10 levels.
 
 Validate content files:
 
 ```bash
 node scripts/validate-world.mjs data/world-3.json
 node scripts/validate-world.mjs data/world-4.json
+node scripts/validate-world.mjs data/world-5.json
 ```
 
 ## Commands
