@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   world3,
   world4,
+  world5,
   allWorlds,
   getWorld,
   getChapter,
@@ -15,10 +16,11 @@ import {
 } from './world-data';
 
 describe('allWorlds', () => {
-  it('should contain both worlds', () => {
-    expect(allWorlds).toHaveLength(2);
+  it('should contain all worlds', () => {
+    expect(allWorlds).toHaveLength(3);
     expect(allWorlds[0]).toBe(world3);
     expect(allWorlds[1]).toBe(world4);
+    expect(allWorlds[2]).toBe(world5);
   });
 
   it('should have distinct world IDs', () => {
@@ -38,6 +40,11 @@ describe('getWorld', () => {
     expect(result).toBe(world4);
   });
 
+  it('should find world5 by ID', () => {
+    const result = getWorld(world5.id);
+    expect(result).toBe(world5);
+  });
+
   it('should return undefined for non-existent world', () => {
     expect(getWorld('world-999')).toBeUndefined();
   });
@@ -54,6 +61,12 @@ describe('world data exports', () => {
     expect(world4).toBeDefined();
     expect(world4.name).toBeTruthy();
     expect(world4.chapters.length).toBeGreaterThan(0);
+  });
+
+  it('should export world5 data', () => {
+    expect(world5).toBeDefined();
+    expect(world5.name).toBeTruthy();
+    expect(world5.chapters.length).toBeGreaterThan(0);
   });
 });
 

@@ -76,6 +76,18 @@ export const WORLD_THEMES = {
     primaryColor: '#3B82F6',
     secondaryColor: '#F97316',
   },
+  'world-4': {
+    name: 'Fraction Islands',
+    theme: 'tropical',
+    primaryColor: '#818CF8',
+    secondaryColor: '#C084FC',
+  },
+  'world-5': {
+    name: 'Algebra Archipelago',
+    theme: 'archipelago',
+    primaryColor: '#14B8A6',
+    secondaryColor: '#8B5CF6',
+  },
 } as const;
 
 // Characters

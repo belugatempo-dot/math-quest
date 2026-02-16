@@ -1,12 +1,14 @@
 import type { World, Chapter, Level, Problem } from '@mathquest/shared';
 import world3Data from '../../../../data/world-3.json';
 import world4Data from '../../../../data/world-4.json';
+import world5Data from '../../../../data/world-5.json';
 
 export const world3 = world3Data as World;
 export const world4 = world4Data as World;
+export const world5 = world5Data as World;
 
 /** All available worlds, ordered by BA level */
-export const allWorlds: World[] = [world3, world4];
+export const allWorlds: World[] = [world3, world4, world5];
 
 export function getWorld(worldId: string): World | undefined {
   return allWorlds.find((w) => w.id === worldId);

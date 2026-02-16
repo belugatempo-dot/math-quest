@@ -113,17 +113,24 @@ World 4 (Fraction Islands) — **133 levels** across 12 chapters with **369 prob
 
 **World 4 quality status: A**. All 12 chapters have boss levels. All CCSS Grade 4-5 gaps filled (4.NF.C.5, 5.NBT.A.4, 5.NBT.B.6-7, 4.MD.A.1-3, 4.G.A.1-3, 4.OA.C.5). Problem ID format: `problem-4-X-Y-Z`. Level ID format: `level-4-X-Y`. Largest chapters: Ch 8 (18 levels, 53 problems), Ch 10 (14 levels, 37 problems). Chapter 1 (Angle Island) has character-led teaching content (4 multi-step lessons, 3 single-message reminders).
 
+### `data/world-5.json`
+World 5 (Algebra Archipelago) — **158 levels** across 12 chapters with **474 problems** (3.0 problems/level). Created 2026-02-16.
+
+**World 5 quality status: A**. BA5 curriculum (ages 10-12). 12 chapters: 3D Solids (Solid Shore), Integers (Integer Isles), Expressions (Expression Expanse), Statistics (Statistics Strait), Factors (Factor Fjords), Fractions (Fraction Falls), Sequences (Sequence Shores), Ratios (Ratio Reef), Decimals (Decimal Depths), Percents (Percent Peninsula), Square Roots (Square Root Summit), Exponents (Exponent Expanse). Problem ID format: `problem-5-X-Y-Z`. Level ID format: `level-5-X-Y`. 12 boss levels (1 per chapter). Final boss: "Admiral Axiom's Final Challenge". Color palette: teal `#14B8A6` / purple `#8B5CF6` / amber `#F59E0B`.
+
 ### `scripts/`
 Utility scripts for content management:
+- `create-world5.mjs` — Assembles World 5 from chapter modules, post-processes short hints
+- `world5-chapters/ch{1-3,4-6,7-9,10-12}.mjs` — World 5 chapter data modules
 - `parse-world4.mjs` — Markdown-to-JSON converter for World 4 content
 - `validate-world.mjs` — Zod WorldSchema validator for any world JSON file
 - `add-teaching-content-world4-ch1.mjs` — Teaching content injection for World 4 Chapter 1
 
 ## Testing
 
-- **Shared**: Vitest with `globals: true`, node environment, v8 coverage. Coverage excludes test files and barrel index files. 100% coverage on all 4 utility modules + auth schemas. **431 tests**.
-- **Web**: Vitest with jsdom, `@testing-library/react`, setup file `vitest.setup.ts`. Hook tests use `renderHook`/`act`. Component tests query by accessibility attributes. **611 tests**.
-- **Total**: 1,042 tests across shared + web.
+- **Shared**: Vitest with `globals: true`, node environment, v8 coverage. Coverage excludes test files and barrel index files. 100% coverage on all 4 utility modules + auth schemas. **455 tests**.
+- **Web**: Vitest with jsdom, `@testing-library/react`, setup file `vitest.setup.ts`. Hook tests use `renderHook`/`act`. Component tests query by accessibility attributes. **663 tests**.
+- **Total**: 1,118 tests across shared + web.
 - Turborepo ensures shared package builds before tests run (`dependsOn: ["^build"]`).
 - **Note**: `@mathquest/content` package has no tests (pre-existing, `pnpm test` from root will fail on it — run shared and web tests separately).
 

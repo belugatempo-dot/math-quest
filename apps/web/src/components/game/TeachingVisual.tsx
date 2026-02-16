@@ -42,22 +42,22 @@ function AngleDiagram({ visualProps }: { visualProps: Record<string, unknown> })
     <div data-testid="visual-angle-diagram" className="flex flex-col items-center gap-3">
       <svg viewBox="0 0 200 150" className="w-full max-w-[280px]" role="img" aria-label={`${angleValue} degree angle diagram`}>
         {/* Base arm (horizontal) */}
-        <line x1="100" y1="100" x2="180" y2="100" stroke="currentColor" strokeWidth="2.5" className="text-purple-300" />
+        <line x1="100" y1="100" x2="180" y2="100" stroke="currentColor" strokeWidth="2.5" className="text-white" />
         {/* Angle arm */}
-        <line x1="100" y1="100" x2={endX} y2={endY} stroke="currentColor" strokeWidth="2.5" className="text-purple-300" />
+        <line x1="100" y1="100" x2={endX} y2={endY} stroke="currentColor" strokeWidth="2.5" className="text-white" />
         {/* Arc */}
         <path
           d={`M ${100 + arcRadius} 100 A ${arcRadius} ${arcRadius} 0 ${largeArc} 0 ${arcEndX} ${arcEndY}`}
           fill="none"
           stroke="currentColor"
           strokeWidth="1.5"
-          className="text-purple-300/70"
+          className="text-white/70"
         />
         {/* Vertex dot */}
-        <circle cx="100" cy="100" r="3" fill="currentColor" className="text-purple-300" />
+        <circle cx="100" cy="100" r="3" fill="currentColor" className="text-white" />
         {/* Right angle square indicator */}
         {angleValue === 90 && (
-          <rect x="100" y="88" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-purple-300/70" />
+          <rect x="100" y="88" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-white/70" />
         )}
       </svg>
       {showLabel && (
@@ -114,10 +114,10 @@ function ConceptDiagram({ visualProps }: { visualProps: Record<string, unknown> 
       <svg viewBox="0 0 200 120" className="w-full max-w-[280px]" role="img" aria-label={title}>
         {diagramId === 'complementary-angles' && (
           <g>
-            <line x1="20" y1="100" x2="180" y2="100" stroke="currentColor" strokeWidth="2" className="text-purple-300" />
-            <line x1="100" y1="100" x2="100" y2="20" stroke="currentColor" strokeWidth="2" className="text-purple-300" />
-            <line x1="100" y1="100" x2="160" y2="40" stroke="currentColor" strokeWidth="2" className="text-purple-300/70" strokeDasharray="4" />
-            <rect x="100" y="88" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1" className="text-purple-300/70" />
+            <line x1="20" y1="100" x2="180" y2="100" stroke="currentColor" strokeWidth="2" className="text-white" />
+            <line x1="100" y1="100" x2="100" y2="20" stroke="currentColor" strokeWidth="2" className="text-white" />
+            <line x1="100" y1="100" x2="160" y2="40" stroke="currentColor" strokeWidth="2" className="text-white/70" strokeDasharray="4" />
+            <rect x="100" y="88" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1" className="text-white/70" />
             <text x="120" y="70" fontSize="11" fill="currentColor" className="text-white/90">a°</text>
             <text x="85" y="70" fontSize="11" fill="currentColor" className="text-white/90">b°</text>
             <text x="60" y="115" fontSize="11" fill="currentColor" className="text-white/70">a + b = 90°</text>
@@ -125,8 +125,8 @@ function ConceptDiagram({ visualProps }: { visualProps: Record<string, unknown> 
         )}
         {diagramId === 'supplementary-angles' && (
           <g>
-            <line x1="20" y1="80" x2="180" y2="80" stroke="currentColor" strokeWidth="2" className="text-purple-300" />
-            <line x1="100" y1="80" x2="60" y2="20" stroke="currentColor" strokeWidth="2" className="text-purple-300/70" />
+            <line x1="20" y1="80" x2="180" y2="80" stroke="currentColor" strokeWidth="2" className="text-white" />
+            <line x1="100" y1="80" x2="60" y2="20" stroke="currentColor" strokeWidth="2" className="text-white/70" />
             <text x="70" y="65" fontSize="11" fill="currentColor" className="text-white/90">a°</text>
             <text x="120" y="65" fontSize="11" fill="currentColor" className="text-white/90">b°</text>
             <text x="55" y="105" fontSize="11" fill="currentColor" className="text-white/70">a + b = 180°</text>
@@ -134,7 +134,7 @@ function ConceptDiagram({ visualProps }: { visualProps: Record<string, unknown> 
         )}
         {diagramId === 'triangle-angle-sum' && (
           <g>
-            <polygon points="100,15 30,100 170,100" fill="none" stroke="currentColor" strokeWidth="2" className="text-purple-300" />
+            <polygon points="100,15 30,100 170,100" fill="none" stroke="currentColor" strokeWidth="2" className="text-white" />
             <text x="90" y="35" fontSize="11" fill="currentColor" className="text-white/90">a°</text>
             <text x="35" y="95" fontSize="11" fill="currentColor" className="text-white/90">b°</text>
             <text x="150" y="95" fontSize="11" fill="currentColor" className="text-white/90">c°</text>

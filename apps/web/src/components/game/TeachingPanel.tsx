@@ -115,7 +115,7 @@ export default function TeachingPanel({
       {hasVisual && (
         <div
           data-testid="teaching-visual-area"
-          className="rounded-xl border-2 border-white/25 bg-white/10 p-6 min-h-[200px] flex items-center justify-center animate-fadeIn"
+          className="rounded-xl border-2 border-white/25 bg-indigo-950/50 p-6 min-h-[200px] flex items-center justify-center animate-fadeIn"
         >
           <TeachingVisual
             visualType={step.visualType as VisualType}

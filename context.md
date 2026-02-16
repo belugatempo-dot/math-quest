@@ -1,12 +1,12 @@
 # MathQuest Development Context
 
-**Last Updated**: February 15, 2026
+**Last Updated**: February 16, 2026
 
 ---
 
 ## Objective & Scope
 
-**Goal**: Build MathQuest Phase 1 MVP — World 3 + World 4 with multi-world navigation, playable on web with content preview functionality.
+**Goal**: Build MathQuest Phase 1 MVP — Worlds 3-5 with multi-world navigation, playable on web with content preview functionality.
 
 **Key Requirements**:
 - Beast Academy methodology (thinking > memorization)
@@ -15,7 +15,7 @@
 - localStorage for progress persistence
 
 **Out of Scope for MVP**:
-- Worlds 1-2 (Phase 2), World 5+ (future)
+- Worlds 1-2 (Phase 2), World 6+ (future)
 - iOS/Android native apps (Phase 2-3)
 - Advanced input types (drag-drop, drawing)
 - Voice narration
@@ -33,6 +33,7 @@
 - Content pipeline with markdown parser
 - **World 3** (Multiplication Mountains): 135 levels, 424 problems, A- quality
 - **World 4** (Fraction Islands): 143 levels, 405 problems, A+ quality (BA4-calibrated), 13 boss levels
+- **World 5** (Algebra Archipelago): 158 levels, 474 problems, BA5-aligned (ages 10-12), 12 boss levels
 - **Multi-world navigation**: world selector tabs, cross-world helpers (`getWorld`, `getChapter`, `getLevel`, `getLevelWithContext`, `getWorldForChapter`)
 - Next.js 14 web app with Tailwind CSS, purple-blue gradient glassmorphism UI with world-themed CSS custom properties
 - Character-led teaching system (TeachingPanel, TeachingVisual, AdaptiveReteachModal)
@@ -48,7 +49,7 @@
 - **Supabase Auth + Cloud Sync**: Parent auth (email/password), child profiles, cloud progress save/load, localStorage migration
 - COPPA-compliant: children never have auth accounts, parents own child profiles
 - Offline-first: localStorage primary, cloud sync is fire-and-forget
-- Comprehensive test suite: **1,069 tests (431 shared + 638 web), 100% shared coverage, 97%+ web coverage**
+- Comprehensive test suite: **1,118 tests (455 shared + 663 web), 100% shared coverage, 97%+ web coverage**
 - **Deployed to Vercel**: https://math-quest-lime.vercel.app (auto-deploys on push to main)
 
 **No Current Blockers** - App is functional and playable.
@@ -237,9 +238,9 @@
 3. **Extend teaching content to World 3** (Priority: HIGH)
    - Adapt teaching system for multiplication topics
 
-4. **World 5 Design** (Priority: MEDIUM)
-   - Decimal Depths (BA5): decimals, percents, coordinate plane, statistics intro
-   - Target: ~120 levels, 12 chapters, A quality from the start
+4. **World 5 teaching content** (Priority: MEDIUM)
+   - Add character-led teaching (TeachingPanel) to World 5 chapters
+   - Use World 4 Ch1 teaching content as template
 
 5. **Polish web app** (Priority: MEDIUM)
    - Add responsive design improvements
@@ -279,6 +280,22 @@
 - ✅ Commit all enhancement work (World 3 commit `97a46ab`, World 4 commit `c02d9c3`, Teaching commit `69538f0`)
 - ✅ Supabase Auth + Cloud Sync (7 slices, COPPA-compliant, offline-first)
 - ✅ Database deployed to Supabase project `lwzjhqglcyvmewbcmlnk`
+- ✅ World 5 creation: Algebra Archipelago (158 levels, 474 problems, 12 boss levels, BA5 curriculum)
+
+### February 16, 2026
+
+**World 5 — Algebra Archipelago** (completed):
+- Created `data/world-5.json`: **158 levels** across 12 chapters with **474 problems** (3.0/level), 12 boss levels
+- BA5 curriculum (ages 10-12): 3D solids, integers, expressions, statistics, factors, fractions, sequences, ratios, decimals, percents, square roots, exponents
+- Modular generation: `scripts/world5-chapters/ch{1-3,4-6,7-9,10-12}.mjs` → `scripts/create-world5.mjs`
+- Content quality: 3-tier hints, teaching points, solution explanations, story contexts, tags
+- Problem categories: 363 thinking, 38 working_backwards, 21 find_the_error, 20 compare_without_calc, 15 pattern_discovery
+- Level types: 72 teaching, 45 practice, 29 challenge, 12 boss
+- Registered in `apps/web/src/lib/world-data.ts` and `packages/shared/src/constants/index.ts` (WORLD_THEMES)
+- World 5 palette: teal `#14B8A6` / purple `#8B5CF6` / amber `#F59E0B`
+- Characters: Grogg (companion), Lizzie (strategist), Prof. Owlbert (teacher), Admiral Axiom (challenger)
+- Final boss: "Admiral Axiom's Final Challenge" (all exponent rules + scientific notation)
+- All 1,118 tests pass (455 shared + 663 web), build clean
 
 ---
 
@@ -290,6 +307,7 @@
 | `mathquest-PRD.md` | Technical spec, data models, API spec |
 | `data/world-3.json` | World 3 game content (135 levels, 424 problems, A-) |
 | `data/world-4.json` | World 4 game content (133 levels, 369 problems, A, with teaching) |
+| `data/world-5.json` | World 5 game content (158 levels, 474 problems, BA5 curriculum) |
 | `scripts/parse-world4.mjs` | Markdown→JSON converter for World 4 |
 | `scripts/validate-world.mjs` | Zod WorldSchema validator for any world JSON |
 | `scripts/add-teaching-content-world4-ch1.mjs` | Teaching content injection for World 4 Ch1 |
@@ -359,7 +377,7 @@
 | Web pages | 76 | 100%* | 86-100% | 100% | 100%* |
 | Web hooks | 116 | 95%+ | 100% | 100% | 95%+ |
 | Web auth/services | 125 | 95%+ | 90%+ | 95%+ | 95%+ |
-| **Total** | **1,042** | **97%+** | **96%+** | **95%+** | **97%+** |
+| **Total** | **1,118** | **97%+** | **96%+** | **95%+** | **97%+** |
 
 \* layout.tsx excluded (framework boilerplate, not business logic)
 
@@ -376,8 +394,8 @@ pnpm build
 cd apps/web && pnpm dev
 
 # Run all tests
-cd packages/shared && pnpm test        # 431 tests
-cd apps/web && pnpm test               # 611 tests
+cd packages/shared && pnpm test        # 455 tests
+cd apps/web && pnpm test               # 663 tests
 
 # Run tests with coverage
 cd packages/shared && pnpm test -- --coverage
@@ -395,5 +413,5 @@ cd tools/content-pipeline && pnpm start detect-antipatterns
 - `/` - World selector with tab navigation; each world shows chapters with progress
 - `/chapter/[id]` - Chapter view with level cards
 - `/play/[levelId]` - Student gameplay
-- `/admin` - Content browser with cross-world filter (268 levels total)
+- `/admin` - Content browser with cross-world filter (436 levels total)
 - `/admin/level/[id]` - Level preview with problems, hints, answers
