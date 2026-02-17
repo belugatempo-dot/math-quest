@@ -57,6 +57,7 @@ Next.js 14 App Router with Tailwind CSS. All pages use `'use client'`.
 - `/chapter/[id]` — Chapter detail (level cards with lock/star status)
 - `/play/[levelId]` — Game play (problem display, answer input, hints, completion modal)
 - `/admin/` — Content preview tools
+- `/auth/callback` — Email confirmation redirect (exchanges `?code=` for Supabase session, redirects to `/`)
 
 **Key patterns:**
 - `useGameState` hook (`src/hooks/`) encapsulates all game logic including phase management (teaching → problem → feedback → teaching-point → adaptive-reteach). PlayPage is phase-based rendering (~189 lines).
@@ -65,11 +66,12 @@ Next.js 14 App Router with Tailwind CSS. All pages use `'use client'`.
 - `TeachingVisual.tsx` — Interactive SVG visuals (AngleDiagram, WorkedExample, ConceptDiagram).
 - `AdaptiveReteachModal.tsx` — Re-teach offer after 2 consecutive wrong answers (once per level).
 - Player progress persisted to localStorage via `src/lib/storage.ts`, with optional cloud sync via Supabase.
-- `world-data.ts` exports `allWorlds`, `getWorld()`, `getChapter()`, `getLevel()`, `getLevelWithContext()`, `getWorldForChapter()` for cross-world navigation.
+- `world-data.ts` exports `allWorlds`, `getWorld()`, `getChapter()`, `getLevel()`, `getLevelWithContext()`, `getWorldForChapter()`, `getProblem()`, `getAllLevels()`, `getNextLevel()`, `getPreviousLevel()` for cross-world navigation.
+- `Answer.orderIndependent` optional field treats comma-separated values as unordered sets. `checkAnswer()` also supports multiple-choice shorthand (accepts `"a"` for `"A) ..."`) and comma spacing normalization. `AnswerInput` shows `(any order)` hint and renders clickable buttons for multiple-choice problems.
 - Path alias: `@/*` maps to `./src/*`.
 
 **Auth & Cloud Sync (COPPA-compliant):**
-- `AuthContext.tsx` — Auth state provider. Gracefully degrades when Supabase env vars missing.
+- `AuthContext.tsx` — Auth state provider. Gracefully degrades when Supabase env vars missing. Initial session check has 5-second timeout to prevent login hanging. `onAuthStateChange` listener has error handling.
 - `ProfileContext.tsx` — Cloud-aware: loads child profiles from Supabase when authenticated, falls back to localStorage.
 - Services in `src/lib/services/`: `auth.service.ts`, `child-profile.service.ts`, `progress.service.ts`, `migration.service.ts`.
 - Supabase clients in `src/lib/supabase/`: `client.ts` (browser, singleton), `server.ts` (SSR), `middleware.ts` (session refresh).
@@ -77,6 +79,7 @@ Next.js 14 App Router with Tailwind CSS. All pages use `'use client'`.
 - Cloud sync is fire-and-forget (non-blocking). Progress merge: max stars, sum attempts, min hints, latest timestamp.
 - `MigrationPrompt.tsx` — One-time prompt to upload localStorage profiles to cloud after first sign-in.
 - `SyncStatus.tsx` — Cloud sync indicator in header.
+- Email confirmation flow: `signUp()` returns `'confirmation'` when email not yet confirmed. `AuthForm` shows confirmation message. `/auth/callback` route exchanges the email link code for a session.
 - Database: 3 tables (`profiles`, `child_profiles`, `user_progress`) with RLS. Supabase project: `lwzjhqglcyvmewbcmlnk`.
 - Dependencies: `@supabase/supabase-js`, `@supabase/ssr`.
 - Env vars: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` (see `.env.example`).
@@ -125,6 +128,7 @@ Utility scripts for content management:
 - `parse-world4.mjs` — Markdown-to-JSON converter for World 4 content
 - `validate-world.mjs` — Zod WorldSchema validator for any world JSON file
 - `add-teaching-content-world4-ch1.mjs` — Teaching content injection for World 4 Chapter 1
+- `add-order-independent.mjs` — Adds `orderIndependent: true` to applicable answer objects
 
 ## Testing
 

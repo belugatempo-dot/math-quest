@@ -49,6 +49,9 @@
 - **Supabase Auth + Cloud Sync**: Parent auth (email/password), child profiles, cloud progress save/load, localStorage migration
 - COPPA-compliant: children never have auth accounts, parents own child profiles
 - Offline-first: localStorage primary, cloud sync is fire-and-forget
+- Order-independent answer matching (`Answer.orderIndependent`, set comparison in `checkAnswer()`)
+- Email confirmation flow (`/auth/callback` route, `AuthForm` confirmation message)
+- Multiple-choice clickable buttons in `AnswerInput` component
 - Comprehensive test suite: **1,118 tests (455 shared + 663 web), 100% shared coverage, 97%+ web coverage**
 - **Deployed to Vercel**: https://math-quest-lime.vercel.app (auto-deploys on push to main)
 
@@ -272,7 +275,7 @@
 - ✅ Content pipeline: Parser built and working (108/108 levels)
 - ✅ Web app: Built and running
 - ✅ World 3 enhancement: B- → A- quality (135 levels, 424 problems)
-- ✅ World 4 creation & enrichment: Fraction Islands, A quality (133 levels, 369 problems, 12 boss levels)
+- ✅ World 4 creation & enrichment: Fraction Islands, A+ quality (143 levels, 405 problems, 13 boss levels)
 - ✅ Multi-world navigation: world selector tabs, cross-world helpers
 - ✅ Character-led teaching system: TeachingPanel, TeachingVisual, AdaptiveReteachModal (commit `69538f0`)
 - ✅ Purple-blue gradient glassmorphism theme (replaced flat dark navy, 26 source files + 2 data files)
@@ -297,6 +300,11 @@
 - Final boss: "Admiral Axiom's Final Challenge" (all exponent rules + scientific notation)
 - All 1,118 tests pass (455 shared + 663 web), build clean
 
+**AuthContext robustness fix** (completed):
+- Added 5-second timeout on initial session check to prevent login hanging when `getCurrentUser()` stalls
+- Added try/catch in `onAuthStateChange` listener to avoid unhandled rejections
+- Root cause: stale session cookie causes `supabase.auth.getUser()` to hang, keeping `isLoading` true forever
+
 ---
 
 ## Key Files Reference
@@ -306,7 +314,7 @@
 | `mathquest-MRD-v2.md` | Product requirements, problem design bible |
 | `mathquest-PRD.md` | Technical spec, data models, API spec |
 | `data/world-3.json` | World 3 game content (135 levels, 424 problems, A-) |
-| `data/world-4.json` | World 4 game content (133 levels, 369 problems, A, with teaching) |
+| `data/world-4.json` | World 4 game content (143 levels, 405 problems, A+, 13 boss levels, with teaching) |
 | `data/world-5.json` | World 5 game content (158 levels, 474 problems, BA5 curriculum) |
 | `scripts/parse-world4.mjs` | Markdown→JSON converter for World 4 |
 | `scripts/validate-world.mjs` | Zod WorldSchema validator for any world JSON |

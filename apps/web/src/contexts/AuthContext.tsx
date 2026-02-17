@@ -46,17 +46,37 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null);
   const configured = isSupabaseConfigured();
 
-  // Check for existing session on mount
+  // Check for existing session on mount (with timeout to prevent hanging)
   useEffect(() => {
     if (!configured) {
       setIsLoading(false);
       return;
     }
 
+    let cancelled = false;
+    const timeout = setTimeout(() => {
+      if (!cancelled) {
+        setUser(null);
+        setIsLoading(false);
+      }
+    }, 5000);
+
     getCurrentUser()
-      .then((profile) => setUser(profile))
-      .catch(() => setUser(null))
-      .finally(() => setIsLoading(false));
+      .then((profile) => {
+        if (!cancelled) setUser(profile);
+      })
+      .catch(() => {
+        if (!cancelled) setUser(null);
+      })
+      .finally(() => {
+        clearTimeout(timeout);
+        if (!cancelled) setIsLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timeout);
+    };
   }, [configured]);
 
   // Listen for auth state changes
@@ -68,11 +88,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event: string) => {
-        if (event === 'SIGNED_IN') {
-          const profile = await getCurrentUser();
-          setUser(profile);
-        } else if (event === 'SIGNED_OUT') {
-          setUser(null);
+        try {
+          if (event === 'SIGNED_IN') {
+            const profile = await getCurrentUser();
+            setUser(profile);
+          } else if (event === 'SIGNED_OUT') {
+            setUser(null);
+          }
+        } catch {
+          // Ignore errors in auth state change listener
         }
       }
     );

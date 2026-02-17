@@ -2,6 +2,8 @@
 
 Gamified math learning platform for elementary students. Players progress through themed worlds solving problems across five level types (teaching, practice, challenge, quiz, boss), with character-led teaching, a progressive hint system, star-based scoring, and multi-profile support.
 
+**Live demo:** https://math-quest-lime.vercel.app
+
 ## Tech Stack
 
 - **Framework:** Next.js 14 (App Router), React 18, TypeScript 5.4
@@ -10,6 +12,8 @@ Gamified math learning platform for elementary students. Players progress throug
 - **Testing:** Vitest + Testing Library (1,118 tests)
 - **Validation:** Zod schemas
 - **Content pipeline:** remark/unified (Markdown to JSON)
+- **Auth & Cloud Sync:** Supabase (optional — app works fully offline without it)
+- **Deployment:** Vercel (auto-deploys on push to main)
 
 ## Getting Started
 
@@ -54,7 +58,7 @@ scripts/                 — Utility scripts (validation, enrichment, teaching c
 | 4     | Fraction Islands         | 12       | 143    | 405      | CCSS Grades 4-5   |
 | 5     | Algebra Archipelago      | 12       | 158    | 474      | BA5 (ages 10-12)  |
 
-World 4 Chapter 1 (Shape Island) includes character-led teaching content: 4 multi-step lessons and 3 single-message reminders across 7/10 levels.
+Character-led teaching content is currently implemented in World 4 Chapter 1 (Shape Island): 4 multi-step lessons and 3 single-message reminders across 7/10 levels. The teaching system is built and ready for expansion to other chapters and worlds.
 
 Validate content files:
 
@@ -63,6 +67,8 @@ node scripts/validate-world.mjs data/world-3.json
 node scripts/validate-world.mjs data/world-4.json
 node scripts/validate-world.mjs data/world-5.json
 ```
+
+Preview all content in the admin interface at `/admin`.
 
 ## Commands
 
@@ -75,3 +81,26 @@ node scripts/validate-world.mjs data/world-5.json
 | `pnpm clean` | Remove dist, .next, node_modules |
 | `pnpm content:parse <file>` | Parse curriculum markdown to JSON |
 | `pnpm content:validate <file>` | Validate content JSON against schemas |
+
+## Environment Variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `NEXT_PUBLIC_SUPABASE_URL` | No | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | No | Supabase anonymous key |
+
+Both are optional — the app works fully offline with localStorage when they are not set.
+
+```bash
+cp apps/web/.env.example apps/web/.env.local
+```
+
+## Auth & Cloud Sync
+
+The app supports optional parent accounts via Supabase Auth (email/password):
+
+- **Parent accounts** manage one or more child profiles
+- **Child profiles** are owned by the parent (COPPA-compliant — children never have auth accounts)
+- **Cloud progress** syncs automatically when signed in (fire-and-forget, non-blocking)
+- **Offline-first** — localStorage is the primary store; cloud sync is additive
+- **Migration prompt** — on first sign-in, offers to upload existing localStorage profiles to the cloud
