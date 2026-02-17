@@ -5896,7 +5896,8 @@
                   "6 × 8",
                   "8 × 6"
                 ],
-                "displayValue": "6 × 8 and 8 × 6"
+                "displayValue": "6 × 8 and 8 × 6",
+                "orderIndependent": true
               },
               "hints": [
                 {

@@ -49,6 +49,7 @@ export const AnswerSchema = z.object({
   displayValue: z.string().optional(),
   explanation: z.string().optional(),
   orderIndependent: z.boolean().optional(),
+  autoAccept: z.boolean().optional(),
 });
 
 export const VisualAssetSchema = z.object({

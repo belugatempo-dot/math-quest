@@ -65,6 +65,7 @@ export interface Answer {
   displayValue?: string;         // How to show it
   explanation?: string;          // Why it's correct
   orderIndependent?: boolean;    // Treat comma-separated values as a set (order doesn't matter)
+  autoAccept?: boolean;          // Any non-empty answer accepted (for open-ended questions)
 }
 
 export interface VisualAsset {

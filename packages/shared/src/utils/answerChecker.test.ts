@@ -286,4 +286,96 @@ describe('checkAnswer', () => {
     expect(checkAnswer({ value: 10 }, problem).isCorrect).toBe(true);
     expect(checkAnswer({ value: 5 }, problem).isCorrect).toBe(false);
   });
+
+  describe('autoAccept', () => {
+    it('accepts any non-empty string when autoAccept is true', () => {
+      const problem = makeProblem({
+        correctAnswer: {
+          value: 'Book corners, door frames, window edges',
+          autoAccept: true,
+          explanation: 'Many real-world objects have right angles.',
+        },
+      });
+      const result = checkAnswer({ value: 'Book, wall, computer' }, problem);
+      expect(result.isCorrect).toBe(true);
+    });
+
+    it('returns explanation as feedback when autoAccept matches', () => {
+      const problem = makeProblem({
+        correctAnswer: {
+          value: 'Example answer',
+          autoAccept: true,
+          explanation: 'Great thinking! Here are some examples.',
+        },
+      });
+      const result = checkAnswer({ value: 'my creative answer' }, problem);
+      expect(result.isCorrect).toBe(true);
+      expect(result.feedback).toBe('Great thinking! Here are some examples.');
+    });
+
+    it('rejects empty string when autoAccept is true', () => {
+      const problem = makeProblem({
+        correctAnswer: { value: 'Example', autoAccept: true },
+      });
+      const result = checkAnswer({ value: '' }, problem);
+      expect(result.isCorrect).toBe(false);
+    });
+
+    it('rejects whitespace-only string when autoAccept is true', () => {
+      const problem = makeProblem({
+        correctAnswer: { value: 'Example', autoAccept: true },
+      });
+      const result = checkAnswer({ value: '   ' }, problem);
+      expect(result.isCorrect).toBe(false);
+    });
+
+    it('rejects empty array when autoAccept is true', () => {
+      const problem = makeProblem({
+        correctAnswer: { value: 'Example', autoAccept: true },
+      });
+      const result = checkAnswer({ value: [] as string[] }, problem);
+      expect(result.isCorrect).toBe(false);
+    });
+
+    it('accepts non-empty array when autoAccept is true', () => {
+      const problem = makeProblem({
+        correctAnswer: { value: 'Example', autoAccept: true },
+      });
+      const result = checkAnswer({ value: ['item1', 'item2'] }, problem);
+      expect(result.isCorrect).toBe(true);
+    });
+
+    it('accepts numeric answer when autoAccept is true', () => {
+      const problem = makeProblem({
+        correctAnswer: { value: 'Example', autoAccept: true },
+      });
+      const result = checkAnswer({ value: 42 }, problem);
+      expect(result.isCorrect).toBe(true);
+    });
+
+    it('falls back to normal checking when autoAccept is undefined', () => {
+      const problem = makeProblem({
+        correctAnswer: { value: 'exact answer' },
+      });
+      const result = checkAnswer({ value: 'wrong answer' }, problem);
+      expect(result.isCorrect).toBe(false);
+    });
+
+    it('falls back to normal checking when autoAccept is false', () => {
+      const problem = makeProblem({
+        correctAnswer: { value: 'exact answer', autoAccept: false },
+      });
+      const result = checkAnswer({ value: 'wrong answer' }, problem);
+      expect(result.isCorrect).toBe(false);
+    });
+
+    it('returns undefined feedback when no explanation on autoAccept', () => {
+      const problem = makeProblem({
+        correctAnswer: { value: 'Example', autoAccept: true },
+      });
+      const result = checkAnswer({ value: 'anything' }, problem);
+      expect(result.isCorrect).toBe(true);
+      expect(result.feedback).toBeUndefined();
+    });
+  });
 });

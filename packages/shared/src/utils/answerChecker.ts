@@ -12,6 +12,17 @@ export function checkAnswer(given: Answer, problem: Problem): CheckResult {
   const correct = problem.correctAnswer;
   const acceptable = problem.acceptableAnswers || [];
 
+  // Auto-accept non-empty answers for open-ended questions
+  if (correct.autoAccept) {
+    const v = given.value;
+    const isEmpty =
+      (typeof v === 'string' && !v.trim()) ||
+      (Array.isArray(v) && v.length === 0);
+    if (!isEmpty) {
+      return { isCorrect: true, feedback: correct.explanation };
+    }
+  }
+
   // Check primary answer
   if (answersAreEquivalent(given, correct)) {
     return { isCorrect: true };

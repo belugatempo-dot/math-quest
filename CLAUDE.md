@@ -68,6 +68,7 @@ Next.js 14 App Router with Tailwind CSS. All pages use `'use client'`.
 - Player progress persisted to localStorage via `src/lib/storage.ts`, with optional cloud sync via Supabase.
 - `world-data.ts` exports `allWorlds`, `getWorld()`, `getChapter()`, `getLevel()`, `getLevelWithContext()`, `getWorldForChapter()`, `getProblem()`, `getAllLevels()`, `getNextLevel()`, `getPreviousLevel()` for cross-world navigation.
 - `Answer.orderIndependent` optional field treats comma-separated values as unordered sets. `checkAnswer()` also supports multiple-choice shorthand (accepts `"a"` for `"A) ..."`) and comma spacing normalization. `AnswerInput` shows `(any order)` hint and renders clickable buttons for multiple-choice problems.
+- `Answer.autoAccept` optional field accepts any non-empty answer for open-ended questions (e.g., "Name three real-world objects..."). Returns `correctAnswer.explanation` as feedback.
 - Path alias: `@/*` maps to `./src/*`.
 
 **Auth & Cloud Sync (COPPA-compliant):**
@@ -129,12 +130,13 @@ Utility scripts for content management:
 - `validate-world.mjs` — Zod WorldSchema validator for any world JSON file
 - `add-teaching-content-world4-ch1.mjs` — Teaching content injection for World 4 Chapter 1
 - `add-order-independent.mjs` — Adds `orderIndependent: true` to applicable answer objects
+- `fix-open-ended-problems.mjs` — Fixes open-ended question answer checking (autoAccept, value cleanup, orderIndependent)
 
 ## Testing
 
-- **Shared**: Vitest with `globals: true`, node environment, v8 coverage. Coverage excludes test files and barrel index files. 100% coverage on all 4 utility modules + auth schemas. **455 tests**.
+- **Shared**: Vitest with `globals: true`, node environment, v8 coverage. Coverage excludes test files and barrel index files. 100% coverage on all 4 utility modules + auth schemas. **465 tests**.
 - **Web**: Vitest with jsdom, `@testing-library/react`, setup file `vitest.setup.ts`. Hook tests use `renderHook`/`act`. Component tests query by accessibility attributes. **663 tests**.
-- **Total**: 1,118 tests across shared + web.
+- **Total**: 1,128 tests across shared + web.
 - Turborepo ensures shared package builds before tests run (`dependsOn: ["^build"]`).
 - **Note**: `@mathquest/content` package has no tests (pre-existing, `pnpm test` from root will fail on it — run shared and web tests separately).
 

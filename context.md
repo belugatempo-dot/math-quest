@@ -52,7 +52,8 @@
 - Order-independent answer matching (`Answer.orderIndependent`, set comparison in `checkAnswer()`)
 - Email confirmation flow (`/auth/callback` route, `AuthForm` confirmation message)
 - Multiple-choice clickable buttons in `AnswerInput` component
-- Comprehensive test suite: **1,118 tests (455 shared + 663 web), 100% shared coverage, 97%+ web coverage**
+- Open-ended question handling: `Answer.autoAccept` for truly open-ended questions, cleaned answer values for partial-match issues
+- Comprehensive test suite: **1,128 tests (465 shared + 663 web), 100% shared coverage, 97%+ web coverage**
 - **Deployed to Vercel**: https://math-quest-lime.vercel.app (auto-deploys on push to main)
 
 **No Current Blockers** - App is functional and playable.
@@ -284,6 +285,7 @@
 - ✅ Supabase Auth + Cloud Sync (7 slices, COPPA-compliant, offline-first)
 - ✅ Database deployed to Supabase project `lwzjhqglcyvmewbcmlnk`
 - ✅ World 5 creation: Algebra Archipelago (158 levels, 474 problems, 12 boss levels, BA5 curriculum)
+- ✅ Open-ended answer checking: `autoAccept` field, value cleanup, 7 content fixes across Worlds 3-4
 
 ### February 16, 2026
 
@@ -304,6 +306,19 @@
 - Added 5-second timeout on initial session check to prevent login hanging when `getCurrentUser()` stalls
 - Added try/catch in `onAuthStateChange` listener to avoid unhandled rejections
 - Root cause: stale session cookie causes `supabase.auth.getUser()` to hang, keeping `isLoading` true forever
+
+**Open-ended question answer checking fix** (completed):
+- Added `Answer.autoAccept` field to type (`types/problem.ts`) and schema (`schemas/problem.ts`)
+- `checkAnswer()` early-returns `{ isCorrect: true, feedback: explanation }` for any non-empty answer when `autoAccept` is true
+- 10 new tests for autoAccept behavior in `answerChecker.test.ts`
+- Content fixes via `scripts/fix-open-ended-problems.mjs`:
+  - `problem-4-1-1-3`, `problem-4-1-5-2` → `autoAccept: true` (truly open-ended)
+  - `problem-4-12-6-1` → cleaned value (removed "(4 outcomes)"), added `orderIndependent`
+  - `problem-4-8-12-2` → cleaned value to `"2/5"` (existing acceptableAnswers handle alternatives)
+  - `problem-4-11-10-2` → cleaned value to `"0.450"` (existing acceptableAnswers handle alternatives)
+  - `problem-4-6-9-2` → cleaned value + 4 new acceptableAnswers (total 6 arrangements)
+  - `problem-3-4-8-2` → added `orderIndependent: true` to array answer
+- All 1,128 tests pass (465 shared + 663 web), both world JSONs validate, build clean
 
 ---
 
@@ -379,13 +394,13 @@
 | Area | Tests | Stmts | Branch | Funcs | Lines |
 |------|-------|-------|--------|-------|-------|
 | Shared schemas | 309 | 100% | 100% | 100% | 100% |
-| Shared utils | 81 | 100% | 100% | 100% | 100% |
+| Shared utils | 91 | 100% | 100% | 100% | 100% |
 | Web libs | 31 | 100% | 100% | 100% | 100% |
 | Web components | 263 | 99%+ | 97%+ | 95%+ | 99%+ |
 | Web pages | 76 | 100%* | 86-100% | 100% | 100%* |
 | Web hooks | 116 | 95%+ | 100% | 100% | 95%+ |
 | Web auth/services | 125 | 95%+ | 90%+ | 95%+ | 95%+ |
-| **Total** | **1,118** | **97%+** | **96%+** | **95%+** | **97%+** |
+| **Total** | **1,128** | **97%+** | **96%+** | **95%+** | **97%+** |
 
 \* layout.tsx excluded (framework boilerplate, not business logic)
 
@@ -402,7 +417,7 @@ pnpm build
 cd apps/web && pnpm dev
 
 # Run all tests
-cd packages/shared && pnpm test        # 455 tests
+cd packages/shared && pnpm test        # 465 tests
 cd apps/web && pnpm test               # 663 tests
 
 # Run tests with coverage

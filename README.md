@@ -9,7 +9,7 @@ Gamified math learning platform for elementary students. Players progress throug
 - **Framework:** Next.js 14 (App Router), React 18, TypeScript 5.4
 - **Styling:** Tailwind CSS 3.4
 - **Monorepo:** pnpm workspaces + Turborepo
-- **Testing:** Vitest + Testing Library (1,118 tests)
+- **Testing:** Vitest + Testing Library (1,128 tests)
 - **Validation:** Zod schemas
 - **Content pipeline:** remark/unified (Markdown to JSON)
 - **Auth & Cloud Sync:** Supabase (optional — app works fully offline without it)
@@ -33,7 +33,7 @@ pnpm dev          # Start dev server
 ### Run Tests
 
 ```bash
-cd packages/shared && pnpm test    # Shared package (455 tests)
+cd packages/shared && pnpm test    # Shared package (465 tests)
 cd apps/web && pnpm test           # Web app (663 tests)
 ```
 
